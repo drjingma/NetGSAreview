@@ -1,9 +1,9 @@
 # NetGSAreview
 
-This folder provides supplementary materials to the review paper `A comparative study of network-based pathway enrichment analysis methods'. More specifically, we provide 
+We provide here the supplementary materials to the review paper `A comparative study of network-based pathway enrichment analysis methods', including 
 
- * online supplementary material summarizing main findings of the comparative study.
- * Numerical results for all settings considered in the review paper. 
+ * the online supplementary material summarizing main findings of the comparative study,
+ * numerical results for all settings considered in the review paper, and 
  * R code for reproducing the numerical results. 
    
 

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Jing Ma" />
+
+<meta name="date" content="2018-05-28" />
+
+<title>Analysis of Metabolomics Data</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Analysis of Metabolomics Data</h1>
+<h4 class="author"><em>Jing Ma</em></h4>
+<h4 class="date"><em>2018-05-28</em></h4>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In this note, we provide details on the metabolomic data preprocessing and enrichment analysis with different methods, including <strong>NetGSA</strong>, <strong>DEGraph</strong>, <strong>PathNet</strong>, and <strong>CAMERA</strong>.</p>
+<div id="r-package" class="section level2">
+<h2>R package</h2>
+<p>Our analysis depends on the following R packages. Additional functions used are also provided.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(glasso)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(glmnet)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(igraph)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(corpcor)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">library</span>(DEGraph)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">library</span>(PathNet)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">library</span>(KEGGgraph)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">library</span>(graphite)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">library</span>(KEGGREST)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># library(devtools)</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># devtools::install_github(&quot;drjingma/netgsa&quot;, build_vignettes=T)</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"># devtools::install_github(&quot;JClavel/glassoFast&quot;)</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">library</span>(netgsa)</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="kw">library</span>(glassoFast)</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co"># Parallel computing</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="kw">library</span>(parallel)</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="kw">library</span>(foreach)</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="kw">library</span>(doParallel)</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="kw">set.seed</span>(<span class="dv">2016</span>)</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="kw">source</span>(<span class="st">&quot;preprocess_lib.r&quot;</span>)</a></code></pre></div>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">dat_<span class="dv">57</span> =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">'../Datasets/metabolomic_data.csv'</span>, <span class="dt">check.names =</span> F)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">## Create the data list</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">dataset=<span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">dataset<span class="op">$</span>metab_info =<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;Number&quot;</span>=<span class="kw">seq</span>(<span class="dv">3</span>,<span class="kw">ncol</span>(dat_<span class="dv">57</span>)),<span class="st">&quot;Compound&quot;</span>=<span class="kw">as.character</span>(<span class="kw">colnames</span>(dat_<span class="dv">57</span>)[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]), <span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">dataset<span class="op">$</span>metab_info<span class="op">$</span>Number =<span class="st"> </span>dataset<span class="op">$</span>metab_info<span class="op">$</span>Number<span class="dv">-2</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">dataset<span class="op">$</span>sample_info=<span class="st"> </span>dat_<span class="dv">57</span>[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw">colnames</span>(dataset<span class="op">$</span>sample_info) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Number&quot;</span>,<span class="st">'Label'</span>)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">dataset<span class="op">$</span>dat=<span class="kw">t</span>(<span class="kw">apply</span>(dat_<span class="dv">57</span>[,<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)], <span class="dv">2</span>, as.numeric))</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">dim</span>(dataset<span class="op">$</span>dat)</a></code></pre></div>
+<pre><code>## [1] 181  71</code></pre>
+</div>
+<div id="kegg-metabolic-pathways" class="section level2">
+<h2>KEGG metabolic pathways</h2>
+<p>We searched for the KEGG IDs for each metabolite, which are used to map the pathways.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID =<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB =<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">dataset<span class="op">$</span>metab_info<span class="op">$</span>MID =<span class="st"> </span><span class="ot">NA</span> <span class="co"># Metabolite ID</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem =<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">1</span>] =<span class="st"> 'C07326'</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">2</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">2</span>] =<span class="st"> 'ME053703'</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">3</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">3</span>] =<span class="st"> 'HMDB0031075'</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">4</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">4</span>] =<span class="st"> &quot;ME133502&quot;</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">5</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">5</span>] =<span class="st"> '13120901'</span>   </a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">6</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">6</span>] =<span class="st"> '28115'</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">7</span>] =<span class="st"> 'C00956'</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">8</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">8</span>] =<span class="st"> 'HMDB0000337'</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">9</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">9</span>] =<span class="st"> 'HMDB0001987'</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">10</span>] =<span class="st"> 'C03196'</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">11</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">11</span>] =<span class="st"> 'HMDB0001863'</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">12</span>] =<span class="st"> 'C00233'</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">13</span>] =<span class="st"> 'C05853'</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">14</span>] =<span class="st"> 'C06474'</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">15</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">15</span>] =<span class="st"> 'ME053685'</span>;</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">16</span>] =<span class="st"> 'C01089'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">16</span>] =<span class="st"> 'HMDB0000357'</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">17</span>] =<span class="st"> 'C00597'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">17</span>] =<span class="st"> 'HMDB0000807'</span>;</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">18</span>] =<span class="st"> 'C00156'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">18</span>] =<span class="st"> 'HMDB0000500'</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">19</span>] =<span class="st"> 'C00989'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">19</span>] =<span class="st"> 'HMDB0000710'</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">20</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">20</span>] =<span class="st"> 'HMDB0000725'</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">21</span>] =<span class="st"> '11003628'</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28">dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">22</span>] =<span class="st"> '1826'</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29">dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">23</span>] =<span class="st"> '80642'</span></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">24</span>] =<span class="st"> 'C05659'</span></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">25</span>] =<span class="st"> 'C00417'</span></a>
+<a class="sourceLine" id="cb4-32" data-line-number="32">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">26</span>] =<span class="st"> 'C00020'</span></a>
+<a class="sourceLine" id="cb4-33" data-line-number="33">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">27</span>] =<span class="st"> 'C06104'</span></a>
+<a class="sourceLine" id="cb4-34" data-line-number="34">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">28</span>] =<span class="st"> 'C00041'</span></a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">29</span>] =<span class="st"> 'C00499'</span></a>
+<a class="sourceLine" id="cb4-36" data-line-number="36">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">30</span>] =<span class="st"> 'C02350'</span></a>
+<a class="sourceLine" id="cb4-37" data-line-number="37">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">31</span>] =<span class="st"> 'C00026'</span></a>
+<a class="sourceLine" id="cb4-38" data-line-number="38">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">32</span>] =<span class="st"> 'C00872'</span></a>
+<a class="sourceLine" id="cb4-39" data-line-number="39">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">33</span>] =<span class="st"> 'C00259'</span></a>
+<a class="sourceLine" id="cb4-40" data-line-number="40">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">34</span>] =<span class="st"> 'C00532'</span></a>
+<a class="sourceLine" id="cb4-41" data-line-number="41">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">35</span>] =<span class="st"> </span><span class="ot">NA</span>; </a>
+<a class="sourceLine" id="cb4-42" data-line-number="42">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">36</span>] =<span class="st"> 'C00219'</span> <span class="co">#Arachidonic acid</span></a>
+<a class="sourceLine" id="cb4-43" data-line-number="43">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">37</span>] =<span class="st"> 'C00152'</span></a>
+<a class="sourceLine" id="cb4-44" data-line-number="44">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">38</span>] =<span class="st"> 'C00049'</span></a>
+<a class="sourceLine" id="cb4-45" data-line-number="45">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">39</span>] =<span class="st"> 'C08261'</span></a>
+<a class="sourceLine" id="cb4-46" data-line-number="46">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">40</span>] =<span class="st"> 'C00180'</span></a>
+<a class="sourceLine" id="cb4-47" data-line-number="47">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">41</span>] =<span class="st"> 'C00099'</span></a>
+<a class="sourceLine" id="cb4-48" data-line-number="48">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">42</span>] =<span class="st"> 'C01753'</span></a>
+<a class="sourceLine" id="cb4-49" data-line-number="49">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">43</span>] =<span class="st"> 'C11118'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">43</span>] =<span class="st"> 'ME133022'</span>;</a>
+<a class="sourceLine" id="cb4-50" data-line-number="50">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">44</span>] =<span class="st"> 'C01571'</span></a>
+<a class="sourceLine" id="cb4-51" data-line-number="51">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">45</span>] =<span class="st"> 'C00187'</span></a>
+<a class="sourceLine" id="cb4-52" data-line-number="52">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">46</span>] =<span class="st"> 'C00695'</span></a>
+<a class="sourceLine" id="cb4-53" data-line-number="53">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">47</span>] =<span class="st"> 'C00158'</span></a>
+<a class="sourceLine" id="cb4-54" data-line-number="54">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">48</span>] =<span class="st"> 'C00327'</span></a>
+<a class="sourceLine" id="cb4-55" data-line-number="55">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">49</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">49</span>] =<span class="st"> '9989541'</span>; <span class="co">#Conduritol-beta-epoxide</span></a>
+<a class="sourceLine" id="cb4-56" data-line-number="56">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">50</span>] =<span class="st"> 'C00791'</span></a>
+<a class="sourceLine" id="cb4-57" data-line-number="57">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">51</span>] =<span class="st"> 'C00097'</span></a>
+<a class="sourceLine" id="cb4-58" data-line-number="58">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">52</span>] =<span class="st"> &quot;C01420&quot;</span></a>
+<a class="sourceLine" id="cb4-59" data-line-number="59">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">53</span>] =<span class="st"> &quot;C00112&quot;</span></a>
+<a class="sourceLine" id="cb4-60" data-line-number="60">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">54</span>] =<span class="st"> &quot;C00599&quot;</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">54</span>] =<span class="st"> &quot;91477&quot;</span></a>
+<a class="sourceLine" id="cb4-61" data-line-number="61">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">55</span>]=<span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">55</span>] =<span class="st"> 'ME053440'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">55</span>] =<span class="st"> &quot;HMDB0000360&quot;</span></a>
+<a class="sourceLine" id="cb4-62" data-line-number="62">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">56</span>] =<span class="st"> 'C17920'</span>;</a>
+<a class="sourceLine" id="cb4-63" data-line-number="63">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">57</span>] =<span class="st"> &quot;C02277&quot;</span></a>
+<a class="sourceLine" id="cb4-64" data-line-number="64">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">58</span>] =<span class="st"> &quot;C00503&quot;</span></a>
+<a class="sourceLine" id="cb4-65" data-line-number="65">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">59</span>] =<span class="st"> &quot;C00189&quot;</span></a>
+<a class="sourceLine" id="cb4-66" data-line-number="66">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">60</span>] =<span class="st"> &quot;C00095&quot;</span></a>
+<a class="sourceLine" id="cb4-67" data-line-number="67">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">61</span>] =<span class="st"> &quot;C00085&quot;</span></a>
+<a class="sourceLine" id="cb4-68" data-line-number="68">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">62</span>] =<span class="st"> &quot;NA&quot;</span></a>
+<a class="sourceLine" id="cb4-69" data-line-number="69">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">63</span>] =<span class="st"> &quot;C01019&quot;</span></a>
+<a class="sourceLine" id="cb4-70" data-line-number="70">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">64</span>] =<span class="st"> &quot;C00122&quot;</span></a>
+<a class="sourceLine" id="cb4-71" data-line-number="71">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">65</span>] =<span class="st"> &quot;C01235&quot;</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">65</span>] =<span class="st"> '4456'</span></a>
+<a class="sourceLine" id="cb4-72" data-line-number="72">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">66</span>] =<span class="st"> &quot;C00880&quot;</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">66</span>] =<span class="st"> '4136'</span> </a>
+<a class="sourceLine" id="cb4-73" data-line-number="73">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">67</span>] =<span class="st"> 'C00333'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">67</span>] =<span class="st"> '3627'</span></a>
+<a class="sourceLine" id="cb4-74" data-line-number="74">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">68</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">68</span>] =<span class="st"> 'HMDB0029162'</span>; </a>
+<a class="sourceLine" id="cb4-75" data-line-number="75">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">69</span>] =<span class="st"> &quot;C00198&quot;</span></a>
+<a class="sourceLine" id="cb4-76" data-line-number="76">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">70</span>] =<span class="st"> &quot;C00031&quot;</span></a>
+<a class="sourceLine" id="cb4-77" data-line-number="77">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">71</span>] =<span class="st"> &quot;C00103&quot;</span></a>
+<a class="sourceLine" id="cb4-78" data-line-number="78">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">72</span>] =<span class="st"> &quot;C00092&quot;</span></a>
+<a class="sourceLine" id="cb4-79" data-line-number="79">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">73</span>] =<span class="st"> &quot;C00191&quot;</span></a>
+<a class="sourceLine" id="cb4-80" data-line-number="80">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">74</span>] =<span class="st"> &quot;C00025&quot;</span></a>
+<a class="sourceLine" id="cb4-81" data-line-number="81">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">75</span>] =<span class="st"> &quot;C00064&quot;</span> <span class="co"># L-form</span></a>
+<a class="sourceLine" id="cb4-82" data-line-number="82">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">76</span>] =<span class="st"> &quot;C00489&quot;</span></a>
+<a class="sourceLine" id="cb4-83" data-line-number="83">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">77</span>] =<span class="st"> &quot;C00258&quot;</span></a>
+<a class="sourceLine" id="cb4-84" data-line-number="84">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">78</span>] =<span class="st"> &quot;C00116&quot;</span></a>
+<a class="sourceLine" id="cb4-85" data-line-number="85">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">79</span>] =<span class="st"> &quot;C05401&quot;</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">79</span>] =<span class="st"> &quot;ME000374&quot;</span></a>
+<a class="sourceLine" id="cb4-86" data-line-number="86">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">80</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">80</span>] =<span class="st"> &quot;EC 3.1.3.21&quot;</span></a>
+<a class="sourceLine" id="cb4-87" data-line-number="87">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">81</span>] =<span class="st"> &quot;C00037&quot;</span></a>
+<a class="sourceLine" id="cb4-88" data-line-number="88">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">82</span>] =<span class="st"> &quot;C00160&quot;</span></a>
+<a class="sourceLine" id="cb4-89" data-line-number="89">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">83</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">83</span>] =<span class="st"> &quot;4157426&quot;</span></a>
+<a class="sourceLine" id="cb4-90" data-line-number="90">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">84</span>] =<span class="st"> &quot;C16536&quot;</span></a>
+<a class="sourceLine" id="cb4-91" data-line-number="91">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">85</span>] =<span class="st"> &quot;C01586&quot;</span></a>
+<a class="sourceLine" id="cb4-92" data-line-number="92">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">86</span>] =<span class="st"> &quot;C00263&quot;</span></a>
+<a class="sourceLine" id="cb4-93" data-line-number="93">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">87</span>] =<span class="st"> &quot;C00811&quot;</span></a>
+<a class="sourceLine" id="cb4-94" data-line-number="94">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">88</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">88</span>] =<span class="st"> &quot;16639161&quot;</span></a>
+<a class="sourceLine" id="cb4-95" data-line-number="95">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">89</span>] =<span class="st"> &quot;C00192&quot;</span></a>
+<a class="sourceLine" id="cb4-96" data-line-number="96">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">90</span>] =<span class="st"> &quot;C00262&quot;</span></a>
+<a class="sourceLine" id="cb4-97" data-line-number="97">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">91</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">91</span>] =<span class="st"> &quot;ME001856&quot;</span>;</a>
+<a class="sourceLine" id="cb4-98" data-line-number="98">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">92</span>] =<span class="st"> &quot;C02043&quot;</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">92</span>] =<span class="st"> &quot;HMDB0000671&quot;</span> </a>
+<a class="sourceLine" id="cb4-99" data-line-number="99">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">93</span>] =<span class="st"> &quot;C00294&quot;</span></a>
+<a class="sourceLine" id="cb4-100" data-line-number="100">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">94</span>] =<span class="st"> &quot;C01711&quot;</span></a>
+<a class="sourceLine" id="cb4-101" data-line-number="101">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">95</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">95</span>] =<span class="st"> 'ME134472'</span></a>
+<a class="sourceLine" id="cb4-102" data-line-number="102">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">96</span>] =<span class="st"> &quot;C00311&quot;</span></a>
+<a class="sourceLine" id="cb4-103" data-line-number="103">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">97</span>] =<span class="st"> &quot;C00407&quot;</span></a>
+<a class="sourceLine" id="cb4-104" data-line-number="104">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">98</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">98</span>] =<span class="st"> &quot;ME000375&quot;</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">98</span>] =<span class="st"> '151152'</span></a>
+<a class="sourceLine" id="cb4-105" data-line-number="105">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">99</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">99</span>] =<span class="st"> &quot;ME053389&quot;</span></a>
+<a class="sourceLine" id="cb4-106" data-line-number="106">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">100</span>] =<span class="st"> &quot;C00186&quot;</span> </a>
+<a class="sourceLine" id="cb4-107" data-line-number="107">dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">101</span>] =<span class="st"> &quot;ME000046&quot;</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>pubchem[<span class="dv">101</span>] =<span class="st"> &quot;7314&quot;</span></a>
+<a class="sourceLine" id="cb4-108" data-line-number="108">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">102</span>] =<span class="st"> &quot;C02679&quot;</span></a>
+<a class="sourceLine" id="cb4-109" data-line-number="109">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">103</span>] =<span class="st"> &quot;C00123&quot;</span> ## L-form</a>
+<a class="sourceLine" id="cb4-110" data-line-number="110">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">104</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">104</span>] =<span class="st"> &quot;HMDB0000640&quot;</span></a>
+<a class="sourceLine" id="cb4-111" data-line-number="111">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">105</span>] =<span class="st"> &quot;C01595&quot;</span></a>
+<a class="sourceLine" id="cb4-112" data-line-number="112">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">106</span>] =<span class="st"> &quot;C06427&quot;</span> <span class="co"># aka Alpha-Linolenic acid</span></a>
+<a class="sourceLine" id="cb4-113" data-line-number="113">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">107</span>] =<span class="st"> &quot;C00047&quot;</span> <span class="co"># L-lysine</span></a>
+<a class="sourceLine" id="cb4-114" data-line-number="114">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">108</span>] =<span class="st"> &quot;C07272&quot;</span></a>
+<a class="sourceLine" id="cb4-115" data-line-number="115">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">109</span>] =<span class="st"> &quot;C00149&quot;</span></a>
+<a class="sourceLine" id="cb4-116" data-line-number="116">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">110</span>] =<span class="st"> &quot;C00208&quot;</span></a>
+<a class="sourceLine" id="cb4-117" data-line-number="117">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">111</span>] =<span class="st"> &quot;C00159&quot;</span></a>
+<a class="sourceLine" id="cb4-118" data-line-number="118">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">112</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">112</span>] =<span class="st"> &quot;ME000452&quot;</span>;</a>
+<a class="sourceLine" id="cb4-119" data-line-number="119">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">113</span>] =<span class="st"> &quot;C00073&quot;</span></a>
+<a class="sourceLine" id="cb4-120" data-line-number="120">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">114</span>] =<span class="st"> 'C02989'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">114</span>] =<span class="st"> &quot;HMDB0002005&quot;</span></a>
+<a class="sourceLine" id="cb4-121" data-line-number="121">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">115</span>] =<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb4-122" data-line-number="122">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">116</span>] =<span class="st"> &quot;C00137&quot;</span></a>
+<a class="sourceLine" id="cb4-123" data-line-number="123">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">117</span>] =<span class="st"> &quot;C06424&quot;</span></a>
+<a class="sourceLine" id="cb4-124" data-line-number="124">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">118</span>] =<span class="st"> &quot;C03137&quot;</span></a>
+<a class="sourceLine" id="cb4-125" data-line-number="125">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">119</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">119</span>] =<span class="st"> &quot;ME054015&quot;</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">119</span>] =<span class="st"> &quot;HMDB0000532&quot;</span></a>
+<a class="sourceLine" id="cb4-126" data-line-number="126">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">120</span>] =<span class="st"> &quot;C00153&quot;</span></a>
+<a class="sourceLine" id="cb4-127" data-line-number="127">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">121</span>] =<span class="st"> &quot;C00253&quot;</span></a>
+<a class="sourceLine" id="cb4-128" data-line-number="128">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">122</span>] =<span class="st"> &quot;C02721&quot;</span></a>
+<a class="sourceLine" id="cb4-129" data-line-number="129">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">123</span>] =<span class="st"> &quot;C00712&quot;</span></a>
+<a class="sourceLine" id="cb4-130" data-line-number="130">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">124</span>] =<span class="st"> &quot;C00077&quot;</span> <span class="co">#L-form</span></a>
+<a class="sourceLine" id="cb4-131" data-line-number="131">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">125</span>] =<span class="st"> &quot;C00295&quot;</span></a>
+<a class="sourceLine" id="cb4-132" data-line-number="132">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">126</span>] =<span class="st"> &quot;C00209&quot;</span></a>
+<a class="sourceLine" id="cb4-133" data-line-number="133">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">127</span>] =<span class="st"> &quot;C01879&quot;</span> <span class="co"># 5-form, there is also 4-form. </span></a>
+<a class="sourceLine" id="cb4-134" data-line-number="134">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">128</span>] =<span class="st"> &quot;C00249&quot;</span></a>
+<a class="sourceLine" id="cb4-135" data-line-number="135">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">129</span>] =<span class="st"> 'C08362'</span></a>
+<a class="sourceLine" id="cb4-136" data-line-number="136">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">130</span>] =<span class="st"> 'C00864'</span></a>
+<a class="sourceLine" id="cb4-137" data-line-number="137">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">131</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">131</span>] =<span class="st"> &quot;ME053372&quot;</span></a>
+<a class="sourceLine" id="cb4-138" data-line-number="138">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">132</span>] =<span class="st">'C01601'</span></a>
+<a class="sourceLine" id="cb4-139" data-line-number="139">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">133</span>] =<span class="st"> 'C00079'</span> <span class="co"># L-form</span></a>
+<a class="sourceLine" id="cb4-140" data-line-number="140">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">134</span>] =<span class="st"> 'C05332'</span></a>
+<a class="sourceLine" id="cb4-141" data-line-number="141">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">135</span>] =<span class="st"> 'C00346'</span></a>
+<a class="sourceLine" id="cb4-142" data-line-number="142">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">136</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">136</span>] =<span class="st"> 'ME132922'</span></a>
+<a class="sourceLine" id="cb4-143" data-line-number="143">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">137</span>] =<span class="st"> 'C00408'</span></a>
+<a class="sourceLine" id="cb4-144" data-line-number="144">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">138</span>] =<span class="st"> 'C00148'</span> <span class="co"># L-form</span></a>
+<a class="sourceLine" id="cb4-145" data-line-number="145">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">139</span>] =<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb4-146" data-line-number="146">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">140</span>] =<span class="st"> 'C02067'</span></a>
+<a class="sourceLine" id="cb4-147" data-line-number="147">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">141</span>] =<span class="st"> 'C00134'</span></a>
+<a class="sourceLine" id="cb4-148" data-line-number="148">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">142</span>] =<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb4-149" data-line-number="149">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">143</span>] =<span class="st"> 'C00013'</span></a>
+<a class="sourceLine" id="cb4-150" data-line-number="150">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">144</span>] =<span class="st"> 'C00022'</span></a>
+<a class="sourceLine" id="cb4-151" data-line-number="151">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">145</span>] =<span class="st"> 'C00492'</span></a>
+<a class="sourceLine" id="cb4-152" data-line-number="152">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">146</span>] =<span class="st"> 'C00474'</span></a>
+<a class="sourceLine" id="cb4-153" data-line-number="153">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">147</span>] =<span class="st"> 'C01685'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">147</span>] =<span class="st"> 'HMDB0000867'</span></a>
+<a class="sourceLine" id="cb4-154" data-line-number="154">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">148</span>] =<span class="st"> 'C00121'</span> <span class="co"># D-form</span></a>
+<a class="sourceLine" id="cb4-155" data-line-number="155">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">149</span>] =<span class="st"> 'C00818'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">149</span>] =<span class="st"> 'HMDB0000663'</span> <span class="co"># D-form</span></a>
+<a class="sourceLine" id="cb4-156" data-line-number="156">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">150</span>] =<span class="st"> 'C00065'</span></a>
+<a class="sourceLine" id="cb4-157" data-line-number="157">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">151</span>] =<span class="st"> 'C00493'</span></a>
+<a class="sourceLine" id="cb4-158" data-line-number="158">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">152</span>] =<span class="st"> 'C01984'</span></a>
+<a class="sourceLine" id="cb4-159" data-line-number="159">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">153</span>] =<span class="st"> 'C08250'</span></a>
+<a class="sourceLine" id="cb4-160" data-line-number="160">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">154</span>] =<span class="st"> 'C00794'</span></a>
+<a class="sourceLine" id="cb4-161" data-line-number="161">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">155</span>] =<span class="st"> 'C01530'</span></a>
+<a class="sourceLine" id="cb4-162" data-line-number="162">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">156</span>] =<span class="st"> 'C05442'</span></a>
+<a class="sourceLine" id="cb4-163" data-line-number="163">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">157</span>] =<span class="st"> 'C00042'</span></a>
+<a class="sourceLine" id="cb4-164" data-line-number="164">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">158</span>] =<span class="st"> 'C00089'</span></a>
+<a class="sourceLine" id="cb4-165" data-line-number="165">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">159</span>] =<span class="st"> 'C00059'</span></a>
+<a class="sourceLine" id="cb4-166" data-line-number="166">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">160</span>] =<span class="st"> 'C00795'</span> <span class="co"># D-form</span></a>
+<a class="sourceLine" id="cb4-167" data-line-number="167">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">161</span>] =<span class="st"> 'C06467'</span> <span class="co"># D-form</span></a>
+<a class="sourceLine" id="cb4-168" data-line-number="168">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">162</span>] =<span class="st"> 'C00245'</span></a>
+<a class="sourceLine" id="cb4-169" data-line-number="169">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">163</span>] =<span class="st"> 'C16884'</span> <span class="co"># D-form</span></a>
+<a class="sourceLine" id="cb4-170" data-line-number="170">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">164</span>] =<span class="st"> 'C01620'</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>HMDB[<span class="dv">164</span>] =<span class="st"> 'HMDB0000943'</span>; </a>
+<a class="sourceLine" id="cb4-171" data-line-number="171">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">165</span>] =<span class="st"> 'C00188'</span> <span class="co"># L-form</span></a>
+<a class="sourceLine" id="cb4-172" data-line-number="172">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">166</span>] =<span class="st"> 'C00178'</span></a>
+<a class="sourceLine" id="cb4-173" data-line-number="173">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">167</span>] =<span class="st"> &quot;C02477&quot;</span> <span class="co"># alpha-tocopherol</span></a>
+<a class="sourceLine" id="cb4-174" data-line-number="174">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">168</span>] =<span class="st"> 'C01157'</span></a>
+<a class="sourceLine" id="cb4-175" data-line-number="175">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">169</span>] =<span class="st"> 'C01083'</span></a>
+<a class="sourceLine" id="cb4-176" data-line-number="176">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">170</span>] =<span class="st"> </span><span class="ot">NA</span>; dataset<span class="op">$</span>metab_info<span class="op">$</span>MID[<span class="dv">170</span>] =<span class="st"> 'ME133517'</span></a>
+<a class="sourceLine" id="cb4-177" data-line-number="177">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">171</span>] =<span class="st"> 'C00078'</span></a>
+<a class="sourceLine" id="cb4-178" data-line-number="178">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">172</span>] =<span class="st"> 'C00082'</span></a>
+<a class="sourceLine" id="cb4-179" data-line-number="179">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">173</span>] =<span class="st"> 'C00106'</span></a>
+<a class="sourceLine" id="cb4-180" data-line-number="180">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">174</span>] =<span class="st"> 'C00086'</span></a>
+<a class="sourceLine" id="cb4-181" data-line-number="181">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">175</span>] =<span class="st"> 'C00366'</span></a>
+<a class="sourceLine" id="cb4-182" data-line-number="182">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">176</span>] =<span class="st"> 'C00299'</span></a>
+<a class="sourceLine" id="cb4-183" data-line-number="183">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">177</span>] =<span class="st"> 'C00183'</span></a>
+<a class="sourceLine" id="cb4-184" data-line-number="184">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">178</span>] =<span class="st"> 'C00385'</span></a>
+<a class="sourceLine" id="cb4-185" data-line-number="185">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">179</span>] =<span class="st"> 'C01762'</span></a>
+<a class="sourceLine" id="cb4-186" data-line-number="186">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">180</span>] =<span class="st"> 'C00379'</span></a>
+<a class="sourceLine" id="cb4-187" data-line-number="187">dataset<span class="op">$</span>metab_info<span class="op">$</span>CID[<span class="dv">181</span>] =<span class="st"> 'C00181'</span> <span class="co"># D-form</span></a>
+<a class="sourceLine" id="cb4-188" data-line-number="188"><span class="co"># print(dataset$metab_info[,c(2:6)])</span></a></code></pre></div>
+<p>When mapping the pathways, we restricted the pathway size to be at least 5. In addition, we removed the <em>Metabolic pathways – Homo sapiens (human)</em> from enrichment analysis since it is the largest pathway that has 93 members, which cover almost all of the metabolites in this study and is likely to be enriched regardless of the method used. In our analysis, there are in total 65 KEGG metabolic pathways.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">kegg_matrix_cpd_pathway =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;../Datasets/KEGG_matrix_cpd_pathway.csv&quot;</span>, <span class="dt">check.names =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">cid_shared &lt;-<span class="st"> </span><span class="kw">intersect</span>(dataset<span class="op">$</span>metab_info<span class="op">$</span>CID, <span class="kw">as.character</span>(kegg_matrix_cpd_pathway[,<span class="dv">1</span>]))</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">dataset &lt;-<span class="st"> </span><span class="kw">drop.metabs</span>(dataset, <span class="op">!</span>(dataset<span class="op">$</span>metab_info<span class="op">$</span>CID <span class="op">%in%</span><span class="st"> </span>cid_shared))</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">dataset<span class="op">$</span>dat &lt;-<span class="st"> </span><span class="kw">log2</span>(dataset<span class="op">$</span>dat)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">kegg_sub_matrix &lt;-<span class="st"> </span>kegg_matrix_cpd_pathway[(kegg_matrix_cpd_pathway[,<span class="dv">1</span>] <span class="op">%in%</span><span class="st"> </span>cid_shared),]</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw">rownames</span>(kegg_sub_matrix) =<span class="kw">as.character</span>(kegg_sub_matrix[,<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">kegg_sub_matrix =<span class="st"> </span>kegg_sub_matrix[,<span class="op">-</span><span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">kegg_sub_matrix =<span class="st"> </span><span class="kw">t</span>(<span class="kw">as.matrix</span>(kegg_sub_matrix))</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">kegg_sub_matrix =<span class="st"> </span>kegg_sub_matrix[(<span class="kw">rowSums</span>(kegg_sub_matrix)<span class="op">&gt;</span><span class="dv">5</span>),]</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">kegg_sub_matrix =<span class="st"> </span>kegg_sub_matrix[<span class="op">-</span><span class="dv">40</span>,] </a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">dim</span>(kegg_sub_matrix)</a></code></pre></div>
+<pre><code>## [1]  65 100</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">kegg_pathways &lt;-<span class="st"> </span>kegg_sub_matrix</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">rownames</span>(dataset<span class="op">$</span>dat) &lt;-<span class="st"> </span>dataset<span class="op">$</span>metab_info<span class="op">$</span>CID</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">kegg_pathways &lt;-<span class="st"> </span>kegg_pathways[,<span class="kw">match</span>(dataset<span class="op">$</span>metab_info<span class="op">$</span>CID,<span class="kw">colnames</span>(kegg_pathways))]</a></code></pre></div>
+<p>KEGG metabolic pathways have a lot of overlap, as shown in the following histogram.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">hist</span>(<span class="kw">colSums</span>(kegg_sub_matrix), <span class="dt">freq =</span> F, <span class="dt">xlab=</span><span class="st">'Number of pathways'</span>,<span class="dt">main=</span><span class="st">'Histogram of pathway overlap'</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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/fzotpNPPnnQtnAr2j9ag379kqIuW221lfmsa6u0vbz00kvB61166aV2snnt7+83nz293tFHHx3cpp9TNVRn/Wzq+c8999ygk73j17/+dXPub33rW7Jw4UKTd82//Xm39wt9jaY+df/N+ayEXof3CPhWwPqPigUBBGIgYAUher/W/Fh/xAL33XffoB8rQAhu/81vfmNytHz58mDaZZddFsyl1cfPpFutWoEvfelL5sdqVTNpVlARsILHwLPPPhs81r6uvlrBpTmPFXwFrIAi7D6633HHHRe8nr75xz/+EbBanYL7W4GSeW8FjsH0n//85+aYp556KrifNWAn+P7AAw802x988MFgmtVqG7CCsuC61fIXsP54m/3uv//+YLoVaAWsVqdA6PmsgCFgBaMBLbvVFzK4rxVEB/7973+bczj9M5ryH3bYYcFzh1pawXXY01vBf3B/K2Ay77VcocdawUvwWKvFK3DwwQcHt1utu6as9v7Wlw2z7zHHHBPcx96m9aCLNbAtuM22UKvQOrv88svNvvr50+N120cffWTS/vnPfwaP123vvPOOSbcC/GD6r371K5MWbf0VFRWZY60vNwGrtd4cq/9YX4aC59Tfg5EWa0BeYPz48cH97XLrq9U6HLC+FAUPLy4uNvupn5ray5///Ofg8YsWLTLJ1hedQTa2mZ63tLTUPtS82r8n1h0J81mz8/DQQw8Fwv2ORlufevLRflYGZYwVBHwsoH2YWBBAIAYCoQGo/QfM6XWkADQ0ILjtttuCOf/jH/8Y2G+//QJWi5kJRqxWs8Bbb70V/MNr9SU161Y/RnPMD3/4w+A2DXA0AHnyyScD1kj9YLqdDz3ADno1z3pd63Z3wBrgFLBay4L72wFOaACq+19//fUBqytB4JFHHjHXtkaPm6DTaokz59GA2WoVDJ7njjvuMPuFBqAaVFi3X016aLButaKaYEkDylNPPTV4DqsFzuzr9M9oym+1OAfUwq4vLb/mRa8ZbgkNKjQ4tmZACFi3YgMPPPBAQINjPY/VGhewBjKZwx9//PGA1Qod0CBVAyNdrNu8AatVzuxrtR6bNKsbQGDevHnBfPztb38LBoqhAah+MbFaZ80xGkjaXxY0INTl7bffDp7jT3/6k0mzWsaDaZq/3/72tyZdX+1y63G6RFt/Wu/2sVZLsDlW/6moqDDpVstjQD+n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" /><!-- --></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># ## QQ plot to check whether normality assumption is appropriate for log2 transformed data</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># for (j in 1:nrow(dataset$dat)){</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#   qqnorm(dataset$dat[j,],main=paste0('Row-',j)); qqline(dataset$dat[j,],col=2);</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># }</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co"># save(dataset, kegg_pathways, file='../0_Datasets/metabolomics/T1D_metabolomic_ready.rda')</span></a></code></pre></div>
+</div>
+<div id="network-information" class="section level2">
+<h2>Network information</h2>
+<p>Network information is needed for <strong>NetGSA</strong>, <strong>PathNet</strong> and <strong>DEGraph</strong>, which is extracted from KEGG metabolic interactions. Since <strong>PathNet</strong> assess the significance of each pathway independently from the others, we only include binary interactions between metabolites from the same pathway. Interactions that show up in multiple pathways are recorded multiple times. The network for <strong>DEGraph</strong> is stored in <code>g</code>, whereas the network for <strong>NetGSA</strong> is stored in <code>A</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">load</span>(<span class="st">'../Datasets/metabolomic_KEGGgraph.rdata'</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">p &lt;-<span class="st"> </span><span class="kw">nrow</span>(dataset<span class="op">$</span>dat)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">dataset<span class="op">$</span>metab_info<span class="op">$</span>Number &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">'C'</span>,<span class="st">''</span>,dataset<span class="op">$</span>metab_info<span class="op">$</span>CID))</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">g &lt;-<span class="st"> </span><span class="kw">igraph.from.graphNEL</span>(wholeGraphDir)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">g &lt;-<span class="st"> </span><span class="kw">as.undirected</span>(g, <span class="st">'collapse'</span>)</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="kw">rownames</span>(kegg_matrix_cpd_pathway) &lt;-<span class="st"> </span><span class="kw">as.character</span>(kegg_matrix_cpd_pathway[,<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">kegg_matrix_cpd_pathway &lt;-<span class="st"> </span>kegg_matrix_cpd_pathway[,<span class="op">-</span><span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">el &lt;-<span class="st"> </span><span class="kw">get.edgelist</span>(g)</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">pathways4PathNet &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="cf">for</span> (row <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(el)){</a>
+<a class="sourceLine" id="cb10-14" data-line-number="14">  nodes_c &lt;-<span class="st"> </span>el[row,]</a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">  tmp &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">which</span>(<span class="kw">colSums</span>(kegg_matrix_cpd_pathway[<span class="kw">match</span>(el[row,],<span class="kw">rownames</span>(kegg_matrix_cpd_pathway)),])<span class="op">==</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">  <span class="cf">if</span> (<span class="kw">length</span>(tmp)<span class="op">==</span><span class="dv">0</span>){</a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">    <span class="cf">next</span>;</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">length</span>(tmp)<span class="op">&gt;</span><span class="dv">1</span>){</a>
+<a class="sourceLine" id="cb10-19" data-line-number="19">    tmp &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">replicate</span>(<span class="kw">length</span>(tmp),el[row,])), <span class="st">'title'</span>=tmp)</a>
+<a class="sourceLine" id="cb10-20" data-line-number="20">    pathways4PathNet &lt;-<span class="st"> </span><span class="kw">rbind</span>(pathways4PathNet,tmp)</a>
+<a class="sourceLine" id="cb10-21" data-line-number="21">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb10-22" data-line-number="22">    <span class="kw">cat</span>(<span class="st">'Row '</span>,row,<span class="st">' and '</span>,<span class="kw">length</span>(tmp),<span class="st">'...</span><span class="ch">\n</span><span class="st">'</span>)</a>
+<a class="sourceLine" id="cb10-23" data-line-number="23">    tmp &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(el[row,],tmp),<span class="dt">nrow=</span><span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb10-24" data-line-number="24">    <span class="kw">colnames</span>(tmp) &lt;-<span class="st"> </span><span class="kw">colnames</span>(pathways4PathNet)</a>
+<a class="sourceLine" id="cb10-25" data-line-number="25">    pathways4PathNet &lt;-<span class="st"> </span><span class="kw">rbind</span>(pathways4PathNet,tmp)</a>
+<a class="sourceLine" id="cb10-26" data-line-number="26">  }</a>
+<a class="sourceLine" id="cb10-27" data-line-number="27">}</a></code></pre></div>
+<pre><code>## Row  71  and  1 ...
+## Row  76  and  1 ...
+## Row  90  and  1 ...
+## Row  91  and  1 ...
+## Row  175  and  1 ...
+## Row  179  and  1 ...
+## Row  411  and  1 ...
+## Row  419  and  1 ...
+## Row  482  and  1 ...
+## Row  709  and  1 ...
+## Row  710  and  1 ...
+## Row  714  and  1 ...
+## Row  729  and  1 ...
+## Row  781  and  1 ...
+## Row  899  and  1 ...
+## Row  908  and  1 ...
+## Row  911  and  1 ...
+## Row  923  and  1 ...
+## Row  924  and  1 ...
+## Row  943  and  1 ...
+## Row  950  and  1 ...
+## Row  951  and  1 ...
+## Row  984  and  1 ...
+## Row  1031  and  1 ...
+## Row  1051  and  1 ...
+## Row  1141  and  1 ...
+## Row  1146  and  1 ...
+## Row  1149  and  1 ...
+## Row  1187  and  1 ...
+## Row  1202  and  1 ...
+## Row  1203  and  1 ...
+## Row  1204  and  1 ...
+## Row  1213  and  1 ...
+## Row  1454  and  1 ...
+## Row  1492  and  1 ...
+## Row  1563  and  1 ...
+## Row  1634  and  1 ...
+## Row  1635  and  1 ...
+## Row  1636  and  1 ...
+## Row  1641  and  1 ...
+## Row  1642  and  1 ...
+## Row  1643  and  1 ...
+## Row  1663  and  1 ...
+## Row  1703  and  1 ...
+## Row  1704  and  1 ...
+## Row  1707  and  1 ...
+## Row  1713  and  1 ...
+## Row  1722  and  1 ...
+## Row  1792  and  1 ...
+## Row  1845  and  1 ...
+## Row  1846  and  1 ...
+## Row  1847  and  1 ...
+## Row  1869  and  1 ...
+## Row  1876  and  1 ...
+## Row  1877  and  1 ...
+## Row  1878  and  1 ...
+## Row  1884  and  1 ...
+## Row  1885  and  1 ...
+## Row  1887  and  1 ...
+## Row  1892  and  1 ...
+## Row  1901  and  1 ...
+## Row  1959  and  1 ...
+## Row  1981  and  1 ...
+## Row  1999  and  1 ...
+## Row  2057  and  1 ...
+## Row  2103  and  1 ...
+## Row  2104  and  1 ...
+## Row  2114  and  1 ...
+## Row  2324  and  1 ...
+## Row  2326  and  1 ...
+## Row  2327  and  1 ...
+## Row  2328  and  1 ...
+## Row  2329  and  1 ...
+## Row  2422  and  1 ...
+## Row  2442  and  1 ...
+## Row  2444  and  1 ...
+## Row  2452  and  1 ...
+## Row  2455  and  1 ...
+## Row  2456  and  1 ...
+## Row  2457  and  1 ...
+## Row  2459  and  1 ...
+## Row  2460  and  1 ...
+## Row  2473  and  1 ...
+## Row  2528  and  1 ...
+## Row  2532  and  1 ...
+## Row  2533  and  1 ...
+## Row  2535  and  1 ...
+## Row  2576  and  1 ...
+## Row  2612  and  1 ...
+## Row  2613  and  1 ...
+## Row  2708  and  1 ...
+## Row  2754  and  1 ...
+## Row  2802  and  1 ...
+## Row  2943  and  1 ...
+## Row  2944  and  1 ...
+## Row  2945  and  1 ...
+## Row  2946  and  1 ...
+## Row  2947  and  1 ...
+## Row  2948  and  1 ...
+## Row  2955  and  1 ...
+## Row  2956  and  1 ...
+## Row  2959  and  1 ...
+## Row  2962  and  1 ...
+## Row  2963  and  1 ...
+## Row  2964  and  1 ...
+## Row  2965  and  1 ...
+## Row  2966  and  1 ...
+## Row  2967  and  1 ...
+## Row  2968  and  1 ...
+## Row  2969  and  1 ...
+## Row  2971  and  1 ...
+## Row  2972  and  1 ...
+## Row  2973  and  1 ...
+## Row  2974  and  1 ...
+## Row  2975  and  1 ...
+## Row  2976  and  1 ...
+## Row  2977  and  1 ...
+## Row  2978  and  1 ...
+## Row  2979  and  1 ...
+## Row  2980  and  1 ...
+## Row  2981  and  1 ...
+## Row  2982  and  1 ...
+## Row  2985  and  1 ...
+## Row  2986  and  1 ...
+## Row  3044  and  1 ...
+## Row  3087  and  1 ...
+## Row  3157  and  1 ...</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">colnames</span>(pathways4PathNet)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'id1'</span>,<span class="st">'id2'</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">pathways4PathNet<span class="op">$</span>id1 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">'C'</span>,<span class="st">''</span>,pathways4PathNet<span class="op">$</span>id1))</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">pathways4PathNet<span class="op">$</span>id2 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">'C'</span>,<span class="st">''</span>,pathways4PathNet<span class="op">$</span>id2))</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw">dim</span>(pathways4PathNet)</a></code></pre></div>
+<pre><code>## [1] 9393    3</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">pathways4PathNet &lt;-<span class="st"> </span>pathways4PathNet[(pathways4PathNet<span class="op">$</span>title <span class="op">%in%</span><span class="st"> </span><span class="kw">rownames</span>(kegg_pathways)),]</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">pathways4PathNet<span class="op">$</span>title &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">'- Homo sapiens (human)'</span>,<span class="st">''</span>,pathways4PathNet<span class="op">$</span>title, <span class="dt">fixed=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">g1 &lt;-<span class="st"> </span><span class="kw">make_empty_graph</span>(<span class="dv">2</span>,<span class="dt">directed =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="kw">V</span>(g1)<span class="op">$</span>name &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">rownames</span>(dataset<span class="op">$</span>dat), <span class="kw">V</span>(g)<span class="op">$</span>name)</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">g &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">union</span>(g,g1)</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">g &lt;-<span class="st"> </span><span class="kw">induced_subgraph</span>(g, <span class="kw">intersect</span>(<span class="kw">V</span>(g)<span class="op">$</span>name, dataset<span class="op">$</span>metab_info<span class="op">$</span>CID))</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">Adj4g &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">get.adjacency</span>(g,<span class="dt">type=</span><span class="st">&quot;both&quot;</span>))</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="kw">isSymmetric</span>(Adj4g)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,p,p)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">rownames</span>(A) &lt;-<span class="st"> </span>dataset<span class="op">$</span>metab_info<span class="op">$</span>CID</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw">colnames</span>(A) &lt;-<span class="st"> </span><span class="kw">rownames</span>(A)</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">A[<span class="kw">match</span>(<span class="kw">rownames</span>(Adj4g), <span class="kw">rownames</span>(A)), <span class="kw">match</span>(<span class="kw">rownames</span>(Adj4g), <span class="kw">rownames</span>(A))] &lt;-<span class="st"> </span>Adj4g</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">A4PathNet &lt;-<span class="st"> </span>A</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="kw">rownames</span>(A4PathNet) &lt;-<span class="st"> </span>dataset<span class="op">$</span>metab_info<span class="op">$</span>Number</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="kw">colnames</span>(A4PathNet) &lt;-<span class="st"> </span>dataset<span class="op">$</span>metab_info<span class="op">$</span>Number</a></code></pre></div>
+</div>
+<div id="enrichment-analysis" class="section level2">
+<h2>Enrichment analysis</h2>
+<p>The following code explains in details how the data are simulated, and enrichment results collected. In brief, we randomly select 20 pathways from which 10% of metabolites (DC) are set to be <em>affected</em> variables. To generate simulated data, we first standardize the original data such that each row (metabolite) has mean zero and unit variance. A non-zero mean signal is then added to each affected metabolite to create <em>truly</em> enriched pathways. Lastly, we evaluate the empirical power for each pathway using different methods. All powers are averaged over 200 replications.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">nCluster &lt;-<span class="st"> </span><span class="dv">5</span> <span class="co"># please set the number of clusters for parallel computing</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">muvals &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">detect_call &lt;-<span class="st"> </span><span class="fl">0.1</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">nreps &lt;-<span class="st"> </span><span class="dv">200</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">ncond &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">p &lt;-<span class="st"> </span><span class="kw">nrow</span>(dataset<span class="op">$</span>dat)</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8">npath &lt;-<span class="st"> </span><span class="kw">nrow</span>(kegg_pathways)</a>
+<a class="sourceLine" id="cb17-9" data-line-number="9">npath_selected &lt;-<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co"># For the selected pathways, assign which variables to affect uniformly.</span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12">setList &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(kegg_pathways), <span class="cf">function</span>(i) <span class="kw">which</span>(kegg_pathways[i,]<span class="op">==</span><span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="kw">names</span>(setList) &lt;-<span class="st"> </span><span class="kw">rownames</span>(kegg_pathways)</a>
+<a class="sourceLine" id="cb17-14" data-line-number="14">pathway_sig_id &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>npath, npath_selected)</a>
+<a class="sourceLine" id="cb17-15" data-line-number="15">isEnrichment &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, npath)</a>
+<a class="sourceLine" id="cb17-16" data-line-number="16">isEnrichment[pathway_sig_id] &lt;-<span class="st"> </span><span class="dv">1</span>  </a>
+<a class="sourceLine" id="cb17-17" data-line-number="17">genesets &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span>npath, </a>
+<a class="sourceLine" id="cb17-18" data-line-number="18">                   <span class="cf">function</span>(i) <span class="cf">if</span> (i <span class="op">%in%</span><span class="st"> </span>pathway_sig_id){</a>
+<a class="sourceLine" id="cb17-19" data-line-number="19">                     <span class="kw">sample</span>(<span class="kw">names</span>(setList[[i]]), <span class="kw">ceiling</span>(detect_call<span class="op">*</span><span class="kw">length</span>(setList[[i]])))</a>
+<a class="sourceLine" id="cb17-20" data-line-number="20">                     })</a>
+<a class="sourceLine" id="cb17-21" data-line-number="21">variables2affect &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">Reduce</span>(<span class="st">&quot;c&quot;</span>, genesets[pathway_sig_id]))</a>
+<a class="sourceLine" id="cb17-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb17-23" data-line-number="23">mu &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)</a>
+<a class="sourceLine" id="cb17-24" data-line-number="24">mu[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, p)</a>
+<a class="sourceLine" id="cb17-25" data-line-number="25">mu[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>muvals <span class="op">*</span><span class="st"> </span>(<span class="kw">match</span>(dataset<span class="op">$</span>metab_info<span class="op">$</span>CID, variables2affect, <span class="dt">nomatch =</span> <span class="dv">0</span>)<span class="op">&gt;</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb17-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb17-27" data-line-number="27"><span class="co">#********************************</span></a>
+<a class="sourceLine" id="cb17-28" data-line-number="28"><span class="co">#****   Main iterations   *******</span></a>
+<a class="sourceLine" id="cb17-29" data-line-number="29"><span class="co">#********************************</span></a>
+<a class="sourceLine" id="cb17-30" data-line-number="30">dat &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)</a>
+<a class="sourceLine" id="cb17-31" data-line-number="31">dat[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>dataset<span class="op">$</span>dat[,(dataset<span class="op">$</span>sample_info<span class="op">$</span>Label<span class="op">==</span><span class="st">&quot;Diabetic&quot;</span>)]    ## p by n1</a>
+<a class="sourceLine" id="cb17-32" data-line-number="32">dat[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>dataset<span class="op">$</span>dat[,(dataset<span class="op">$</span>sample_info<span class="op">$</span>Label<span class="op">==</span><span class="st">&quot;Non-Diabetic&quot;</span>)]## p by n2</a>
+<a class="sourceLine" id="cb17-33" data-line-number="33">n &lt;-<span class="st"> </span><span class="kw">sapply</span>(dat, ncol)</a>
+<a class="sourceLine" id="cb17-34" data-line-number="34">dat &lt;-<span class="st"> </span><span class="kw">lapply</span>(dat, <span class="cf">function</span>(d) <span class="kw">t</span>(<span class="kw">scale</span>(<span class="kw">t</span>(d))))</a>
+<a class="sourceLine" id="cb17-35" data-line-number="35">dat_combined &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat[[<span class="dv">1</span>]], dat[[<span class="dv">2</span>]])</a>
+<a class="sourceLine" id="cb17-36" data-line-number="36"></a>
+<a class="sourceLine" id="cb17-37" data-line-number="37">my.iterations &lt;-<span class="st"> </span><span class="cf">function</span>(iters){</a>
+<a class="sourceLine" id="cb17-38" data-line-number="38">  <span class="kw">set.seed</span>(iters)</a>
+<a class="sourceLine" id="cb17-39" data-line-number="39">  sigInd &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, npath, <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb17-40" data-line-number="40">  <span class="kw">colnames</span>(sigInd) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;PathNet-nom&quot;</span>, <span class="st">&quot;PathNet-fdr&quot;</span>,<span class="st">&quot;PathNet-fwer&quot;</span>,</a>
+<a class="sourceLine" id="cb17-41" data-line-number="41">                        <span class="st">&quot;camera-nom&quot;</span>,  <span class="st">&quot;camera-fdr&quot;</span>, <span class="st">&quot;camera-fwer&quot;</span>,</a>
+<a class="sourceLine" id="cb17-42" data-line-number="42">                        <span class="st">&quot;DEGraph-nom&quot;</span>, <span class="st">&quot;DEGraph-fdr&quot;</span>,<span class="st">&quot;DEGraph-fwer&quot;</span>,</a>
+<a class="sourceLine" id="cb17-43" data-line-number="43">                        <span class="st">&quot;NetGSA-nom&quot;</span>, <span class="st">&quot;NetGSA-fdr&quot;</span>,<span class="st">&quot;NetGSA-fwer&quot;</span>)</a>
+<a class="sourceLine" id="cb17-44" data-line-number="44"></a>
+<a class="sourceLine" id="cb17-45" data-line-number="45">  <span class="co"># Add the following four lines if shuffling the samples. </span></a>
+<a class="sourceLine" id="cb17-46" data-line-number="46">  <span class="co"># ind.1 &lt;- sample(ncol(dataset$dat), n[1])</span></a>
+<a class="sourceLine" id="cb17-47" data-line-number="47">  <span class="co"># dat &lt;- vector(&quot;list&quot;, ncond) </span></a>
+<a class="sourceLine" id="cb17-48" data-line-number="48">  <span class="co"># dat[[1]] &lt;- dat_combined[,ind.1]</span></a>
+<a class="sourceLine" id="cb17-49" data-line-number="49">  <span class="co"># dat[[2]] &lt;- dat_combined[,-ind.1]</span></a>
+<a class="sourceLine" id="cb17-50" data-line-number="50"></a>
+<a class="sourceLine" id="cb17-51" data-line-number="51">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>ncond) {</a>
+<a class="sourceLine" id="cb17-52" data-line-number="52">    epsilonVar &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(p <span class="op">*</span><span class="st"> </span>n[i]), p, n[i])</a>
+<a class="sourceLine" id="cb17-53" data-line-number="53">    dat[[i]] &lt;-<span class="st"> </span>dat[[i]] <span class="op">+</span><span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(mu[[i]], n[i]), p, n[i]) <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span><span class="op">*</span>epsilonVar</a>
+<a class="sourceLine" id="cb17-54" data-line-number="54">  }</a>
+<a class="sourceLine" id="cb17-55" data-line-number="55">  </a>
+<a class="sourceLine" id="cb17-56" data-line-number="56">  ##******************************</a>
+<a class="sourceLine" id="cb17-57" data-line-number="57">  ## (1) *******PathNet*******</a>
+<a class="sourceLine" id="cb17-58" data-line-number="58">  ##******************************</a>
+<a class="sourceLine" id="cb17-59" data-line-number="59">  ## Two-sample t-test to first determine the DE genes;</a>
+<a class="sourceLine" id="cb17-60" data-line-number="60">  pvals4metabs &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>p, <span class="cf">function</span>(i) <span class="kw">t.test</span>(dat[[<span class="dv">2</span>]][i,], dat[[<span class="dv">1</span>]][i,], <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb17-61" data-line-number="61">  dat4PathNet &lt;-<span class="st"> </span><span class="kw">cbind</span>(dataset<span class="op">$</span>metab_info<span class="op">$</span>Number,<span class="op">-</span><span class="kw">log10</span>(pvals4metabs))</a>
+<a class="sourceLine" id="cb17-62" data-line-number="62">  <span class="kw">colnames</span>(dat4PathNet) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CID&quot;</span>, <span class="st">&quot;pvals&quot;</span>)</a>
+<a class="sourceLine" id="cb17-63" data-line-number="63"></a>
+<a class="sourceLine" id="cb17-64" data-line-number="64">  resPathNet &lt;-<span class="st"> </span><span class="kw">PathNet</span>(<span class="dt">Enrichment_Analysis =</span> <span class="ot">TRUE</span>, <span class="dt">Contextual_Analysis =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb17-65" data-line-number="65">                        <span class="dt">DirectEvidence_info =</span> dat4PathNet, <span class="dt">Column_DirectEvidence =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb17-66" data-line-number="66">                        <span class="dt">Adjacency =</span> A4PathNet, <span class="dt">pathway =</span> pathways4PathNet, </a>
+<a class="sourceLine" id="cb17-67" data-line-number="67">                        <span class="dt">n_perm =</span> <span class="dv">100</span>, <span class="dt">threshold =</span> alpha, <span class="dt">use_sig_pathways  =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb17-68" data-line-number="68">  </a>
+<a class="sourceLine" id="cb17-69" data-line-number="69">  dict.pathnet &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;full.name&quot;</span> =<span class="st"> </span><span class="kw">sort</span>(<span class="kw">rownames</span>(kegg_pathways)), <span class="st">'short.name'</span> =<span class="st"> </span><span class="kw">sort</span>(<span class="kw">as.character</span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>Name)))</a>
+<a class="sourceLine" id="cb17-70" data-line-number="70">  pathnet.tempName &lt;-<span class="st"> </span>dict.pathnet<span class="op">$</span>full.name[<span class="kw">match</span>(<span class="kw">as.character</span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>Name),<span class="kw">as.character</span>(dict.pathnet<span class="op">$</span>short.name))]</a>
+<a class="sourceLine" id="cb17-71" data-line-number="71">  resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>Name &lt;-<span class="st"> </span><span class="kw">as.character</span>(pathnet.tempName)</a>
+<a class="sourceLine" id="cb17-72" data-line-number="72">  resPathNet<span class="op">$</span>enrichment_results &lt;-<span class="st"> </span>resPathNet<span class="op">$</span>enrichment_results[<span class="kw">match</span>(<span class="kw">rownames</span>(kegg_pathways),resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>Name),]</a>
+<a class="sourceLine" id="cb17-73" data-line-number="73"></a>
+<a class="sourceLine" id="cb17-74" data-line-number="74">  sigInd[,<span class="dv">1</span>] &lt;-<span class="st"> </span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>p_PathNet<span class="op">&lt;</span>alpha)</a>
+<a class="sourceLine" id="cb17-75" data-line-number="75">  sigInd[,<span class="dv">2</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>p_PathNet, <span class="st">&quot;BH&quot;</span>)<span class="op">&lt;</span>alpha)</a>
+<a class="sourceLine" id="cb17-76" data-line-number="76">  sigInd[,<span class="dv">3</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>p_PathNet, <span class="st">&quot;holm&quot;</span>)<span class="op">&lt;</span>alpha)</a>
+<a class="sourceLine" id="cb17-77" data-line-number="77">  </a>
+<a class="sourceLine" id="cb17-78" data-line-number="78">  ##*******************************  </a>
+<a class="sourceLine" id="cb17-79" data-line-number="79">  ## (2) *******camera*******</a>
+<a class="sourceLine" id="cb17-80" data-line-number="80">  ##*******************************</a>
+<a class="sourceLine" id="cb17-81" data-line-number="81">  classT1D &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">-</span><span class="kw">as.numeric</span>(dataset<span class="op">$</span>sample_info<span class="op">$</span>Label)</a>
+<a class="sourceLine" id="cb17-82" data-line-number="82">  <span class="kw">names</span>(classT1D) &lt;-<span class="st"> </span><span class="kw">paste0</span>(dataset<span class="op">$</span>sample_info<span class="op">$</span>Label,dataset<span class="op">$</span>sample_info<span class="op">$</span>Number)</a>
+<a class="sourceLine" id="cb17-83" data-line-number="83">  T1Dprofile &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat[[<span class="dv">1</span>]],dat[[<span class="dv">2</span>]])</a>
+<a class="sourceLine" id="cb17-84" data-line-number="84">  </a>
+<a class="sourceLine" id="cb17-85" data-line-number="85">  design &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">Intercept =</span> <span class="dv">1</span>, <span class="dt">Group =</span> classT1D)</a>
+<a class="sourceLine" id="cb17-86" data-line-number="86">  </a>
+<a class="sourceLine" id="cb17-87" data-line-number="87">  resCamera &lt;-<span class="st"> </span>limma<span class="op">::</span><span class="kw">camera</span>(T1Dprofile, setList, design) </a>
+<a class="sourceLine" id="cb17-88" data-line-number="88">  resCamera &lt;-<span class="st"> </span>resCamera[<span class="kw">match</span>(<span class="kw">rownames</span>(kegg_pathways),<span class="kw">rownames</span>(resCamera)),]</a>
+<a class="sourceLine" id="cb17-89" data-line-number="89">  sigInd[,<span class="dv">4</span>] &lt;-<span class="st"> </span>(resCamera<span class="op">$</span>PValue <span class="op">&lt;</span><span class="st"> </span>alpha)</a>
+<a class="sourceLine" id="cb17-90" data-line-number="90">  sigInd[,<span class="dv">5</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(resCamera<span class="op">$</span>PValue, <span class="st">'BH'</span>)<span class="op">&lt;</span>alpha)</a>
+<a class="sourceLine" id="cb17-91" data-line-number="91">  sigInd[,<span class="dv">6</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(resCamera<span class="op">$</span>PValue, <span class="st">'holm'</span>)<span class="op">&lt;</span>alpha)</a>
+<a class="sourceLine" id="cb17-92" data-line-number="92">  </a>
+<a class="sourceLine" id="cb17-93" data-line-number="93">  ##*******************************  </a>
+<a class="sourceLine" id="cb17-94" data-line-number="94">  ## (3) *******DEGraph*******</a>
+<a class="sourceLine" id="cb17-95" data-line-number="95">  ##*******************************</a>
+<a class="sourceLine" id="cb17-96" data-line-number="96">  res.DEGraph &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, npath)</a>
+<a class="sourceLine" id="cb17-97" data-line-number="97">  ## Run NetGSA on each pathway</a>
+<a class="sourceLine" id="cb17-98" data-line-number="98">  <span class="cf">for</span> (loop_path <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>npath){</a>
+<a class="sourceLine" id="cb17-99" data-line-number="99">    currentDat &lt;-<span class="st"> </span>T1Dprofile[(<span class="kw">rownames</span>(T1Dprofile)<span class="op">%in%</span><span class="st"> </span><span class="kw">names</span>(setList[[loop_path]])),]</a>
+<a class="sourceLine" id="cb17-100" data-line-number="100">    g_c &lt;-<span class="st"> </span><span class="kw">induced_subgraph</span>(g, <span class="kw">names</span>(setList[[loop_path]]))</a>
+<a class="sourceLine" id="cb17-101" data-line-number="101">    X1 &lt;-<span class="st"> </span><span class="kw">t</span>(currentDat[, <span class="kw">which</span>(dataset<span class="op">$</span>sample_info<span class="op">$</span>Label<span class="op">==</span><span class="st">'Diabetic'</span>)])</a>
+<a class="sourceLine" id="cb17-102" data-line-number="102">    X2 &lt;-<span class="st"> </span><span class="kw">t</span>(currentDat[, <span class="kw">which</span>(dataset<span class="op">$</span>sample_info<span class="op">$</span>Label<span class="op">==</span><span class="st">'Non-Diabetic'</span>)])</a>
+<a class="sourceLine" id="cb17-103" data-line-number="103">    res.DEGraph[loop_path] &lt;-<span class="st"> </span><span class="kw">graph.T2.test</span>(X1, X2, <span class="dt">G=</span><span class="kw">igraph.to.graphNEL</span>(g_c))<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb17-104" data-line-number="104">  }</a>
+<a class="sourceLine" id="cb17-105" data-line-number="105">  sigInd[,<span class="dv">7</span>] &lt;-<span class="st"> </span>(res.DEGraph<span class="op">&lt;</span>alpha)</a>
+<a class="sourceLine" id="cb17-106" data-line-number="106">  sigInd[,<span class="dv">8</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(res.DEGraph, <span class="st">&quot;BH&quot;</span>)<span class="op">&lt;</span>alpha)</a>
+<a class="sourceLine" id="cb17-107" data-line-number="107">  sigInd[,<span class="dv">9</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(res.DEGraph, <span class="st">&quot;holm&quot;</span>)<span class="op">&lt;</span>alpha)</a>
+<a class="sourceLine" id="cb17-108" data-line-number="108">  </a>
+<a class="sourceLine" id="cb17-109" data-line-number="109">  ##*******************************</a>
+<a class="sourceLine" id="cb17-110" data-line-number="110">  ## (4) *******NetGSA*******</a>
+<a class="sourceLine" id="cb17-111" data-line-number="111">  ##*******************************</a>
+<a class="sourceLine" id="cb17-112" data-line-number="112">  ## Estimate the partial correlation matrices</a>
+<a class="sourceLine" id="cb17-113" data-line-number="113">  wAdj &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)</a>
+<a class="sourceLine" id="cb17-114" data-line-number="114">  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>ncond) {</a>
+<a class="sourceLine" id="cb17-115" data-line-number="115">    lambda_vec =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(p)<span class="op">/</span>n[k])</a>
+<a class="sourceLine" id="cb17-116" data-line-number="116">    bic_tune &lt;-<span class="st"> </span><span class="kw">bic.netEst.undir</span>(<span class="dt">x=</span>dat[[k]], <span class="dt">one=</span>A, <span class="dt">lambda =</span> lambda_vec, <span class="dt">rho=</span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(p)<span class="op">/</span>n[k]), <span class="dt">eta=</span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb17-117" data-line-number="117">    lambda_opt &lt;-<span class="st"> </span>(<span class="dv">9</span><span class="op">+</span><span class="kw">which.min</span>(bic_tune<span class="op">$</span>BIC)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(p)<span class="op">/</span>n[k]) <span class="op">/</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb17-118" data-line-number="118">    fit &lt;-<span class="st"> </span><span class="kw">netEst.undir</span>(dat[[k]], <span class="dt">one=</span>A, <span class="dt">lambda =</span> lambda_opt, <span class="dt">rho=</span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(p)<span class="op">/</span>n[k]), <span class="dt">eta=</span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb17-119" data-line-number="119">    wAdj[[k]] &lt;-<span class="st"> </span>fit<span class="op">$</span>Adj</a>
+<a class="sourceLine" id="cb17-120" data-line-number="120">  }</a>
+<a class="sourceLine" id="cb17-121" data-line-number="121"></a>
+<a class="sourceLine" id="cb17-122" data-line-number="122">  out &lt;-<span class="st"> </span><span class="kw">NetGSA</span>(<span class="dt">A =</span> wAdj, <span class="dt">x =</span> T1Dprofile, <span class="dt">group =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n[<span class="dv">1</span>]), <span class="kw">rep</span>(<span class="dv">2</span>, n[<span class="dv">2</span>])), <span class="dt">pathways =</span> kegg_pathways, <span class="dt">lklMethod =</span> <span class="st">&quot;REML&quot;</span>)</a>
+<a class="sourceLine" id="cb17-123" data-line-number="123">  <span class="co"># Output netgsa results</span></a>
+<a class="sourceLine" id="cb17-124" data-line-number="124">  sigInd[,<span class="dv">10</span>] &lt;-<span class="st"> </span>(out<span class="op">$</span>results<span class="op">$</span>pval <span class="op">&lt;</span><span class="st"> </span>alpha)</a>
+<a class="sourceLine" id="cb17-125" data-line-number="125">  sigInd[,<span class="dv">11</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(out<span class="op">$</span>results<span class="op">$</span>pval, <span class="st">&quot;BH&quot;</span>) <span class="op">&lt;</span><span class="st"> </span>alpha)</a>
+<a class="sourceLine" id="cb17-126" data-line-number="126">  sigInd[,<span class="dv">12</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(out<span class="op">$</span>results<span class="op">$</span>pval, <span class="st">'holm'</span>)<span class="op">&lt;</span>alpha)</a>
+<a class="sourceLine" id="cb17-127" data-line-number="127"></a>
+<a class="sourceLine" id="cb17-128" data-line-number="128">  <span class="kw">return</span>(sigInd)</a>
+<a class="sourceLine" id="cb17-129" data-line-number="129">}</a>
+<a class="sourceLine" id="cb17-130" data-line-number="130"></a>
+<a class="sourceLine" id="cb17-131" data-line-number="131"></a>
+<a class="sourceLine" id="cb17-132" data-line-number="132"><span class="kw">cat</span>(<span class="st">&quot;In the main loop ... </span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb17-133" data-line-number="133">cl &lt;-<span class="st"> </span><span class="kw">makeCluster</span>(nCluster)</a>
+<a class="sourceLine" id="cb17-134" data-line-number="134"><span class="kw">registerDoParallel</span>(cl)</a>
+<a class="sourceLine" id="cb17-135" data-line-number="135"></a>
+<a class="sourceLine" id="cb17-136" data-line-number="136">res &lt;-<span class="st"> </span><span class="kw">foreach</span>(<span class="dt">iter =</span> <span class="dv">1</span><span class="op">:</span>nreps,<span class="co">#.combine='+',</span></a>
+<a class="sourceLine" id="cb17-137" data-line-number="137">               <span class="dt">.packages =</span> <span class="kw">c</span>(<span class="st">&quot;glasso&quot;</span>,<span class="st">&quot;glmnet&quot;</span>,<span class="st">&quot;graphite&quot;</span>,<span class="st">&quot;igraph&quot;</span>,<span class="st">&quot;KEGGgraph&quot;</span>,</a>
+<a class="sourceLine" id="cb17-138" data-line-number="138">                             <span class="st">&quot;PathNet&quot;</span>,<span class="st">&quot;limma&quot;</span>,<span class="st">&quot;DEGraph&quot;</span>,<span class="st">&quot;org.Hs.eg.db&quot;</span>), <span class="dt">.verbose =</span> T) <span class="op">%dopar%</span><span class="st"> </span>{</a>
+<a class="sourceLine" id="cb17-139" data-line-number="139">                               <span class="kw">tryCatch</span>({<span class="kw">my.iterations</span>(iter)}, <span class="dt">error=</span><span class="cf">function</span>(e) <span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb17-140" data-line-number="140">                             }</a>
+<a class="sourceLine" id="cb17-141" data-line-number="141"></a>
+<a class="sourceLine" id="cb17-142" data-line-number="142"><span class="kw">stopCluster</span>(cl)</a>
+<a class="sourceLine" id="cb17-143" data-line-number="143"></a>
+<a class="sourceLine" id="cb17-144" data-line-number="144"><span class="co"># The average power</span></a>
+<a class="sourceLine" id="cb17-145" data-line-number="145">sigInd &lt;-<span class="st"> </span><span class="kw">Reduce</span>(<span class="st">&quot;+&quot;</span>, res)<span class="op">/</span><span class="kw">length</span>(res)</a></code></pre></div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

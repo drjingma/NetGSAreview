@@ -15,6 +15,16 @@ drop.metabs = function(dataset, metab.id = NULL){
   return(dataset)
 }
 
+drop.genes = function(dataset, gene.id = NULL){
+  if(is.null(gene.id)){print("no gene selected")}
+  else{
+    dataset[["gene_info"]] = dataset[["gene_info"]][!gene.id,]
+    rownames(dataset[["gene_info"]]) <- NULL
+    dataset[["dat"]] = dataset[["dat"]][!gene.id,]
+  }
+  return(dataset)
+}
+
 drop.samples = function(dataset, sample.id = NULL){
   if(is.null(sample.id)){print("no sample selected")}
   else{
@@ -35,17 +45,16 @@ community.dereg <- function(pathway, genes, DC=0.5, maxIter=10, seed=1){
   #  In this design, DC is fixed to be about 50% to make it easier for control.
   set.seed(seed)
   el <- edges(pathway)
-  gr <- graph_from_edgelist(cbind(el[,1], el[,2]), directed = F)
+  gr <- graph_from_edgelist(cbind(el$src, el$dest), directed = F)
   
   # get ride of duplicated edges
   adj <- as.matrix(get.adjacency(gr, type="both"))
   adj[(adj>0)] = 1;  diag(adj) <- 0;
-  gr <- graph_from_adjacency_matrix(adj, mode = "undirected")
-  gr <- induced_subgraph(gr, genes)
+  gr <- igraph::graph_from_adjacency_matrix(adj, mode = "undirected")
+  gr <- induced_subgraph(gr, which(match(V(gr)$name,genes,nomatch = 0)>0))
 
   size <- length(genes)
   
-  # lec <- cluster_leading_eigen(gr)
   lec <- cluster_edge_betweenness(gr)
   tmp <- as.numeric(table(lec$membership))
   proportion <- tmp/size
@@ -98,15 +107,15 @@ betweenness.dereg <- function(pathway, genes, DC=0.5, seed=1){
   set.seed(seed)
   size <- length(genes)
   el <- edges(pathway)
-  gr <- graph_from_edgelist(cbind(el[,1], el[,2]), directed = F)
+  gr <- igraph::graph_from_edgelist(cbind(el$src, el$dest), directed = F)
   
   # get ride of duplicated edges
   adj <- as.matrix(get.adjacency(gr, type="both"))
   adj[(adj>0)] = 1;   diag(adj) <- 0;
-  gr <- graph_from_adjacency_matrix(adj, mode = "undirected")
+  gr <- igraph::graph_from_adjacency_matrix(adj, mode = "undirected")
   
   #subgraph based on the variables in genes
-  gr <- induced_subgraph(gr, genes)
+  gr <- induced_subgraph(gr, which(match(V(gr)$name,genes,nomatch = 0)>0))
   
   ## calculate edge betweenness based on gr
   vb <- betweenness(gr, directed = F)
@@ -131,16 +140,16 @@ neighborhood.dereg <- function(pathway, genes, DC=0.5, nei=2, seed=1){
   set.seed(seed)
   size <- length(genes)
   el <- edges(pathway)
-  gr <- graph_from_edgelist(cbind(el[,1], el[,2]), directed = F)
+  gr <- igraph::graph_from_edgelist(cbind(el$src, el$dest), directed = F)
   
   # get ride of duplicated edges
   adj <- as.matrix(get.adjacency(gr, type="both"))
   adj[(adj>0)] = 1
   diag(adj) <- 0
-  gr <- graph_from_adjacency_matrix(adj, mode = "undirected")
+  gr <- igraph::graph_from_adjacency_matrix(adj, mode = "undirected")
   
   #subgraph based on the variables in genes
-  gr <- induced_subgraph(gr, genes)
+  gr <- induced_subgraph(gr, which(match(V(gr)$name,genes,nomatch = 0)>0))
   ## calculate edge betweenness based on gr
   ngbh <- ego(gr, nei)
   ngbh_len <- sapply(ngbh, length)

@@ -6,7 +6,7 @@ We provide here the supplementary materials to the review paper `A comparative s
  * numerical results for all settings considered in the review paper, and 
  * R code for reproducing the numerical results. 
    
-Datasets
+**Datasets**
 
 This folder consists of the data used in the comparative study, including
 

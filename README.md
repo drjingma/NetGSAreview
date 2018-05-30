@@ -35,7 +35,14 @@ This folder consists of three subfolders:
  * /PCa
  * /Metabolomics
 
-which, respectively, provides detailed numerical results from our analysis of the three data examples. For example, in the folder */BCa*, one can find the file `bca_powers_noperm_btw_t5_1.csv`, which has the empirical powers with the betweenness pathway dysregulation design, without sample permutation and with mean signal 0.1 for the breast cancer study. Notice that two methods SPIA and Pathway-Express only work when the number of DE genes is greater than zero. Threfore at mean signal 0.1, 0.2 and 0.3, the outputs of SPIA and Pathway-Express are all zero, meaning that they didn't return any values. In addition, at mean signal 0.4 and 0.5, when the number of DE genes is indeed greater than zero, SPIA and Pathway-Express only work for a subset of pathways due to topological constraints. Pathways that were analyzed by SPIA and Pathway-Express will have a numeric significance value, whereas the remaining ones not analyzed have `NA` values. 
+which, respectively, provides detailed numerical results from our analysis of the three data examples. For example, in the folder /BCa, one can find the file `bca_powers_noperm_btw_t5_1.csv`, which has the empirical powers with the betweenness pathway dysregulation design, without sample permutation and with mean signal 0.1 for the breast cancer study.
+
+Note that SPIA and Pathway-Express only work when the number of DE genes is greater than zero. Threfore at mean signal 0.1, 0.2 and 0.3, the outputs of SPIA and Pathway-Express are all zero, meaning that they didn't return any values. In addition, at mean signal 0.4 and 0.5, when the number of DE genes is indeed greater than zero, SPIA and Pathway-Express only work for a subset of pathways due to topological constraints. Pathways that were analyzed by SPIA and Pathway-Express will have a numeric significance value, whereas the remaining ones not analyzed have `NA` values.
+
+**Supplement**
+
+This folder consists of the online supplementary material for the main paper, which summarizes the main findings from our comparative study across different pathway dysregulation designs and studies. It has provides a synthetic data example to illustrate the use of NetGSA in simultaneously detecting changes in means and networks. 
+
 
 
 

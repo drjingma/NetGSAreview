@@ -2,7 +2,6 @@
 
 We provide here the supplementary materials to the review paper `A comparative study of network-based pathway enrichment analysis methods', including 
 
- * **Supplement**: the online supplementary material summarizing main findings of the comparative study,
  * **Results**: numerical results for all settings considered in the review paper, and 
  * **RCode**: R code for reproducing the numerical results. 
    
@@ -39,9 +38,7 @@ which, respectively, provides detailed numerical results from our analysis of th
 
 Note that SPIA and Pathway-Express only work when the number of DE genes is greater than zero. Threfore at mean signal 0.1, 0.2 and 0.3, the outputs of SPIA and Pathway-Express are all zero, meaning that they didn't return any values. In addition, at mean signal 0.4 and 0.5, when the number of DE genes is indeed greater than zero, SPIA and Pathway-Express only work for a subset of pathways due to topological constraints. Pathways that were analyzed by SPIA and Pathway-Express will have a numeric significance value, whereas the remaining ones not analyzed have `NA` values.
 
-**Supplement**
 
-This folder consists of the online supplementary material for the main paper, which summarizes the main findings from our comparative study across different pathway dysregulation designs and studies. It has provides a synthetic data example to illustrate the use of NetGSA in simultaneously detecting changes in means and networks. 
 
 
 

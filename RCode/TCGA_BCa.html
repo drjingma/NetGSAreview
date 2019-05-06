@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8" />
+<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jing Ma" />
 
-<meta name="date" content="2018-05-29" />
+<meta name="date" content="2019-05-05" />
 
 <title>Analysis of Breast Cancer Data from TCGA</title>
 
@@ -20,46 +20,82 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<style type="text/css">@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;src:local('Open Sans'),local(OpenSans),url(data:application/font-woff;base64,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) format("woff")}@font-face{font-family:'Open Sans';font-style:normal;font-weight:700;src:local('Open Sans Bold'),local(OpenSans-Bold),url(data:application/font-woff;base64,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) format("woff")}*{box-sizing:border-box}body{padding:0;margin:0;font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;color:#606c71}a{color:#1e6bb8;text-decoration:none}a:hover{text-decoration:underline}.page-header{color:#fff;text-align:center;background-color:#159957;background-image:linear-gradient(120deg,#155799,#159957);padding:1.5rem 2rem}.project-name{margin-top:0;margin-bottom:.1rem;font-size:2rem}.project-tagline{margin-bottom:2rem;font-weight:400;opacity:.7;font-size:1.5rem}.project-author,.project-date{font-weight:400;opacity:.7;font-size:1.2rem}@media screen and (max-width: 42em){.page-header{padding:1rem}.project-name{font-size:1.75rem}.project-tagline{font-size:1.2rem}.project-author,.project-date{font-size:1rem}}.main-content:first-child{margin-top:0}.main-content img{max-width:100%}.main-content h1,.main-content h2,.main-content h3,.main-content h4,.main-content h5,.main-content h6{margin-top:2rem;margin-bottom:1rem;font-weight:400;color:#159957}.main-content p{margin-bottom:1em}.main-content code{padding:2px 4px;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;color:#383e41;background-color:#f3f6fa;border-radius:.3rem}.main-content pre{padding:.8rem;margin-top:0;margin-bottom:1rem;font:1rem Consolas,"Liberation Mono",Menlo,Courier,monospace;color:#567482;word-wrap:normal;background-color:#f3f6fa;border:solid 1px #dce6f0;border-radius:.3rem;line-height:1.45;overflow:auto}.main-content pre> code{padding:0;margin:0;font-size:1rem;color:#567482;word-break:normal;white-space:pre;background:transparent;border:0}.main-content pre code,.main-content pre tt{display:inline;padding:0;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.main-content pre code:before,.main-content pre code:after,.main-content pre tt:before,.main-content pre tt:after{content:normal}.main-content ul,.main-content ol{margin-top:0}.main-content blockquote{padding:0 1rem;margin-left:0;font-size:1.2rem;color:#819198;border-left:.3rem solid #dce6f0}.main-content blockquote>:first-child{margin-top:0}.main-content blockquote>:last-child{margin-bottom:0}.main-content table{width:100%;overflow:auto;word-break:normal;word-break:keep-all;border-collapse:collapse;border-spacing:0;margin:1rem 0}.main-content table th{font-weight:700;background-color:#4CAF50;color:#fff}.main-content table th,.main-content table td{padding:.5rem 1rem;border-bottom:1px solid #e9ebec;text-align:left}.main-content table tr:nth-child(odd){background-color:#f2f2f2}.main-content dl{padding:0}.main-content dl dt{padding:0;margin-top:1rem;font-size:1rem;font-weight:700}.main-content dl dd{padding:0;margin-bottom:1rem}.main-content hr{margin:1rem 0;border:0;height:1px;background:#aaa;background-image:linear-gradient(to right,#eee,#aaa,#eee)}.main-content,.toc{max-width:64rem;padding:2rem 4rem;margin:0 auto;font-size:1.1rem}.toc{padding-bottom:0}.toc ul{margin-bottom:0}@media screen and (min-width: 42em) and (max-width: 64em){.toc{padding:2rem 2rem 0}.main-content{padding:2rem}}@media screen and (max-width: 42em){.toc{padding:2rem 1rem 0;font-size:1rem}.main-content{padding:2rem 1rem;font-size:1rem}.main-content pre,.main-content pre> code{font-size:.9rem}.main-content blockquote{font-size:1.1rem}}.site-footer{padding-top:2rem;margin-top:2rem;border-top:solid 1px #eff0f1;font-size:1rem}.site-footer-owner{display:block;font-weight:700}.site-footer-credits{color:#819198}
+code > span.kw { color: #a71d5d; font-weight: normal; } 
+code > span.dt { color: #795da3; } 
+code > span.dv { color: #0086b3; } 
+code > span.bn { color: #0086b3; } 
+code > span.fl { color: #0086b3; } 
+code > span.ch { color: #4070a0; } 
+code > span.st { color: #183691; } 
+code > span.co { color: #969896; font-style: italic; } 
+code > span.ot { color: #007020; } 
+</style>
 
 </head>
 
@@ -68,327 +104,482 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<h1 class="title toc-ignore">Analysis of Breast Cancer Data from TCGA</h1>
-<h4 class="author"><em>Jing Ma</em></h4>
-<h4 class="date"><em>2018-05-29</em></h4>
+<section class="page-header">
+<h1 class="title toc-ignore project-name">Analysis of Breast Cancer Data from TCGA</h1>
+<h4 class="author project-author">Jing Ma</h4>
+<h4 class="date project-date">2019-05-05</h4>
+</section>
 
 
 
+<section class="main-content">
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>In this note, we provide details on the breast cancer enrichment analysis with different methods, including <strong>NetGSA</strong>, <strong>DEGraph</strong>, <strong>PathNet</strong>, <strong>CAMERA</strong>, <strong>SPIA</strong>, <strong>Pathway-Express</strong> and <strong>topologyGSA</strong>.</p>
+<p>In this note, we provide details on the breast cancer enrichment analysis with different methods, including <strong>CAMERA</strong>, <strong>CePa</strong>, <strong>DEGraph</strong>, <strong>NetGSA</strong>, <strong>PathNet</strong>, <strong>Pathway-Express</strong>, <strong>PRS</strong>, <strong>SPIA</strong> and <strong>topologyGSA</strong>.</p>
 <div id="r-package" class="section level2">
 <h2>R package</h2>
 <p>The following packages are used throughout for the analysis.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
-<span class="kw">library</span>(glasso)
-<span class="kw">library</span>(glmnet)
-<span class="kw">library</span>(igraph)
-<span class="kw">library</span>(KEGGgraph)
-<span class="kw">library</span>(graphite)
-<span class="kw">library</span>(corpcor)
-<span class="kw">library</span>(DEGraph)
-<span class="kw">library</span>(SPIA)
-<span class="kw">library</span>(PathNet)
-<span class="kw">library</span>(org.Hs.eg.db)
-<span class="co"># library(annotate)</span>
-<span class="co"># library(hugene10sttranscriptcluster.db)</span>
-<span class="co"># Parallel computing</span>
-<span class="kw">library</span>(parallel)
-<span class="kw">library</span>(foreach)
-<span class="kw">library</span>(doParallel)
-
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;drjingma/netgsa&quot;</span>, <span class="dt">build_vignettes=</span>T)
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;JClavel/glassoFast&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">## Packages for different methods</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(devtools)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(graphite)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(org.Hs.eg.db)</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">library</span>(SPIA)</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">library</span>(ROntoTools)</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">library</span>(ToPASeq)</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">library</span>(CePa)</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">library</span>(topologyGSA)</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">library</span>(netgsa)</a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="kw">library</span>(DEGraph)</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="kw">library</span>(glasso)</a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="kw">library</span>(limma)</a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="kw">library</span>(PathNet)</a></code></pre></div>
+<p>Computations are done in R 3.5.2. Detailed session information can be retrieved via <code>session_info()</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">devtools<span class="op">::</span><span class="kw">session_info</span>()</a></code></pre></div>
+<pre><code>## ─ Session info ──────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 3.5.2 (2018-12-20)
+##  os       macOS Mojave 10.14.4        
+##  system   x86_64, darwin15.6.0        
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       America/Los_Angeles         
+##  date     2019-05-05                  
+## 
+## ─ Packages ──────────────────────────────────────────────────────────────
+##  package              * version   date       lib source        
+##  annotate               1.60.1    2019-03-07 [1] Bioconductor  
+##  AnnotationDbi        * 1.44.0    2018-10-30 [1] Bioconductor  
+##  assertthat             0.2.1     2019-03-21 [1] CRAN (R 3.5.2)
+##  backports              1.1.4     2019-04-10 [1] CRAN (R 3.5.2)
+##  Biobase              * 2.42.0    2018-10-30 [1] Bioconductor  
+##  BiocGenerics         * 0.28.0    2018-10-30 [1] Bioconductor  
+##  BiocParallel           1.16.6    2019-02-17 [1] Bioconductor  
+##  biomaRt                2.38.0    2018-10-30 [1] Bioconductor  
+##  Biostrings             2.50.2    2019-01-03 [1] Bioconductor  
+##  bit                    1.1-14    2018-05-29 [1] CRAN (R 3.5.0)
+##  bit64                  0.9-7     2017-05-08 [1] CRAN (R 3.5.0)
+##  bitops                 1.0-6     2013-08-17 [1] CRAN (R 3.5.0)
+##  blob                   1.1.1     2018-03-25 [1] CRAN (R 3.5.0)
+##  boot                 * 1.3-20    2017-08-06 [1] CRAN (R 3.5.2)
+##  callr                  3.2.0     2019-03-15 [1] CRAN (R 3.5.2)
+##  CePa                 * 0.6       2018-06-04 [1] CRAN (R 3.5.0)
+##  checkmate              1.9.1     2019-01-15 [1] CRAN (R 3.5.2)
+##  cli                    1.1.0     2019-03-19 [1] CRAN (R 3.5.2)
+##  cluster                2.0.8     2019-04-05 [1] CRAN (R 3.5.2)
+##  corpcor                1.6.9     2017-04-01 [1] CRAN (R 3.5.0)
+##  crayon                 1.3.4     2017-09-16 [1] CRAN (R 3.5.0)
+##  DBI                    1.0.0     2018-05-02 [1] CRAN (R 3.5.0)
+##  DEGraph              * 1.34.0    2018-10-30 [1] Bioconductor  
+##  DelayedArray           0.8.0     2018-10-30 [1] Bioconductor  
+##  DEoptimR               1.0-8     2016-11-19 [1] CRAN (R 3.5.0)
+##  desc                   1.2.0     2018-05-01 [1] CRAN (R 3.5.0)
+##  devtools             * 2.0.2     2019-04-08 [1] CRAN (R 3.5.2)
+##  digest                 0.6.18    2018-10-10 [1] CRAN (R 3.5.0)
+##  dotCall64              1.0-0     2018-07-30 [1] CRAN (R 3.5.0)
+##  evaluate               0.13      2019-02-12 [1] CRAN (R 3.5.2)
+##  fields                 9.7       2019-04-23 [1] CRAN (R 3.5.2)
+##  fs                     1.2.7     2019-03-19 [1] CRAN (R 3.5.2)
+##  GenomeInfoDb           1.18.2    2019-02-12 [1] Bioconductor  
+##  GenomeInfoDbData       1.2.0     2019-05-03 [1] Bioconductor  
+##  GenomicAlignments      1.18.1    2019-01-04 [1] Bioconductor  
+##  GenomicFeatures        1.34.8    2019-04-10 [1] Bioconductor  
+##  GenomicRanges          1.34.0    2018-10-30 [1] Bioconductor  
+##  glasso               * 1.10      2018-07-13 [1] CRAN (R 3.5.0)
+##  glassoFast             1.0       2018-07-30 [1] CRAN (R 3.5.0)
+##  glue                   1.3.1     2019-03-12 [1] CRAN (R 3.5.2)
+##  graph                * 1.60.0    2018-10-30 [1] Bioconductor  
+##  graphite             * 1.28.2    2019-01-18 [1] Bioconductor  
+##  gRbase                 1.8-3.4   2018-08-07 [1] CRAN (R 3.5.0)
+##  hms                    0.4.2     2018-03-10 [1] CRAN (R 3.5.0)
+##  htmltools              0.3.6     2017-04-28 [1] CRAN (R 3.5.0)
+##  httr                   1.4.0     2018-12-11 [1] CRAN (R 3.5.0)
+##  igraph                 1.2.4     2019-02-13 [1] CRAN (R 3.5.2)
+##  IRanges              * 2.16.0    2018-10-30 [1] Bioconductor  
+##  KEGGgraph            * 1.42.0    2018-10-30 [1] Bioconductor  
+##  KEGGREST             * 1.22.0    2018-10-30 [1] Bioconductor  
+##  knitr                  1.22      2019-03-08 [1] CRAN (R 3.5.2)
+##  lattice                0.20-38   2018-11-04 [1] CRAN (R 3.5.2)
+##  limma                * 3.38.3    2018-12-02 [1] Bioconductor  
+##  magrittr               1.5       2014-11-22 [1] CRAN (R 3.5.0)
+##  maps                   3.3.0     2018-04-03 [1] CRAN (R 3.5.0)
+##  Matrix                 1.2-17    2019-03-22 [1] CRAN (R 3.5.2)
+##  matrixStats            0.54.0    2018-07-23 [1] CRAN (R 3.5.0)
+##  memoise                1.1.0     2017-04-21 [1] CRAN (R 3.5.0)
+##  mvtnorm                1.0-10    2019-03-05 [1] CRAN (R 3.5.2)
+##  NCIgraph               1.30.0    2018-10-30 [1] Bioconductor  
+##  netgsa               * 3.1.0     2019-03-27 [1] CRAN (R 3.5.2)
+##  org.Hs.eg.db         * 3.7.0     2019-04-04 [1] Bioconductor  
+##  PathNet              * 1.22.0    2018-10-30 [1] Bioconductor  
+##  pcaPP                  1.9-73    2018-01-14 [1] CRAN (R 3.5.0)
+##  pkgbuild               1.0.3     2019-03-20 [1] CRAN (R 3.5.2)
+##  pkgconfig              2.0.2     2018-08-16 [1] CRAN (R 3.5.0)
+##  pkgload                1.0.2     2018-10-29 [1] CRAN (R 3.5.0)
+##  png                    0.1-7     2013-12-03 [1] CRAN (R 3.5.0)
+##  prettydoc              0.2.1     2018-01-16 [1] CRAN (R 3.5.0)
+##  prettyunits            1.0.2     2015-07-13 [1] CRAN (R 3.5.0)
+##  processx               3.3.0     2019-03-10 [1] CRAN (R 3.5.2)
+##  progress               1.2.0     2018-06-14 [1] CRAN (R 3.5.0)
+##  ps                     1.3.0     2018-12-21 [1] CRAN (R 3.5.0)
+##  qpgraph                2.16.0    2018-10-30 [1] Bioconductor  
+##  qtl                    1.44-9    2019-01-22 [1] CRAN (R 3.5.2)
+##  quadprog               1.5-5     2013-04-17 [1] CRAN (R 3.5.0)
+##  R.methodsS3          * 1.7.1     2016-02-16 [1] CRAN (R 3.5.0)
+##  R.oo                 * 1.22.0    2018-04-22 [1] CRAN (R 3.5.0)
+##  R.utils              * 2.8.0     2019-02-14 [1] CRAN (R 3.5.2)
+##  R6                     2.4.0     2019-02-14 [1] CRAN (R 3.5.2)
+##  rappdirs               0.3.1     2016-03-28 [1] CRAN (R 3.5.0)
+##  RBGL                   1.58.2    2019-03-22 [1] Bioconductor  
+##  Rcpp                   1.0.1     2019-03-17 [1] CRAN (R 3.5.2)
+##  RCurl                  1.95-4.12 2019-03-04 [1] CRAN (R 3.5.2)
+##  RCy3                   2.2.9     2019-03-08 [1] Bioconductor  
+##  remotes                2.0.4     2019-04-10 [1] CRAN (R 3.5.2)
+##  Rgraphviz            * 2.26.0    2018-10-30 [1] Bioconductor  
+##  RJSONIO                1.3-1.1   2018-11-14 [1] CRAN (R 3.5.0)
+##  rlang                  0.3.4     2019-04-07 [1] CRAN (R 3.5.2)
+##  rmarkdown              1.12      2019-03-14 [1] CRAN (R 3.5.2)
+##  robustbase             0.93-4    2019-03-19 [1] CRAN (R 3.5.2)
+##  ROntoTools           * 2.10.0    2018-10-30 [1] Bioconductor  
+##  rprojroot              1.3-2     2018-01-03 [1] CRAN (R 3.5.0)
+##  rrcov                  1.4-7     2018-11-15 [1] CRAN (R 3.5.0)
+##  Rsamtools              1.34.1    2019-01-31 [1] Bioconductor  
+##  RSQLite                2.1.1     2018-05-06 [1] CRAN (R 3.5.0)
+##  rtracklayer            1.42.2    2019-03-01 [1] Bioconductor  
+##  S4Vectors            * 0.20.1    2018-11-09 [1] Bioconductor  
+##  sessioninfo            1.1.1     2018-11-05 [1] CRAN (R 3.5.0)
+##  spam                   2.2-2     2019-03-08 [1] CRAN (R 3.5.2)
+##  SPIA                 * 2.34.0    2018-10-30 [1] Bioconductor  
+##  stringi                1.4.3     2019-03-12 [1] CRAN (R 3.5.2)
+##  stringr                1.4.0     2019-02-10 [1] CRAN (R 3.5.2)
+##  SummarizedExperiment   1.12.0    2018-10-30 [1] Bioconductor  
+##  testthat               2.1.0     2019-04-22 [1] CRAN (R 3.5.2)
+##  ToPASeq              * 1.16.1    2019-01-04 [1] Bioconductor  
+##  topologyGSA          * 1.4.6     2016-09-22 [1] CRAN (R 3.5.2)
+##  usethis              * 1.5.0     2019-04-07 [1] CRAN (R 3.5.2)
+##  withr                  2.1.2     2018-03-15 [1] CRAN (R 3.5.0)
+##  xfun                   0.6       2019-04-02 [1] CRAN (R 3.5.2)
+##  XML                    3.98-1.19 2019-03-06 [1] CRAN (R 3.5.2)
+##  xtable                 1.8-4     2019-04-21 [1] CRAN (R 3.5.2)
+##  XVector                0.22.0    2018-10-30 [1] Bioconductor  
+##  yaml                   2.2.0     2018-07-25 [1] CRAN (R 3.5.0)
+##  zlibbioc               1.28.0    2018-10-30 [1] Bioconductor  
+## 
+## [1] /Library/Frameworks/R.framework/Versions/3.5/Resources/library</code></pre>
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
 <p>We first load the data object.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;../Datasets/BreastCancer.rda&quot;</span>)
-<span class="kw">ls</span>()</code></pre></div>
-<pre><code>## [1] &quot;A&quot;                &quot;A4PathNet&quot;        &quot;ALL_EntrezID&quot;    
-## [4] &quot;B&quot;                &quot;dataset&quot;          &quot;kpg&quot;             
-## [7] &quot;path4netgsa&quot;      &quot;pathways4PathNet&quot;</code></pre>
-<p>The variables are</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">load</span>(<span class="st">&quot;../Datasets/breastcancer2012_ready.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">ls</span>()</a></code></pre></div>
+<pre><code>##  [1] &quot;camera_paths&quot;      &quot;cepa_paths&quot;        &quot;dataset&quot;          
+##  [4] &quot;deGraph_paths&quot;     &quot;genes2affect_btw&quot;  &quot;genes2affect_comm&quot;
+##  [7] &quot;genes2affect_nbhd&quot; &quot;netgsa_paths&quot;      &quot;pathNet_paths&quot;    
+## [10] &quot;pathSelected&quot;      &quot;pe_paths&quot;          &quot;topoGSA_paths&quot;</code></pre>
+<p>The variables in the current working environment are</p>
 <ul>
-<li><code>A</code>: the binary adjacency matrix needed in NetGSA. This matrix is obtained from BioCarta.</li>
-<li><code>A4PathNet</code>: the binary adjacency matrix needed in PathNet. This matrix is based on KEGG interactions available in <code>graphite</code>.</li>
-<li><code>ALL_EntrezID</code>: a list of gene Entrez IDs of length 14009. These are the genes mapped from gene symbols in the original data matrix.</li>
-<li><code>B</code>: the pathway membership matrix with rows corresponding to pathways and columns to genes.</li>
+<li><code>camera_paths</code>: a list of pathways defined for use in CAMERA.</li>
+<li><code>cepa_paths</code>: a list of pathway catelogue information defined for use in CePa.</li>
 <li><code>dataset</code>: a list with values
 <ul>
+<li><code>gene_info</code>: a data frame of gene information, including gene symbol and gene Entrez ID.</li>
+<li><code>sample_info</code>: a data frame of sample meta data where we used the variable <code>er_status_by_ihc</code> to define the patient’s group (ER positive or negative).<br />
+</li>
 <li><code>dat</code>: the processed data matrix with rows corresponding to genes and columns to samples.</li>
-<li><code>gene_info</code>: a data frame of gene information, including the gene symbol and Entrez ID.</li>
-<li><code>sample_info</code>: a character vector of patient status, indicating whether the subject is ER positive or ER negative.</li>
 </ul></li>
-<li><code>kpg</code>: a list of KEGG pathway graph for use in Pathway-Express.</li>
-<li><code>pathways4PathNet</code>: a data frame consisting of edges for use in PathNet.</li>
-<li><code>path4netgsa</code>: a PathwayList object consisting of 98 KEGG signaling and metabolic pathways.</li>
+<li><code>deGraph_paths</code>: a list of KEGG pathway graph for use in Pathway-Express.</li>
+<li><code>genes2affect_btw</code>: genes (in Entrez IDs) that are affected under the betweenness design.</li>
+<li><code>genes2affect_comm</code>: genes (in Entrez IDs) that are affected under the community design.</li>
+<li><code>genes2affect_nbhd</code>: genes (in Entrez IDs) that are affected under the neighborhood design.</li>
+<li><code>netgsa_paths</code>: a list of pathways defined for use in netgsa.</li>
+<li><code>pathNet_paths</code>: a list of pathways defined for use in PathNet.</li>
+<li><code>pathSelected</code>: a list of <em>graphite</em> pathways.</li>
+<li><code>pe_paths</code>: a list of pathways defined for use in Pathway-Express.</li>
+<li><code>topoGSA_paths</code>: a list of pathways defined for use in topologyGSA.</li>
 </ul>
-</div>
-<div id="pathway-topology" class="section level2">
-<h2>Pathway topology</h2>
-<p>Different methods require the users to supply the pathway topology information in different formats, such as either an adjacency matrix or a graph representing the pathway topology. To ensure fair comparisons, we downloaded the KEGG pathways using the R-package <code>graphite</code>, on December 10, 2016.</p>
-<p>Note due to a change in the internal structure of the Pathway class, new version of R (&gt;=3.4) may not be able to read <code>path4netgsa</code>. One solution is to run the code on R 3.3.3, under which the object was created. If you are using R 3.4 or newer, we suggest reloading the PathwayList and select the pathways whose names match those in <code>path4netgsa</code>. Further, it is important to ensure that the pathways in different objects are all equivalent.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new.paths &lt;-<span class="st"> </span><span class="kw">pathways</span>(<span class="st">&quot;hsapiens&quot;</span>, <span class="st">&quot;kegg&quot;</span>)
-path4netgsa &lt;-<span class="st"> </span>new.paths[<span class="kw">match</span>(<span class="kw">names</span>(path4netgsa),<span class="kw">names</span>(new.paths))]
-<span class="cf">if</span> (<span class="kw">sum</span>(<span class="kw">sapply</span>(path4netgsa, is.null))<span class="op">&gt;</span><span class="dv">0</span>){
-  path4netgsa &lt;-<span class="st"> </span>path4netgsa[<span class="op">-</span><span class="kw">which</span>(<span class="kw">sapply</span>(path4netgsa, is.null)<span class="op">==</span><span class="dv">1</span>)]
-  B &lt;-<span class="st"> </span>B[(<span class="kw">rownames</span>(B)<span class="op">%in%</span><span class="kw">names</span>(path4netgsa)),]
-  pathways4PathNet &lt;-<span class="st"> </span>pathways4PathNet[(pathways4PathNet<span class="op">$</span>title <span class="op">%in%</span><span class="st"> </span><span class="kw">names</span>(path4netgsa)),]
-  kpg &lt;-<span class="st"> </span>kpg[(<span class="kw">rownames</span>(B)<span class="op">%in%</span><span class="kw">names</span>(path4netgsa))]
-}</code></pre></div>
-<p>The function <code>runTopologyGSA</code> is also built in <code>graphite</code>. In addition, this package allows us to prepare the pathways into a format that can be used in <strong>SPIA</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># --Run the following to prepare the pathway information for SPIA--</span>
-<span class="co"># prepareSPIA(path4netgsa, &quot;hsa_KEGG_signaling&quot;)</span></code></pre></div>
+<p>One can use the <em>graphite</em> package to prepare pathways into a format that can be used in <strong>SPIA</strong>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># --Run the following to prepare the pathway information for SPIA--</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">prepareSPIA</span>(pathSelected, <span class="st">&quot;BCA_KEGG&quot;</span>)</a></code></pre></div>
 </div>
 <div id="enrichment-analysis" class="section level2">
 <h2>Enrichment analysis</h2>
-<p>The goal is to identify KEGG pathways enriched between ER positive and ER negative breast cancer patients. In our comparative study, we consider the following two scenarios: (1) use the samples as they are and generate signals at the mean level based on the pathway topology; and (2) shuffle the samples and generate mean level signals. The rationale of (2) is that by shuffling the samples, we expect no difference between the underlying networks.</p>
-<p>The following code was used to run all seven methods in the final enrichment analysis. Note since there are a large number of KEGG pathways and a lot of genes, enrichment analysis is done separately for each pathway.</p>
-<p>We start by generating the <em>affected</em> genes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2017</span>)
-<span class="kw">source</span>(<span class="st">&quot;../RCode/preprocess_lib.r&quot;</span>)
-
-p &lt;-<span class="st"> </span><span class="kw">nrow</span>(dataset<span class="op">$</span>dat)
-DEBUG &lt;-<span class="st"> 'community'</span> 
-<span class="co"># design for pathway deregulation</span>
-## general parameters
-ncond &lt;-<span class="st"> </span><span class="dv">2</span>
-npath &lt;-<span class="st"> </span><span class="kw">length</span>(path4netgsa)
-npath_selected &lt;-<span class="st"> </span><span class="dv">20</span>
-pathway_sig_id &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>npath, npath_selected)
-isEnrichment &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, npath)
-isEnrichment[pathway_sig_id] &lt;-<span class="st"> </span><span class="dv">1</span>  
-nreps &lt;-<span class="st"> </span><span class="dv">100</span>
-muvals &lt;-<span class="st"> </span><span class="fl">0.4</span>
-detect_call &lt;-<span class="st"> </span><span class="fl">0.1</span>
-pathway_names &lt;-<span class="st"> </span><span class="kw">names</span>(path4netgsa)
-
-## For the selected pathways, assign which genes to affect based on the design in DEBUG.
-## The following short loop allows us to introduce randomness in genes that are differential.
-genesets &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, npath)
-<span class="cf">for</span> (i <span class="cf">in</span> pathway_sig_id){
-  pathway_i &lt;-<span class="st"> </span>path4netgsa[[i]]
-  genes &lt;-<span class="st"> </span><span class="kw">colnames</span>(B)[<span class="kw">which</span>(B[i,]<span class="op">==</span><span class="dv">1</span>)]
-  fit &lt;-<span class="st"> </span><span class="kw">community.dereg</span>(pathway_i, genes, <span class="dt">DC =</span> detect_call, <span class="dt">seed=</span><span class="dv">1</span>)
-  genesets[[i]] &lt;-<span class="st"> </span>fit<span class="op">$</span>GeneID
-}
-genes2affect &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">Reduce</span>(<span class="st">&quot;c&quot;</span>, genesets[pathway_sig_id]))
-
-<span class="kw">colnames</span>(B) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>Symbol
-mu &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)
-mu[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, p)
-mu[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>muvals <span class="op">*</span><span class="st"> </span>(<span class="kw">match</span>(dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID, genes2affect, <span class="dt">nomatch =</span> <span class="dv">0</span>)<span class="op">&gt;</span><span class="dv">0</span>)
-
-myPathway &lt;-<span class="st"> </span><span class="kw">convertIdentifiers</span>(path4netgsa, <span class="st">&quot;symbol&quot;</span>)</code></pre></div>
-<p>Our main function is as follows, and simultaneously handles all seven methods. The results of pathway enrichment are saved in the matrix <code>sigInd</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.iterations &lt;-<span class="st"> </span><span class="cf">function</span>(iters){
-  ## For every iteration, need to restandardize data first
-  dat &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond) 
-  dat[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>dataset<span class="op">$</span>dat[,(dataset<span class="op">$</span>sample_info<span class="op">==</span><span class="st">&quot;Positive&quot;</span>)]## p by n1
-  dat[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>dataset<span class="op">$</span>dat[,(dataset<span class="op">$</span>sample_info<span class="op">==</span><span class="st">&quot;Negative&quot;</span>)]## p by n2
-  n &lt;-<span class="st"> </span><span class="kw">sapply</span>(dat, ncol)
-  dat &lt;-<span class="st"> </span><span class="kw">lapply</span>(dat, <span class="cf">function</span>(d) <span class="kw">t</span>(<span class="kw">scale</span>(<span class="kw">t</span>(d))))  
-  <span class="kw">rownames</span>(dat[[<span class="dv">1</span>]]) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>Symbol[<span class="dv">1</span><span class="op">:</span>p]
-  <span class="kw">rownames</span>(dat[[<span class="dv">2</span>]]) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>Symbol[<span class="dv">1</span><span class="op">:</span>p]
-  <span class="kw">rownames</span>(A) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>Symbol[<span class="dv">1</span><span class="op">:</span>p]
-  <span class="kw">colnames</span>(A) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>Symbol[<span class="dv">1</span><span class="op">:</span>p]
- 
-  sigInd &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, npath, <span class="dv">21</span>)
-  <span class="kw">colnames</span>(sigInd) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;PathNet-nom&quot;</span>, <span class="st">&quot;PathNet-fdr&quot;</span>,<span class="st">&quot;PathNet-fwer&quot;</span>,
-                        <span class="st">&quot;camera-nom&quot;</span>,  <span class="st">&quot;camera-fdr&quot;</span>, <span class="st">&quot;camera-fwer&quot;</span>,
-                        <span class="st">&quot;DEGraph-nom&quot;</span>, <span class="st">&quot;DEGraph-fdr&quot;</span>,<span class="st">&quot;DEGraph-fwer&quot;</span>,
-                        <span class="st">&quot;topoGSA-nom&quot;</span>, <span class="st">&quot;topoGSA-fdr&quot;</span>,<span class="st">&quot;topoGSA-fwer&quot;</span>,
-                        <span class="st">&quot;NetGSA-nom&quot;</span>, <span class="st">&quot;NetGSA-fdr&quot;</span>,<span class="st">&quot;NetGSA-fwer&quot;</span>,
-                        <span class="st">&quot;SPIA-nom&quot;</span>, <span class="st">&quot;SPIA-fdr&quot;</span>,<span class="st">&quot;SPIA-fwer&quot;</span>,
-                        <span class="st">&quot;pe-nom&quot;</span>, <span class="st">&quot;pe-fdr&quot;</span>,<span class="st">&quot;pe-fwer&quot;</span>)
-  
-  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>ncond) {
-    epsilonVar &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(p <span class="op">*</span><span class="st"> </span>n[i]), p, n[i])
-    dat[[i]] &lt;-<span class="st"> </span>dat[[i]] <span class="op">+</span><span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(mu[[i]], n[i]), p, n[i]) <span class="op">+</span><span class="st"> </span><span class="fl">0.25</span><span class="op">*</span>epsilonVar
-  }
-
-  ## Two-sample t-test with FDR correction to first determine the DE genes;
-  pvals4genes &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>p, <span class="cf">function</span>(i) <span class="kw">t.test</span>(dat[[<span class="dv">2</span>]][i,], dat[[<span class="dv">1</span>]][i,], <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)<span class="op">$</span>p.value)
-  
-  ##*******************************  
-  ## (1) *******NetGSA*******
-  ##*******************************
-  fitted_netgsa &lt;-<span class="st">  </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, npath)
-  res.DEGraph &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, npath)
-  ## Run NetGSA on each pathway
-  <span class="cf">for</span> (loop_path <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>npath){
-    ## Set current variables
-    currentPath &lt;-<span class="st"> </span><span class="kw">convertIdentifiers</span>(path4netgsa[[loop_path]], <span class="st">&quot;entrez&quot;</span>)
-    currentName &lt;-<span class="st"> </span><span class="kw">nodes</span>(currentPath)
-    <span class="cf">if</span> (<span class="kw">grep</span>(<span class="st">'ENTREZID:'</span>,currentName[<span class="dv">1</span>])<span class="op">==</span><span class="dv">1</span>){
-      newEntrez &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">'ENTREZID:'</span>,dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID)
-    } <span class="cf">else</span>{
-      newEntrez &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID
-    }
-    index=<span class="op">!</span><span class="kw">is.na</span>(<span class="kw">match</span>(newEntrez,currentName))
-    g =<span class="st"> </span><span class="kw">subGraph</span>(newEntrez[index], <span class="kw">pathwayGraph</span>(currentPath))
-    X1 =<span class="st"> </span><span class="kw">t</span>(dat[[<span class="dv">1</span>]][index,])
-    X2 =<span class="st"> </span><span class="kw">t</span>(dat[[<span class="dv">2</span>]][index,])
-    res.DEGraph[loop_path]  =<span class="st"> </span><span class="kw">graph.T2.test</span>(X1, X2, <span class="dt">G=</span>g)<span class="op">$</span>p.value
-    
-    variables_in_loop &lt;-<span class="st"> </span><span class="kw">colnames</span>(B)[<span class="kw">which</span>(B[loop_path,]<span class="op">==</span><span class="dv">1</span>)] 
-    pp &lt;-<span class="st"> </span><span class="kw">length</span>(variables_in_loop)
-    
-    ## Set current data
-    current_data &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)
-    current_data[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>dat[[<span class="dv">1</span>]][(<span class="kw">rownames</span>(A) <span class="op">%in%</span><span class="st"> </span>variables_in_loop),]
-    current_data[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>dat[[<span class="dv">2</span>]][(<span class="kw">rownames</span>(A) <span class="op">%in%</span><span class="st"> </span>variables_in_loop),]
-    
-    ## Prepare for NetGSA
-    oneMat &lt;-<span class="st"> </span>A[(<span class="kw">rownames</span>(A) <span class="op">%in%</span><span class="st"> </span>variables_in_loop),(<span class="kw">rownames</span>(A) <span class="op">%in%</span><span class="st"> </span>variables_in_loop)]
-    
-    ## Estimate the partial correlation matrices 
-    wAdj &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)
-    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>ncond) {
-      lambda_vec =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(pp)<span class="op">/</span>n[k])
-      rho_star =<span class="st"> </span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(pp)<span class="op">/</span>n[k])
-      bic_tune &lt;-<span class="st"> </span><span class="kw">bic.netEst.undir</span>(current_data[[k]], <span class="dt">one=</span>oneMat, <span class="dt">lambda =</span> lambda_vec, <span class="dt">rho=</span>rho_star, <span class="dt">eta=</span><span class="dv">1</span>)
-      lambda_opt &lt;-<span class="st"> </span>(<span class="dv">9</span><span class="op">+</span><span class="kw">which.min</span>(bic_tune<span class="op">$</span>BIC)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(pp)<span class="op">/</span>n[k]) <span class="op">/</span><span class="dv">10</span>
-      fit &lt;-<span class="st"> </span><span class="kw">netEst.undir</span>(current_data[[k]], <span class="dt">one=</span>oneMat, <span class="dt">lambda =</span> lambda_opt, <span class="dt">rho=</span>rho_star, <span class="dt">eta =</span> <span class="dv">1</span>)
-      wAdj[[k]] &lt;-<span class="st"> </span>fit<span class="op">$</span>Adj
-    } 
-    
-    ## Run NetGSA
-    current_pathway &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>,pp), <span class="dt">nrow=</span><span class="dv">1</span>)
-    <span class="kw">colnames</span>(current_pathway) &lt;-<span class="st"> </span><span class="kw">rownames</span>(oneMat)
-    <span class="kw">rownames</span>(current_pathway) &lt;-<span class="st"> </span><span class="kw">names</span>(path4netgsa)[[loop_path]]
-    out &lt;-<span class="st"> </span><span class="kw">NetGSA</span>(<span class="dt">A =</span> wAdj, <span class="dt">x =</span> <span class="kw">do.call</span>(cbind, current_data),<span class="dt">group =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n[<span class="dv">1</span>]), <span class="kw">rep</span>(<span class="dv">2</span>, n[<span class="dv">2</span>])), <span class="dt">pathways =</span> current_pathway, <span class="dt">lklMethod =</span> <span class="st">&quot;REHE&quot;</span>)
-    
-    fitted_netgsa[[loop_path]] &lt;-<span class="st"> </span>out 
-  }
-  <span class="co"># Output netgsa results</span>
-  pvals &lt;-<span class="st"> </span><span class="kw">sapply</span>(fitted_netgsa, <span class="cf">function</span>(a) a<span class="op">$</span>results<span class="op">$</span>pval)
-  sigInd[,<span class="dv">13</span>] &lt;-<span class="st"> </span>(pvals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">14</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(pvals, <span class="st">&quot;BH&quot;</span>) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">15</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(pvals, <span class="st">'holm'</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  
-  ##*******************************
-  ## (3) *******DEGraph*******
-  ##*******************************
-  sigInd[,<span class="dv">7</span>] &lt;-<span class="st"> </span>(res.DEGraph<span class="op">&lt;</span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">8</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(res.DEGraph, <span class="st">&quot;BH&quot;</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">9</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(res.DEGraph, <span class="st">&quot;holm&quot;</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  
-  ##*******************************  
-  ## (2) *******camera*******
-  ##*******************************
-  classBca2012 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n[<span class="dv">1</span>]), <span class="kw">rep</span>(<span class="dv">0</span>, n[<span class="dv">2</span>]))
-  expBca2012 &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat[[<span class="dv">1</span>]], dat[[<span class="dv">2</span>]])
-  <span class="kw">rownames</span>(expBca2012) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID
-  
-  design &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">Intercept =</span> <span class="dv">1</span>, <span class="dt">Group =</span> classBca2012)
-  setList &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(B), <span class="cf">function</span>(i) <span class="kw">which</span>(B[i,]<span class="op">==</span><span class="dv">1</span>))
-  <span class="kw">names</span>(setList) &lt;-<span class="st"> </span><span class="kw">names</span>(path4netgsa)
-  
-  resCamera &lt;-<span class="st"> </span>limma<span class="op">::</span><span class="kw">camera</span>(expBca2012, setList, design) 
-  resCamera &lt;-<span class="st"> </span>resCamera[<span class="kw">match</span>(<span class="kw">names</span>(path4netgsa),<span class="kw">rownames</span>(resCamera)),]
-  sigInd[,<span class="dv">4</span>] &lt;-<span class="st"> </span>(resCamera<span class="op">$</span>PValue <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">5</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(resCamera<span class="op">$</span>PValue, <span class="st">'BH'</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">6</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(resCamera<span class="op">$</span>PValue, <span class="st">'holm'</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  
-  ## ******************************
-  ## (4) *******PathNet*******
-  <span class="co"># based on -log10(pvalue)</span>
-  ## ******************************
-  gene_ID &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID
-  logPval &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log10</span>(pvals4genes)
-  dat4PathNet &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">as.numeric</span>(gene_ID),logPval)
-  <span class="kw">colnames</span>(dat4PathNet) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Gene.ID&quot;</span>, <span class="st">&quot;ERneg&quot;</span>)
-  resPathNet &lt;-<span class="st"> </span><span class="kw">PathNet</span>(<span class="dt">Enrichment_Analysis =</span> <span class="ot">TRUE</span>, <span class="dt">Contextual_Analysis =</span> <span class="ot">FALSE</span>, 
-                        <span class="dt">DirectEvidence_info =</span> dat4PathNet, <span class="dt">Column_DirectEvidence =</span> <span class="dv">2</span>, 
-                        <span class="dt">Adjacency =</span> A4PathNet, <span class="dt">pathway =</span> pathways4PathNet, 
-                        <span class="dt">n_perm =</span> <span class="dv">100</span>, <span class="dt">threshold =</span> <span class="fl">0.05</span>, <span class="dt">use_sig_pathways  =</span> <span class="ot">FALSE</span>)
-  
-  dict.pathnet &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;full.name&quot;</span> =<span class="st"> </span><span class="kw">sort</span>(<span class="kw">names</span>(path4netgsa)), <span class="st">'path.name'</span> =<span class="st"> </span><span class="kw">sort</span>(<span class="kw">as.character</span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>Name)))
-  pathnet.tempName &lt;-<span class="st"> </span>dict.pathnet<span class="op">$</span>full.name[<span class="kw">match</span>(<span class="kw">as.character</span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>Name),<span class="kw">as.character</span>(dict.pathnet<span class="op">$</span>path.name))]
-  resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>Name &lt;-<span class="st"> </span><span class="kw">as.character</span>(pathnet.tempName)
-  resPathNet<span class="op">$</span>enrichment_results &lt;-<span class="st"> </span>resPathNet<span class="op">$</span>enrichment_results[<span class="kw">match</span>(<span class="kw">names</span>(path4netgsa),resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>Name),]
-  
-  sigInd[,<span class="dv">1</span>] &lt;-<span class="st"> </span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>p_PathNet<span class="op">&lt;</span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">2</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>p_PathNet, <span class="st">&quot;BH&quot;</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">3</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(resPathNet<span class="op">$</span>enrichment_results<span class="op">$</span>p_PathNet, <span class="st">&quot;holm&quot;</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  
-  ## ******************************
-  ## (5) *******topologyGSA*******
-  ## ******************************
-  res.TopoGSA.var &lt;-<span class="st"> </span><span class="kw">runTopologyGSA</span>(myPathway, <span class="st">&quot;var&quot;</span>, <span class="dt">exp1=</span><span class="kw">t</span>(dat[[<span class="dv">1</span>]]), <span class="dt">exp2=</span><span class="kw">t</span>(dat[[<span class="dv">2</span>]]), <span class="fl">0.05</span>)
-  res.TopoGSA.mean &lt;-<span class="st"> </span><span class="kw">runTopologyGSA</span>(myPathway, <span class="st">&quot;mean&quot;</span>, <span class="dt">exp1=</span><span class="kw">t</span>(dat[[<span class="dv">1</span>]]), <span class="dt">exp2=</span><span class="kw">t</span>(dat[[<span class="dv">2</span>]]), <span class="fl">0.05</span>)
-  res.topologyGSA &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;Name&quot;</span> =<span class="st"> </span><span class="kw">names</span>(path4netgsa))
-  is.match.topologyGSA &lt;-<span class="st"> </span><span class="kw">match</span>(<span class="kw">names</span>(path4netgsa), <span class="kw">names</span>(res.TopoGSA.var<span class="op">$</span>results))
-  
-  res.topologyGSA<span class="op">$</span>p.value &lt;-<span class="st"> </span><span class="kw">sapply</span>(is.match.topologyGSA, <span class="cf">function</span>(a) {
-    <span class="cf">if</span> (<span class="kw">is.na</span>(a)) {
-      <span class="kw">return</span>(<span class="ot">NA</span>)
-    } <span class="cf">else</span> {
-      <span class="kw">min</span>(<span class="kw">c</span>(res.TopoGSA.var<span class="op">$</span>results[[a]]<span class="op">$</span>p.value,res.TopoGSA.mean<span class="op">$</span>results[[a]]<span class="op">$</span>p.value)) 
-    }
-  } 
-  )
-  pFdr &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(res.topologyGSA<span class="op">$</span>p.value, <span class="st">&quot;BH&quot;</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">10</span>] &lt;-<span class="st"> </span>(res.topologyGSA<span class="op">$</span>p.value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">11</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(res.topologyGSA<span class="op">$</span>p.value, <span class="st">&quot;BH&quot;</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  sigInd[,<span class="dv">12</span>] &lt;-<span class="st"> </span>(<span class="kw">p.adjust</span>(res.topologyGSA<span class="op">$</span>p.value, <span class="st">&quot;holm&quot;</span>)<span class="op">&lt;</span><span class="fl">0.05</span>)
-  
-  ## ******************************
-  ## (6) *******SPIA*******
-  ## ******************************
-  
-  pval4spiaFDR &lt;-<span class="st"> </span><span class="kw">p.adjust</span>(pvals4genes, <span class="st">&quot;BH&quot;</span>)
-  logFC &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(dat[[<span class="dv">2</span>]]) <span class="op">-</span><span class="st"> </span><span class="kw">rowMeans</span>(dat[[<span class="dv">1</span>]])
-  <span class="kw">names</span>(logFC) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID[<span class="dv">1</span><span class="op">:</span>p]
-  logFC &lt;-<span class="st"> </span>logFC[<span class="kw">which</span>(pval4spiaFDR<span class="op">&lt;</span><span class="fl">0.05</span>)]
-
-  <span class="cf">if</span> (<span class="kw">length</span>(logFC)<span class="op">==</span><span class="dv">0</span>){
-    spiaStatus=<span class="dv">0</span>;   
-    <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">sigInd=</span>sigInd, <span class="dt">spiaStatus =</span> spiaStatus))
-  } <span class="cf">else</span>{
-    spiaStatus=<span class="dv">1</span>;
-
-    resSPIA &lt;-<span class="st"> </span><span class="kw">runSPIA</span>(<span class="dt">de=</span>logFC, <span class="dt">all=</span>ALL_EntrezID, <span class="st">&quot;hsa_KEGG_signaling&quot;</span>)
-    neworder &lt;-<span class="st"> </span><span class="kw">match</span>(<span class="kw">names</span>(path4netgsa),resSPIA<span class="op">$</span>Name)
-    resSPIA &lt;-<span class="st"> </span>resSPIA[neworder,]
-    <span class="kw">rownames</span>(resSPIA) &lt;-<span class="st"> </span><span class="ot">NULL</span>
-    resSPIA<span class="op">$</span>Name &lt;-<span class="st"> </span><span class="kw">names</span>(path4netgsa)
-    
-    sigInd[,<span class="dv">16</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(resSPIA<span class="op">$</span>pG, <span class="cf">function</span>(a) <span class="kw">ifelse</span>(<span class="kw">is.na</span>(a), <span class="ot">NA</span>, (a<span class="op">&lt;</span><span class="fl">0.05</span>)))
-    sigInd[,<span class="dv">17</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(resSPIA<span class="op">$</span>pGFdr, <span class="cf">function</span>(a) <span class="kw">ifelse</span>(<span class="kw">is.na</span>(a), <span class="ot">NA</span>, (a<span class="op">&lt;</span><span class="fl">0.05</span>)))
-    sigInd[,<span class="dv">18</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(resSPIA<span class="op">$</span>pGFWER, <span class="cf">function</span>(a) <span class="kw">ifelse</span>(<span class="kw">is.na</span>(a), <span class="ot">NA</span>, (a<span class="op">&lt;</span><span class="fl">0.05</span>)))
-    
-    resPE &lt;-<span class="st"> </span><span class="kw">pe</span>(<span class="dt">x =</span> logFC, <span class="dt">graphs =</span> kpg, <span class="dt">ref =</span> ALL_EntrezID,  <span class="dt">nboot =</span> <span class="dv">500</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)
-    df4PE &lt;-<span class="st"> </span><span class="kw">summary</span>(resPE)
-    neworder &lt;-<span class="st"> </span><span class="kw">match</span>(<span class="kw">names</span>(path4netgsa),<span class="kw">rownames</span>(df4PE))
-    df4PE &lt;-<span class="st"> </span>df4PE[neworder,]
-    <span class="kw">rownames</span>(df4PE) &lt;-<span class="st"> </span><span class="kw">names</span>(path4netgsa)
-    
-    sigInd[,<span class="dv">19</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(df4PE<span class="op">$</span>pComb, <span class="cf">function</span>(a) <span class="kw">ifelse</span>(<span class="kw">is.na</span>(a), <span class="ot">NA</span>, (a<span class="op">&lt;</span><span class="fl">0.05</span>)))
-    sigInd[,<span class="dv">20</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(df4PE<span class="op">$</span>pComb.fdr, <span class="cf">function</span>(a) <span class="kw">ifelse</span>(<span class="kw">is.na</span>(a), <span class="ot">NA</span>, (a<span class="op">&lt;</span><span class="fl">0.05</span>)))
-    sigInd[,<span class="dv">21</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">p.adjust</span>(df4PE<span class="op">$</span>pComb,<span class="st">'holm'</span>), <span class="cf">function</span>(a) <span class="kw">ifelse</span>(<span class="kw">is.na</span>(a), <span class="ot">NA</span>, (a<span class="op">&lt;</span><span class="fl">0.05</span>)))
-    
-    <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">sigInd=</span>sigInd, <span class="dt">spiaStatus =</span> spiaStatus))
-  }
-  
-}</code></pre></div>
-<p>To evaluate the above procedure multiple times, we find parallel computing very useful.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="st">&quot;In the main loop ... </span><span class="ch">\n</span><span class="st">&quot;</span>)
-cl &lt;-<span class="st"> </span><span class="kw">makeCluster</span>(<span class="dv">10</span>)
-<span class="kw">registerDoParallel</span>(cl)
-
-res &lt;-<span class="st"> </span><span class="kw">foreach</span>(<span class="dt">iter =</span> <span class="dv">1</span><span class="op">:</span>nreps, 
-               <span class="dt">.packages =</span> <span class="kw">c</span>(<span class="st">&quot;glasso&quot;</span>, <span class="st">&quot;glmnet&quot;</span>, <span class="st">&quot;graphite&quot;</span>,<span class="st">&quot;igraph&quot;</span>,<span class="st">&quot;KEGGgraph&quot;</span>, <span class="st">&quot;ROntoTools&quot;</span>,
-                             <span class="st">&quot;SPIA&quot;</span>,<span class="st">&quot;PathNet&quot;</span>,<span class="st">&quot;limma&quot;</span>,<span class="st">&quot;DEGraph&quot;</span>,<span class="st">&quot;org.Hs.eg.db&quot;</span>,<span class="st">&quot;topologyGSA&quot;</span>), <span class="dt">.verbose =</span> T) <span class="op">%dopar%</span><span class="st"> </span>{
-                               <span class="kw">tryCatch</span>({<span class="kw">my.iterations</span>(iter)}, <span class="dt">error=</span><span class="cf">function</span>(e) <span class="ot">NULL</span>)
-                             }
-
-<span class="kw">stopCluster</span>(cl)</code></pre></div>
+<p>The goal is to identify KEGG pathways enriched between ER positive and ER negative breast cancer patients. In our comparative study, we consider the following two scenarios: (1) use the samples as they are and generate signals at the mean level based on the pathway topology; and (2) shuffle the samples and generate mean level signals. The rationale of (2) is that by repeatedly permuting the samples, we expect no difference between the underlying networks.</p>
+<p>The following code was used to run all methods in the final enrichment analysis. Note</p>
+<ul>
+<li>Since there are a large number of KEGG pathways and a lot of genes, enrichment analysis is done separately for each pathway.</li>
+<li>The following code sets mean signal via <code>muvals=0.1</code>. In our studies, we let the mean signal <code>muvals</code> vary from 0.1, 0.2, 0.3, 0.4 and 0.5 to evaluate the empirical powers of different methods.</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">source</span>(<span class="st">&quot;preprocess_lib.r&quot;</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw">set.seed</span>(<span class="dv">2019</span>)</a>
+<a class="sourceLine" id="cb7-4" title="4"></a>
+<a class="sourceLine" id="cb7-5" title="5">OutFolder &lt;-<span class="st"> &quot;../6_Results_New/BCA/&quot;</span></a>
+<a class="sourceLine" id="cb7-6" title="6">filename &lt;-<span class="st"> &quot;breastcancer2012_ready.rda&quot;</span></a>
+<a class="sourceLine" id="cb7-7" title="7">newFileName &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&#39;.rda&#39;</span>,<span class="st">&#39;&#39;</span>,filename)</a>
+<a class="sourceLine" id="cb7-8" title="8">newFileName &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&#39;_ready&#39;</span>,<span class="st">&#39;&#39;</span>, newFileName)</a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="kw">load</span>(<span class="kw">paste0</span>(OutFolder, filename))</a>
+<a class="sourceLine" id="cb7-10" title="10"></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="kw">writeLines</span>(<span class="kw">capture.output</span>(devtools<span class="op">::</span><span class="kw">session_info</span>()), <span class="kw">paste0</span>(newFileName,<span class="st">&quot;_sessionInfo.txt&quot;</span>))</a>
+<a class="sourceLine" id="cb7-12" title="12"></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co"># general parameters</span></a>
+<a class="sourceLine" id="cb7-14" title="14">DEBUG &lt;-<span class="st"> &#39;btw&#39;</span> <span class="co"># design for pathway deregulation</span></a>
+<a class="sourceLine" id="cb7-15" title="15">today &lt;-<span class="st"> &#39;20190403&#39;</span></a>
+<a class="sourceLine" id="cb7-16" title="16">ncond &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb7-17" title="17">ncores &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb7-18" title="18">muvals &lt;-<span class="st"> </span><span class="fl">0.1</span></a>
+<a class="sourceLine" id="cb7-19" title="19"></a>
+<a class="sourceLine" id="cb7-20" title="20">newFileName &lt;-<span class="st"> </span><span class="kw">paste0</span>(newFileName, <span class="st">&#39;_&#39;</span>, DEBUG, <span class="st">&#39;_perm_mu&#39;</span>, muvals<span class="op">*</span><span class="dv">10</span>, <span class="st">&#39;_ncores&#39;</span>, ncores, <span class="st">&#39;_&#39;</span>, today, <span class="st">&#39;_&#39;</span>, jid)</a>
+<a class="sourceLine" id="cb7-21" title="21"></a>
+<a class="sourceLine" id="cb7-22" title="22">p &lt;-<span class="st"> </span><span class="kw">nrow</span>(dataset<span class="op">$</span>dat)</a>
+<a class="sourceLine" id="cb7-23" title="23">npath &lt;-<span class="st"> </span><span class="kw">length</span>(pathSelected)</a>
+<a class="sourceLine" id="cb7-24" title="24">path.names &lt;-<span class="st"> </span><span class="kw">names</span>(pathSelected)</a>
+<a class="sourceLine" id="cb7-25" title="25">mu &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)</a>
+<a class="sourceLine" id="cb7-26" title="26">mu[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, p)</a>
+<a class="sourceLine" id="cb7-27" title="27">mu[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>muvals <span class="op">*</span><span class="st"> </span>(<span class="kw">match</span>(dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID, base<span class="op">::</span><span class="kw">eval</span>(<span class="kw">as.name</span>(<span class="kw">paste0</span>(<span class="st">&quot;genes2affect_&quot;</span>,DEBUG))), <span class="dt">nomatch =</span> <span class="dv">0</span>)<span class="op">&gt;</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb7-28" title="28"></a>
+<a class="sourceLine" id="cb7-29" title="29"><span class="co">##********************************</span></a>
+<a class="sourceLine" id="cb7-30" title="30"><span class="co">##****   Main function   *******</span></a>
+<a class="sourceLine" id="cb7-31" title="31"><span class="co">##********************************</span></a>
+<a class="sourceLine" id="cb7-32" title="32">dat &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)</a>
+<a class="sourceLine" id="cb7-33" title="33">dat[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>dataset<span class="op">$</span>dat[,(dataset<span class="op">$</span>sample_info<span class="op">$</span>er_status_by_ihc<span class="op">==</span><span class="st">&quot;Positive&quot;</span>)]<span class="co">## p by n1</span></a>
+<a class="sourceLine" id="cb7-34" title="34">dat[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>dataset<span class="op">$</span>dat[,(dataset<span class="op">$</span>sample_info<span class="op">$</span>er_status_by_ihc<span class="op">==</span><span class="st">&quot;Negative&quot;</span>)]<span class="co">## p by n2</span></a>
+<a class="sourceLine" id="cb7-35" title="35">dat &lt;-<span class="st"> </span><span class="kw">lapply</span>(dat, <span class="cf">function</span>(d) <span class="kw">t</span>(<span class="kw">scale</span>(<span class="kw">t</span>(d))))</a>
+<a class="sourceLine" id="cb7-36" title="36">n &lt;-<span class="st"> </span><span class="kw">sapply</span>(dat, ncol)</a>
+<a class="sourceLine" id="cb7-37" title="37">dat_combined &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat[[<span class="dv">1</span>]], dat[[<span class="dv">2</span>]])</a></code></pre></div>
+<p>Our main function is <code>my.iterations</code>, and simultaneously handles the output from all methods. The results of pathway enrichment are saved in the object <code>out.obj</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">my.iterations &lt;-<span class="st"> </span><span class="cf">function</span>(iters){</a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="kw">set.seed</span>(iters)</a>
+<a class="sourceLine" id="cb8-3" title="3">  new_dat &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)</a>
+<a class="sourceLine" id="cb8-4" title="4">  </a>
+<a class="sourceLine" id="cb8-5" title="5">  <span class="co">## Permute sample lables</span></a>
+<a class="sourceLine" id="cb8-6" title="6">  ind<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">ncol</span>(dat_combined), n[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb8-7" title="7">  new_dat[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>dat_combined[,ind<span class="fl">.1</span>]</a>
+<a class="sourceLine" id="cb8-8" title="8">  new_dat[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>dat_combined[,<span class="op">-</span>ind<span class="fl">.1</span>]</a>
+<a class="sourceLine" id="cb8-9" title="9">  </a>
+<a class="sourceLine" id="cb8-10" title="10">  <span class="co">## Or use the original sample labels</span></a>
+<a class="sourceLine" id="cb8-11" title="11">  <span class="co">#  new_dat[[1]] &lt;- dat_combined[,seq(1,n[1])]</span></a>
+<a class="sourceLine" id="cb8-12" title="12">  <span class="co">#  new_dat[[2]] &lt;- dat_combined[,-seq(1,n[1])]</span></a>
+<a class="sourceLine" id="cb8-13" title="13">  dat &lt;-<span class="st"> </span>new_dat</a>
+<a class="sourceLine" id="cb8-14" title="14"></a>
+<a class="sourceLine" id="cb8-15" title="15">  <span class="co">## output</span></a>
+<a class="sourceLine" id="cb8-16" title="16">  col.names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;PE.noCut&quot;</span>, </a>
+<a class="sourceLine" id="cb8-17" title="17">                 <span class="st">&quot;PE.Cut&quot;</span>, </a>
+<a class="sourceLine" id="cb8-18" title="18">                 <span class="st">&quot;SPIA&quot;</span>, </a>
+<a class="sourceLine" id="cb8-19" title="19">                 <span class="st">&quot;PRS&quot;</span>,</a>
+<a class="sourceLine" id="cb8-20" title="20">                 <span class="st">&quot;cepa.ORA.equal.weight&quot;</span>, </a>
+<a class="sourceLine" id="cb8-21" title="21">                 <span class="st">&quot;cepa.ORA.in.degree&quot;</span>,</a>
+<a class="sourceLine" id="cb8-22" title="22">                 <span class="st">&quot;cepa.ORA.out.degree&quot;</span>,</a>
+<a class="sourceLine" id="cb8-23" title="23">                 <span class="st">&quot;cepa.ORA.betweenness&quot;</span>,</a>
+<a class="sourceLine" id="cb8-24" title="24">                 <span class="st">&quot;cepa.ORA.in.reach&quot;</span>,</a>
+<a class="sourceLine" id="cb8-25" title="25">                 <span class="st">&quot;cepa.ORA.out.reach&quot;</span>,</a>
+<a class="sourceLine" id="cb8-26" title="26">                 <span class="st">&quot;cepa.GSA.equal.weight&quot;</span>, </a>
+<a class="sourceLine" id="cb8-27" title="27">                 <span class="st">&quot;cepa.GSA.in.degree&quot;</span>,</a>
+<a class="sourceLine" id="cb8-28" title="28">                 <span class="st">&quot;cepa.GSA.out.degree&quot;</span>,</a>
+<a class="sourceLine" id="cb8-29" title="29">                 <span class="st">&quot;cepa.GSA.betweenness&quot;</span>,</a>
+<a class="sourceLine" id="cb8-30" title="30">                 <span class="st">&quot;cepa.GSA.in.reach&quot;</span>,</a>
+<a class="sourceLine" id="cb8-31" title="31">                 <span class="st">&quot;cepa.GSA.out.reach&quot;</span>,</a>
+<a class="sourceLine" id="cb8-32" title="32">                 <span class="st">&quot;NetGSA2&quot;</span>, </a>
+<a class="sourceLine" id="cb8-33" title="33">                 <span class="st">&quot;DEGraph&quot;</span>, </a>
+<a class="sourceLine" id="cb8-34" title="34">                 <span class="st">&quot;topologyGSA&quot;</span>, </a>
+<a class="sourceLine" id="cb8-35" title="35">                 <span class="st">&quot;topologyGSA.var&quot;</span>, </a>
+<a class="sourceLine" id="cb8-36" title="36">                 <span class="st">&quot;CAMERA&quot;</span>, </a>
+<a class="sourceLine" id="cb8-37" title="37">                 <span class="st">&quot;PathNet&quot;</span>,</a>
+<a class="sourceLine" id="cb8-38" title="38">                 <span class="st">&quot;NetGSA&quot;</span>)</a>
+<a class="sourceLine" id="cb8-39" title="39">  sigInd &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, npath, <span class="kw">length</span>(col.names))</a>
+<a class="sourceLine" id="cb8-40" title="40">  <span class="kw">rownames</span>(sigInd) &lt;-<span class="st"> </span>path.names</a>
+<a class="sourceLine" id="cb8-41" title="41">  <span class="kw">colnames</span>(sigInd) &lt;-<span class="st"> </span>col.names</a>
+<a class="sourceLine" id="cb8-42" title="42">  </a>
+<a class="sourceLine" id="cb8-43" title="43">  out.obj &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb8-44" title="44">  out.obj<span class="op">$</span>pe &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb8-45" title="45">  out.obj<span class="op">$</span>spia &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb8-46" title="46">  out.obj<span class="op">$</span>prs &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb8-47" title="47">  out.obj<span class="op">$</span>cepa &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb8-48" title="48">  </a>
+<a class="sourceLine" id="cb8-49" title="49">  <span class="kw">cat</span>(<span class="st">&#39;... Setting up data ....</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-50" title="50">  </a>
+<a class="sourceLine" id="cb8-51" title="51">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>ncond) {</a>
+<a class="sourceLine" id="cb8-52" title="52">    <span class="co">## Add some random noise to the data</span></a>
+<a class="sourceLine" id="cb8-53" title="53">    epsilonVar &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(p <span class="op">*</span><span class="st"> </span>n[i]), p, n[i])</a>
+<a class="sourceLine" id="cb8-54" title="54">    dat[[i]] &lt;-<span class="st"> </span>dat[[i]] <span class="op">+</span><span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(mu[[i]], n[i]), p, n[i]) <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span><span class="op">*</span>epsilonVar</a>
+<a class="sourceLine" id="cb8-55" title="55">  }</a>
+<a class="sourceLine" id="cb8-56" title="56">  </a>
+<a class="sourceLine" id="cb8-57" title="57">  <span class="co">## ******************************</span></a>
+<a class="sourceLine" id="cb8-58" title="58">  <span class="co">## (1) SPIA, Pathway-Express----</span></a>
+<a class="sourceLine" id="cb8-59" title="59">  <span class="co">## ******************************</span></a>
+<a class="sourceLine" id="cb8-60" title="60">  <span class="kw">cat</span>(<span class="st">&#39;... Running PE ....</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-61" title="61">  </a>
+<a class="sourceLine" id="cb8-62" title="62">  <span class="co">## Two-sample t-test with FDR correction to first determine the DE genes;</span></a>
+<a class="sourceLine" id="cb8-63" title="63">  pvals4genes &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>p, <span class="cf">function</span>(i)  <span class="kw">t.test</span>(dat[[<span class="dv">2</span>]][i,], dat[[<span class="dv">1</span>]][i,], <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-64" title="64">  </a>
+<a class="sourceLine" id="cb8-65" title="65">  pvals4genes.fdr &lt;-<span class="st"> </span><span class="kw">p.adjust</span>(pvals4genes, <span class="st">&quot;BH&quot;</span>)</a>
+<a class="sourceLine" id="cb8-66" title="66">  logFC.ALL &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(dat[[<span class="dv">2</span>]]) <span class="op">-</span><span class="st"> </span><span class="kw">rowMeans</span>(dat[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb8-67" title="67">  <span class="kw">names</span>(logFC.ALL) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID</a>
+<a class="sourceLine" id="cb8-68" title="68">  </a>
+<a class="sourceLine" id="cb8-69" title="69">  res.pe.all &lt;-<span class="st"> </span><span class="kw">pe</span>(<span class="dt">x =</span> logFC.ALL, <span class="dt">graphs =</span> pe_paths, <span class="dt">ref =</span> dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID,  <span class="dt">nboot =</span> <span class="dv">2000</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-70" title="70">  res.pe.all &lt;-<span class="st"> </span><span class="kw">summary</span>(res.pe.all)</a>
+<a class="sourceLine" id="cb8-71" title="71">  sigInd[,<span class="dv">1</span>] &lt;-<span class="st"> </span>res.pe.all<span class="op">$</span>pPert[<span class="kw">match</span>(path.names,<span class="kw">rownames</span>(res.pe.all))]</a>
+<a class="sourceLine" id="cb8-72" title="72"> </a>
+<a class="sourceLine" id="cb8-73" title="73">  logFC.th &lt;-<span class="st"> </span>logFC.ALL[<span class="kw">which</span>(pvals4genes.fdr<span class="op">&lt;</span><span class="fl">0.05</span>)]</a>
+<a class="sourceLine" id="cb8-74" title="74">  <span class="cf">if</span> (<span class="kw">length</span>(logFC.th)<span class="op">&gt;</span><span class="dv">0</span>){</a>
+<a class="sourceLine" id="cb8-75" title="75">    <span class="co"># Use DE genes</span></a>
+<a class="sourceLine" id="cb8-76" title="76">    out.obj<span class="op">$</span>spia &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb8-77" title="77">    out.obj<span class="op">$</span>pe &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb8-78" title="78">    </a>
+<a class="sourceLine" id="cb8-79" title="79">    res.pe &lt;-<span class="st"> </span><span class="kw">pe</span>(<span class="dt">x =</span> logFC.th, <span class="dt">graphs =</span> pe_paths, <span class="dt">ref =</span> dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID,  <span class="dt">nboot =</span> <span class="dv">2000</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-80" title="80">    res.pe &lt;-<span class="st"> </span><span class="kw">summary</span>(res.pe)</a>
+<a class="sourceLine" id="cb8-81" title="81">    sigInd[,<span class="dv">2</span>] &lt;-<span class="st"> </span>res.pe<span class="op">$</span>pComb[<span class="kw">match</span>(path.names,<span class="kw">rownames</span>(res.pe))]</a>
+<a class="sourceLine" id="cb8-82" title="82">    </a>
+<a class="sourceLine" id="cb8-83" title="83">    <span class="kw">cat</span>(<span class="st">&#39;... Running SPIA ....</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-84" title="84">    res.spia &lt;-<span class="st"> </span><span class="kw">runSPIA</span>(<span class="dt">de=</span>logFC.th, <span class="dt">all=</span>dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID, <span class="st">&quot;hsa_KEGG&quot;</span>)</a>
+<a class="sourceLine" id="cb8-85" title="85">    sigInd[,<span class="dv">3</span>] &lt;-<span class="st"> </span>res.spia<span class="op">$</span>pG[<span class="kw">match</span>(path.names,res.spia<span class="op">$</span>Name)]</a>
+<a class="sourceLine" id="cb8-86" title="86">  }</a>
+<a class="sourceLine" id="cb8-87" title="87">  </a>
+<a class="sourceLine" id="cb8-88" title="88">  <span class="co">## ******************************</span></a>
+<a class="sourceLine" id="cb8-89" title="89">  <span class="co">## (2) PRS----</span></a>
+<a class="sourceLine" id="cb8-90" title="90">  <span class="co">## ******************************</span></a>
+<a class="sourceLine" id="cb8-91" title="91">  <span class="kw">cat</span>(<span class="st">&#39;... Running PRS ....</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-92" title="92">  </a>
+<a class="sourceLine" id="cb8-93" title="93">  <span class="cf">if</span> (<span class="kw">length</span>(logFC.th)<span class="op">&gt;</span><span class="dv">0</span>){</a>
+<a class="sourceLine" id="cb8-94" title="94">    out.obj<span class="op">$</span>prs &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb8-95" title="95">    res.prs &lt;-<span class="st"> </span><span class="kw">prs</span>(logFC.th, <span class="dt">all=</span>dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID, <span class="dt">pwys =</span> pathSelected, <span class="dt">nperm=</span><span class="dv">2000</span>)</a>
+<a class="sourceLine" id="cb8-96" title="96">    sigInd[,<span class="dv">4</span>] &lt;-<span class="st"> </span>res.prs<span class="op">$</span>p.value[<span class="kw">match</span>(path.names,<span class="kw">rownames</span>(res.prs))]</a>
+<a class="sourceLine" id="cb8-97" title="97">  }</a>
+<a class="sourceLine" id="cb8-98" title="98">  </a>
+<a class="sourceLine" id="cb8-99" title="99">  <span class="co">## ******************************</span></a>
+<a class="sourceLine" id="cb8-100" title="100">  <span class="co">## (3) CePa----</span></a>
+<a class="sourceLine" id="cb8-101" title="101">  <span class="co">## ******************************</span></a>
+<a class="sourceLine" id="cb8-102" title="102">  <span class="kw">cat</span>(<span class="st">&#39;... Running CePa ORA...</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-103" title="103">  </a>
+<a class="sourceLine" id="cb8-104" title="104">  <span class="co"># Note cepa DE gene list is named by gene symbols, and the background genes are also named by gene symbols</span></a>
+<a class="sourceLine" id="cb8-105" title="105">  <span class="kw">names</span>(logFC.ALL) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>symbol</a>
+<a class="sourceLine" id="cb8-106" title="106">  logFC.th &lt;-<span class="st"> </span>logFC.ALL[<span class="kw">which</span>(pvals4genes.fdr<span class="op">&lt;</span><span class="fl">0.05</span>)]</a>
+<a class="sourceLine" id="cb8-107" title="107">  <span class="cf">if</span> (<span class="kw">length</span>(logFC.th)<span class="op">&gt;</span><span class="dv">0</span>){</a>
+<a class="sourceLine" id="cb8-108" title="108">    out.obj<span class="op">$</span>cepa &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb8-109" title="109">    res.cepa.ORA &lt;-<span class="st"> </span><span class="kw">cepa.all</span>(<span class="dt">dif=</span><span class="kw">names</span>(logFC.th), <span class="dt">bk=</span>dataset<span class="op">$</span>gene_info<span class="op">$</span>symbol, <span class="dt">pc =</span> cepa_paths<span class="op">$</span>pathways)</a>
+<a class="sourceLine" id="cb8-110" title="110">    sigInd[,<span class="dv">5</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.ORA, <span class="cf">function</span>(a) a<span class="op">$</span>equal.weight<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-111" title="111">    sigInd[,<span class="dv">6</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.ORA, <span class="cf">function</span>(a) a<span class="op">$</span>in.degree<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-112" title="112">    sigInd[,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.ORA, <span class="cf">function</span>(a) a<span class="op">$</span>out.degree<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-113" title="113">    sigInd[,<span class="dv">8</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.ORA, <span class="cf">function</span>(a) a<span class="op">$</span>betweenness<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-114" title="114">    sigInd[,<span class="dv">9</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.ORA, <span class="cf">function</span>(a) a<span class="op">$</span>in.reach<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-115" title="115">    sigInd[,<span class="dv">10</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.ORA, <span class="cf">function</span>(a) a<span class="op">$</span>out.reach<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-116" title="116">  }</a>
+<a class="sourceLine" id="cb8-117" title="117">  </a>
+<a class="sourceLine" id="cb8-118" title="118">  <span class="kw">cat</span>(<span class="st">&#39;... Running CePa GSA ... </span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-119" title="119">  classlabels &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb8-120" title="120">  classlabels<span class="op">$</span>label &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Pos&quot;</span>, n[<span class="dv">1</span>]), <span class="kw">rep</span>(<span class="st">&quot;Neg&quot;</span>, n[<span class="dv">2</span>]))</a>
+<a class="sourceLine" id="cb8-121" title="121">  classlabels<span class="op">$</span>treatment &lt;-<span class="st"> &quot;Pos&quot;</span></a>
+<a class="sourceLine" id="cb8-122" title="122">  classlabels<span class="op">$</span>control &lt;-<span class="st"> &quot;Neg&quot;</span></a>
+<a class="sourceLine" id="cb8-123" title="123">  </a>
+<a class="sourceLine" id="cb8-124" title="124">  res.cepa.GSA &lt;-<span class="st"> </span><span class="kw">cepa.all</span>(<span class="dt">mat =</span> <span class="kw">cbind</span>(dat[[<span class="dv">1</span>]], dat[[<span class="dv">2</span>]]), <span class="dt">label =</span> classlabels, <span class="dt">pc =</span> cepa_paths<span class="op">$</span>pathways)</a>
+<a class="sourceLine" id="cb8-125" title="125">  sigInd[,<span class="dv">11</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.GSA, <span class="cf">function</span>(a) a<span class="op">$</span>equal.weight<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-126" title="126">  sigInd[,<span class="dv">12</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.GSA, <span class="cf">function</span>(a) a<span class="op">$</span>in.degree<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-127" title="127">  sigInd[,<span class="dv">13</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.GSA, <span class="cf">function</span>(a) a<span class="op">$</span>out.degree<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-128" title="128">  sigInd[,<span class="dv">14</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.GSA, <span class="cf">function</span>(a) a<span class="op">$</span>betweenness<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-129" title="129">  sigInd[,<span class="dv">15</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.GSA, <span class="cf">function</span>(a) a<span class="op">$</span>in.reach<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-130" title="130">  sigInd[,<span class="dv">16</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(res.cepa.GSA, <span class="cf">function</span>(a) a<span class="op">$</span>out.reach<span class="op">$</span>p.value)</a>
+<a class="sourceLine" id="cb8-131" title="131">  </a>
+<a class="sourceLine" id="cb8-132" title="132">  <span class="co">##*******************************  </span></a>
+<a class="sourceLine" id="cb8-133" title="133">  <span class="co">## (4) NetGSA, DEGraph, topologyGSA----</span></a>
+<a class="sourceLine" id="cb8-134" title="134">  <span class="co">##*******************************</span></a>
+<a class="sourceLine" id="cb8-135" title="135">  <span class="kw">cat</span>(<span class="st">&#39;... Running NetGSA, DEGraph and topologyGSA ....</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-136" title="136">  classlabels &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n[<span class="dv">1</span>]), <span class="kw">rep</span>(<span class="dv">2</span>, n[<span class="dv">2</span>]))</a>
+<a class="sourceLine" id="cb8-137" title="137">  </a>
+<a class="sourceLine" id="cb8-138" title="138">  <span class="cf">for</span> (loop_path <span class="cf">in</span> <span class="kw">seq</span>(<span class="dv">1</span>,npath)){</a>
+<a class="sourceLine" id="cb8-139" title="139">    <span class="kw">cat</span>(<span class="st">&quot;current path ...&quot;</span>, loop_path, <span class="st">&#39;/&#39;</span>, npath, <span class="st">&#39;...</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-140" title="140">    index =<span class="st"> </span>camera_paths<span class="op">$</span>membership[[loop_path]]</a>
+<a class="sourceLine" id="cb8-141" title="141">    pp &lt;-<span class="st"> </span><span class="kw">length</span>(index)</a>
+<a class="sourceLine" id="cb8-142" title="142">    current_data &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span>ncond, <span class="cf">function</span>(a) dat[[a]][index,])</a>
+<a class="sourceLine" id="cb8-143" title="143">    oneMat &lt;-<span class="st"> </span>netgsa_paths<span class="op">$</span>adjacency[[loop_path]]</a>
+<a class="sourceLine" id="cb8-144" title="144">    </a>
+<a class="sourceLine" id="cb8-145" title="145">    <span class="co">## Estimate the partial correlation matrices</span></a>
+<a class="sourceLine" id="cb8-146" title="146">    wAdj &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, ncond)</a>
+<a class="sourceLine" id="cb8-147" title="147">    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>ncond) {</a>
+<a class="sourceLine" id="cb8-148" title="148">      lambda_vec &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(pp)<span class="op">/</span>n[k])</a>
+<a class="sourceLine" id="cb8-149" title="149">      rho_star &lt;-<span class="st"> </span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(pp)<span class="op">/</span>n[k])</a>
+<a class="sourceLine" id="cb8-150" title="150">      bic_tune &lt;-<span class="st"> </span><span class="kw">bic.netEst.undir</span>(<span class="dt">x=</span>current_data[[k]], <span class="dt">one=</span>oneMat,  <span class="dt">lambda =</span> lambda_vec, <span class="dt">rho=</span>rho_star, <span class="dt">eta=</span><span class="fl">0.01</span><span class="op">*</span>(<span class="dv">1</span><span class="op">+</span>pp<span class="op">/</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb8-151" title="151">      lambda_opt &lt;-<span class="st"> </span>(<span class="dv">9</span><span class="op">+</span><span class="kw">which.min</span>(bic_tune<span class="op">$</span>BIC)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(pp)<span class="op">/</span>n[k]) <span class="op">/</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb8-152" title="152">      fit &lt;-<span class="st"> </span><span class="kw">netEst.undir</span>(current_data[[k]], <span class="dt">one=</span>oneMat, <span class="dt">lambda =</span> lambda_opt, <span class="dt">rho=</span>rho_star, <span class="dt">eta =</span> <span class="fl">0.01</span><span class="op">*</span>(<span class="dv">1</span><span class="op">+</span>pp<span class="op">/</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb8-153" title="153">      wAdj[[k]] &lt;-<span class="st"> </span>fit<span class="op">$</span>Adj</a>
+<a class="sourceLine" id="cb8-154" title="154">    }</a>
+<a class="sourceLine" id="cb8-155" title="155"></a>
+<a class="sourceLine" id="cb8-156" title="156">    <span class="co">## Run NetGSA</span></a>
+<a class="sourceLine" id="cb8-157" title="157">    B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>,pp), <span class="dt">nrow=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb8-158" title="158">    <span class="kw">colnames</span>(B) &lt;-<span class="st"> </span><span class="kw">rownames</span>(oneMat)</a>
+<a class="sourceLine" id="cb8-159" title="159">    <span class="kw">rownames</span>(B) &lt;-<span class="st"> </span>path.names[loop_path]</a>
+<a class="sourceLine" id="cb8-160" title="160">    out &lt;-<span class="st"> </span><span class="kw">NetGSA</span>(<span class="dt">A =</span> wAdj, <span class="dt">x =</span> <span class="kw">do.call</span>(cbind, current_data), <span class="dt">group=</span>classlabels, <span class="dt">pathways =</span> B, <span class="dt">lklMethod =</span> <span class="st">&quot;REHE&quot;</span>)</a>
+<a class="sourceLine" id="cb8-161" title="161">    sigInd[loop_path,<span class="dv">17</span>] &lt;-<span class="st"> </span>out<span class="op">$</span>results<span class="op">$</span>pval</a>
+<a class="sourceLine" id="cb8-162" title="162">    </a>
+<a class="sourceLine" id="cb8-163" title="163">    <span class="co"># Also run NetGSA assuming the network is shared between the two conditions</span></a>
+<a class="sourceLine" id="cb8-164" title="164">    dat_joint &lt;-<span class="st"> </span><span class="kw">do.call</span>(cbind, current_data)</a>
+<a class="sourceLine" id="cb8-165" title="165">    lambda_vec &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(pp)<span class="op">/</span><span class="kw">sum</span>(n))</a>
+<a class="sourceLine" id="cb8-166" title="166">    rho_star &lt;-<span class="st"> </span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(pp)<span class="op">/</span><span class="kw">sum</span>(n))</a>
+<a class="sourceLine" id="cb8-167" title="167">    bic_tune &lt;-<span class="st"> </span><span class="kw">bic.netEst.undir</span>(<span class="dt">x=</span>dat_joint, <span class="dt">one=</span>oneMat,  <span class="dt">lambda =</span> lambda_vec, <span class="dt">rho=</span>rho_star, <span class="dt">eta=</span><span class="fl">0.01</span><span class="op">*</span>(<span class="dv">1</span><span class="op">+</span>pp<span class="op">/</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb8-168" title="168">    lambda_opt &lt;-<span class="st"> </span>(<span class="dv">9</span><span class="op">+</span><span class="kw">which.min</span>(bic_tune<span class="op">$</span>BIC)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">log</span>(pp)<span class="op">/</span><span class="kw">sum</span>(n)) <span class="op">/</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb8-169" title="169">    fit &lt;-<span class="st"> </span><span class="kw">netEst.undir</span>(dat_joint, <span class="dt">one=</span>oneMat, <span class="dt">lambda =</span> lambda_opt, <span class="dt">rho=</span>rho_star, <span class="dt">eta =</span> <span class="fl">0.01</span><span class="op">*</span>(<span class="dv">1</span><span class="op">+</span>pp<span class="op">/</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb8-170" title="170">    wAdj &lt;-<span class="st"> </span>fit<span class="op">$</span>Adj</a>
+<a class="sourceLine" id="cb8-171" title="171">    out &lt;-<span class="st"> </span><span class="kw">NetGSA</span>(<span class="dt">A =</span> <span class="kw">list</span>(wAdj,wAdj), <span class="dt">x =</span> dat_joint, <span class="dt">group=</span>classlabels, <span class="dt">pathways =</span> B, <span class="dt">lklMethod =</span> <span class="st">&quot;REHE&quot;</span>)</a>
+<a class="sourceLine" id="cb8-172" title="172">    sigInd[loop_path,<span class="dv">23</span>] &lt;-<span class="st"> </span>out<span class="op">$</span>results<span class="op">$</span>pval</a>
+<a class="sourceLine" id="cb8-173" title="173">    </a>
+<a class="sourceLine" id="cb8-174" title="174">    sigInd[loop_path,<span class="dv">18</span>] &lt;-<span class="st"> </span><span class="kw">graph.T2.test</span>(<span class="dt">X1=</span><span class="kw">t</span>(current_data[[<span class="dv">1</span>]]), <span class="dt">X2=</span><span class="kw">t</span>(current_data[[<span class="dv">2</span>]]), <span class="dt">G=</span>deGraph_paths<span class="op">$</span>pathways[[loop_path]])<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb8-175" title="175"></a>
+<a class="sourceLine" id="cb8-176" title="176">    test &lt;-<span class="st"> </span><span class="kw">tryCatch</span>(<span class="kw">pathway.mean.test</span>(<span class="dt">y1=</span><span class="kw">t</span>(current_data[[<span class="dv">1</span>]]), <span class="dt">y2=</span><span class="kw">t</span>(current_data[[<span class="dv">2</span>]]), <span class="dt">dag =</span> topoGSA_paths<span class="op">$</span>pathways[[loop_path]], <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">perm.num =</span> <span class="dv">1000</span>), <span class="dt">error=</span><span class="cf">function</span>(e) <span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb8-177" title="177">    <span class="cf">if</span> (<span class="kw">is.null</span>(test)){</a>
+<a class="sourceLine" id="cb8-178" title="178">      sigInd[loop_path,<span class="dv">19</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>; sigInd[loop_path,<span class="dv">20</span>]  &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb8-179" title="179">    } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb8-180" title="180">      sigInd[loop_path,<span class="dv">19</span>] &lt;-<span class="st"> </span>test<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb8-181" title="181">      sigInd[loop_path,<span class="dv">20</span>] &lt;-<span class="st"> </span>test<span class="op">$</span>p.value.var</a>
+<a class="sourceLine" id="cb8-182" title="182">    }</a>
+<a class="sourceLine" id="cb8-183" title="183">  }</a>
+<a class="sourceLine" id="cb8-184" title="184">  </a>
+<a class="sourceLine" id="cb8-185" title="185">  <span class="co">##*******************************  </span></a>
+<a class="sourceLine" id="cb8-186" title="186">  <span class="co">## (5) camera----</span></a>
+<a class="sourceLine" id="cb8-187" title="187">  <span class="co">##*******************************</span></a>
+<a class="sourceLine" id="cb8-188" title="188">  <span class="kw">cat</span>(<span class="st">&#39;... Running CAMERA ....</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-189" title="189">  </a>
+<a class="sourceLine" id="cb8-190" title="190">  classBca2012 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n[<span class="dv">1</span>]), <span class="kw">rep</span>(<span class="dv">0</span>, n[<span class="dv">2</span>]))</a>
+<a class="sourceLine" id="cb8-191" title="191">  <span class="kw">names</span>(classBca2012) &lt;-<span class="st"> </span>dataset<span class="op">$</span>sample_info<span class="op">$</span>GSMID</a>
+<a class="sourceLine" id="cb8-192" title="192">  expBca2012 &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat[[<span class="dv">1</span>]], dat[[<span class="dv">2</span>]])</a>
+<a class="sourceLine" id="cb8-193" title="193">  <span class="kw">rownames</span>(expBca2012) &lt;-<span class="st"> </span>dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID</a>
+<a class="sourceLine" id="cb8-194" title="194">  design &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">Intercept =</span> <span class="dv">1</span>, <span class="dt">Group =</span> classBca2012)</a>
+<a class="sourceLine" id="cb8-195" title="195">  </a>
+<a class="sourceLine" id="cb8-196" title="196">  res.camera &lt;-<span class="st"> </span>limma<span class="op">::</span><span class="kw">camera</span>(expBca2012, camera_paths<span class="op">$</span>membership, design) </a>
+<a class="sourceLine" id="cb8-197" title="197">  sigInd[,<span class="dv">21</span>] &lt;-<span class="st"> </span>res.camera<span class="op">$</span>PValue[<span class="kw">match</span>(path.names,<span class="kw">rownames</span>(res.camera))]</a>
+<a class="sourceLine" id="cb8-198" title="198">  </a>
+<a class="sourceLine" id="cb8-199" title="199">  <span class="co">## ******************************</span></a>
+<a class="sourceLine" id="cb8-200" title="200">  <span class="co">## (6) PathNet----</span></a>
+<a class="sourceLine" id="cb8-201" title="201">  <span class="co">## ******************************</span></a>
+<a class="sourceLine" id="cb8-202" title="202">  <span class="kw">cat</span>(<span class="st">&#39;... Running PathNet ....</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
+<a class="sourceLine" id="cb8-203" title="203">  </a>
+<a class="sourceLine" id="cb8-204" title="204">  logPval &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log10</span>(pvals4genes)</a>
+<a class="sourceLine" id="cb8-205" title="205">  dat4PathNet &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">&quot;ENTREZID:&quot;</span>,<span class="st">&quot;&quot;</span>,dataset<span class="op">$</span>gene_info<span class="op">$</span>EntrezID)),logPval)</a>
+<a class="sourceLine" id="cb8-206" title="206">  <span class="kw">colnames</span>(dat4PathNet) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Gene.ID&quot;</span>, <span class="st">&quot;ERneg&quot;</span>)</a>
+<a class="sourceLine" id="cb8-207" title="207">  res.PathNet &lt;-<span class="st"> </span><span class="kw">PathNet</span>(<span class="dt">Enrichment_Analysis =</span> <span class="ot">TRUE</span>, <span class="dt">Contextual_Analysis =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb8-208" title="208">                         <span class="dt">DirectEvidence_info =</span> dat4PathNet, <span class="dt">Column_DirectEvidence =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb8-209" title="209">                         <span class="dt">Adjacency =</span> pathNet_paths<span class="op">$</span>adjacency, <span class="dt">pathway =</span> pathNet_paths<span class="op">$</span>pathways, </a>
+<a class="sourceLine" id="cb8-210" title="210">                         <span class="dt">n_perm =</span> <span class="dv">2000</span>, <span class="dt">threshold =</span> <span class="fl">0.05</span>, <span class="dt">use_sig_pathways  =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-211" title="211">  </a>
+<a class="sourceLine" id="cb8-212" title="212">  res.PathNet &lt;-<span class="st"> </span>res.PathNet<span class="op">$</span>enrichment_results</a>
+<a class="sourceLine" id="cb8-213" title="213">  dict.pathnet &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;full.name&quot;</span> =<span class="st"> </span><span class="kw">sort</span>(path.names), </a>
+<a class="sourceLine" id="cb8-214" title="214">                             <span class="st">&#39;path.name&#39;</span> =<span class="st"> </span><span class="kw">sort</span>(<span class="kw">as.character</span>(res.PathNet<span class="op">$</span>Name)), <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-215" title="215">  res.PathNet<span class="op">$</span>Name &lt;-<span class="st"> </span>dict.pathnet<span class="op">$</span>full.name[<span class="kw">match</span>(<span class="kw">as.character</span>(res.PathNet<span class="op">$</span>Name),dict.pathnet<span class="op">$</span>path.name)]</a>
+<a class="sourceLine" id="cb8-216" title="216">  sigInd[,<span class="dv">22</span>] &lt;-<span class="st"> </span>res.PathNet<span class="op">$</span>p_PathNet[<span class="kw">match</span>(path.names, res.PathNet<span class="op">$</span>Name)]</a>
+<a class="sourceLine" id="cb8-217" title="217">  </a>
+<a class="sourceLine" id="cb8-218" title="218">  out.obj<span class="op">$</span>sigInd &lt;-<span class="st"> </span>sigInd</a>
+<a class="sourceLine" id="cb8-219" title="219">  </a>
+<a class="sourceLine" id="cb8-220" title="220">  <span class="kw">return</span>(out.obj)</a>
+<a class="sourceLine" id="cb8-221" title="221">}</a></code></pre></div>
+<p>To evaluate empirical power of each method, we run the function <code>my.iterations</code> multiple times using the following line, where the variable <code>jid</code> ranges from 1 to 200. The empirical power of each pathway is calculated as the proportion of runs which report an adjusted <span class="math inline">\(p\)</span>-value that is no greater than 0.05 out of the 200 replications.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">res &lt;-<span class="st"> </span><span class="kw">tryCatch</span>(<span class="kw">my.iterations</span>(jid), <span class="dt">error=</span><span class="cf">function</span>(e) <span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(res)) {</a>
+<a class="sourceLine" id="cb9-4" title="4">  <span class="kw">cat</span>(<span class="st">&quot;... Save Output ... </span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb9-5" title="5">  <span class="kw">save</span>(res, <span class="dt">file=</span><span class="kw">paste0</span>(<span class="kw">paste0</span>(OutFolder,<span class="st">&#39;results/mu&#39;</span>, muvals<span class="op">*</span><span class="dv">10</span>,<span class="st">&#39;/&#39;</span>), newFileName, <span class="st">&#39;.rda&#39;</span>))</a>
+<a class="sourceLine" id="cb9-6" title="6">}</a>
+<a class="sourceLine" id="cb9-7" title="7"></a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="kw">cat</span>(<span class="st">&quot;... DONE! ... </span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 </div>
 </div>
+</section>
 
 
 

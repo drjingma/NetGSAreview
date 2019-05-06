@@ -2,7 +2,10 @@
 title: "Analysis of Prostate Cancer Data from TCGA"
 author: "Jing Ma"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,60 +17,50 @@ vignette: >
 
 rm(list = ls())
 
-library(glasso)
-library(glmnet)
-library(igraph)
-library(KEGGgraph)
+## Packages for different methods
+library(devtools)
 library(graphite)
-library(corpcor)
-library(DEGraph)
-library(SPIA)
-library(PathNet)
 library(org.Hs.eg.db)
-# library(annotate)
+library(SPIA)
 library(ROntoTools)
-# library(hugene10sttranscriptcluster.db)
-
-# please install the latest version of netgsa
-# library(devtools)
-# devtools::install_github("drjingma/netgsa", build_vignettes=T)
-# devtools::install_github("JClavel/glassoFast")
+library(ToPASeq)
+library(CePa)
+library(topologyGSA)
 library(netgsa)
-library(glassoFast)
-
-# Parallel computing
-library(parallel)
-library(foreach)
-library(doParallel)
+library(DEGraph)
+library(glasso)
+library(limma)
+library(PathNet)
 
 ```
 
 # Introduction
-In this note, we provide details on the prostate cancer enrichment analysis with different methods, including **NetGSA**, **DEGraph**, **PathNet**, **CAMERA**, **SPIA**, **Pathway-Express** and **topologyGSA**. 
+
+In this note, we provide details on the prostate cancer enrichment analysis with different methods, including **CAMERA**, **CePa**, **DEGraph**, **NetGSA**, **PathNet**, **Pathway-Express**, **PRS**, **SPIA** and **topologyGSA**. 
 
 ## R package
 The following packages are used throughout for the analysis.
 ```{r package, eval=FALSE}
+## Packages for different methods
 library(devtools)
-library(glasso)
-library(glmnet)
-library(igraph)
-library(KEGGgraph)
 library(graphite)
-library(corpcor)
-library(DEGraph)
-library(SPIA)
-library(PathNet)
 library(org.Hs.eg.db)
-# library(annotate)
-# library(hugene10sttranscriptcluster.db)
-# Parallel computing
-library(parallel)
-library(foreach)
-library(doParallel)
+library(SPIA)
+library(ROntoTools)
+library(ToPASeq)
+library(CePa)
+library(topologyGSA)
+library(netgsa)
+library(DEGraph)
+library(glasso)
+library(limma)
+library(PathNet)
+```
 
-devtools::install_github("drjingma/netgsa", build_vignettes=T)
-devtools::install_github("JClavel/glassoFast")
+Computations are done in R 3.5.2. Detailed session information can be retrieved via `session_info()`:
+
+```{r session info}
+devtools::session_info()
 ```
 
 ## Data
@@ -75,313 +68,329 @@ devtools::install_github("JClavel/glassoFast")
 We first load the data object. 
 
 ```{r load data}
-load("../Datasets/ProstateCancer.rda")
+load("../Datasets/prostatecancer2015_ready.rda")
 ls()
 ```
-The variables are 
+
+The variables in the current working environment are 
   
-  * `A`: the binary adjacency matrix needed in NetGSA. This matrix is obtained from BioCarta.
-  * `A4PathNet`: the binary adjacency matrix needed in PathNet. This matrix is based on KEGG interactions available in `graphite`.
-  * `ALL_EntrezID`: a list of gene Entrez IDs of length 17539. These are the genes mapped from the complete set of Affymetrix probe IDs. 
-  * `B`: the pathway membership matrix with rows corresponding to pathways and columns to genes.
+  * `camera_paths`: a list of pathways defined for use in CAMERA.
+  * `cepa_paths`: a list of pathway catelogue information defined for use in CePa.
   * `dataset`: a list with values
+    + `gene_info`: a data frame of gene information, including gene symbol and gene Entrez ID. 
+    + `sample_info`: a data frame of sample meta data where we used `Status` to define the patient's group (1 for cases and 0 for control).     
     + `dat`: the processed data matrix with rows corresponding to genes and columns to samples.
-    + `gene_info`: a data frame of gene information, including the original AffyID, gene symbol and Entrez ID. 
-    + `sample_info`: a numeric vector of sample status, with 1 for cases and 0 for control. 
-  * `kpg`: a list of KEGG pathway graph for use in Pathway-Express. 
-  * `pathways4PathNet`: a data frame consisting of edges for use in PathNet. 
-  * `path4netgsa`: a PathwayList object consisting of 98 KEGG signaling and metabolic pathways. 
-  
-## Pathway topology
-Different methods require the users to supply the pathway topology information in different formats, such as either an adjacency matrix or a graph representing the pathway topology. To ensure fair comparisons, we downloaded the KEGG pathways using the R-package `graphite`, on December 10, 2016. 
+  * `deGraph_paths`: a list of KEGG pathway graph for use in Pathway-Express.
+  * `genes2affect_btw`: genes (in Entrez IDs) that are affected under the betweenness design. 
+  * `genes2affect_comm`: genes (in Entrez IDs) that are affected under the community design.
+  * `genes2affect_nbhd`: genes (in Entrez IDs) that are affected under the neighborhood design.
+  * `netgsa_paths`: a list of pathways defined for use in netgsa.
+  * `pathNet_paths`: a list of pathways defined for use in PathNet.
+  * `pathSelected`: a list of *graphite* pathways.
+  * `pe_paths`: a list of pathways defined for use in Pathway-Express.
+  * `topoGSA_paths`: a list of pathways defined for use in topologyGSA. 
 
-Note due to a change in the internal structure of the Pathway class, new version of R (>=3.4) may not be able to read `path4netgsa`. One solution is to run the code on R 3.3.3, under which the object was created. If you are using R 3.4 or newer, we suggest reloading the PathwayList and select the pathways whose names match those in `path4netgsa`. Further, it is important to ensure that the pathways in different objects are all equivalent. 
-
-```{r reload pathways}
-new.paths <- pathways("hsapiens", "kegg")
-path4netgsa <- new.paths[match(names(path4netgsa),names(new.paths))]
-if (sum(sapply(path4netgsa, is.null))>0){
-  path4netgsa <- path4netgsa[-which(sapply(path4netgsa, is.null)==1)]
-  B <- B[(rownames(B)%in%names(path4netgsa)),]
-  pathways4PathNet <- pathways4PathNet[(pathways4PathNet$title %in% names(path4netgsa)),]
-  kpg <- kpg[(rownames(B)%in%names(path4netgsa))]
-}
-```
-
-The function `runTopologyGSA` is also built in `graphite`.  In addition, this package allows us to prepare the pathways into a format that can be used in **SPIA**. 
+One can use the *graphite* package to prepare pathways into a format that can be used in **SPIA**. 
 
 ```{r prepare spia, eval=FALSE}
 # --Run the following to prepare the pathway information for SPIA--
-# prepareSPIA(path4netgsa, "hsa_KEGG_signaling")
+prepareSPIA(pathSelected, "PCA_KEGG")
 ```
 
 ## Enrichment analysis
 
-The goal is to identify KEGG pathways enriched between prostate cancer cases and normal control patients. 
-In our comparative study, we consider the following two scenarios: (1) use the samples as they are and generate signals at the mean level based on the pathway topology; and (2) shuffle the samples and generate mean level signals. The rationale of (2) is that by shuffling the samples, we expect no difference between the underlying networks.
+The goal is to identify KEGG pathways enriched between normal and diseased patients. In our comparative study, we consider the following two scenarios: (1) use the samples as they are and generate signals at the mean level based on the pathway topology; and (2) shuffle the samples and generate mean level signals. The rationale of (2) is that by repeatedly permuting the samples, we expect no difference between the underlying networks.
 
-The following code was used to run all seven methods in the final enrichment analysis. Note since there are a large number of KEGG pathways and a lot of genes, enrichment analysis is done separately for each pathway. 
+The following code was used to run all methods in the final enrichment analysis. Note 
 
-We start by generating the *affected* genes. 
+  * Since there are a large number of KEGG pathways and a lot of genes, enrichment analysis is done separately for each pathway.
+  * The following code sets mean signal via `muvals=0.1`. In our studies, we let the mean signal `muvals` vary from 0.1, 0.2, 0.3, 0.4 and 0.5 to evaluate the empirical powers of different methods. 
+
 
 ```{r start, eval=FALSE}
 
-set.seed(2017)
-source("../RCode/preprocess_lib.r")
+source("preprocess_lib.r")
+
+set.seed(2019)
+
+OutFolder <- "../6_Results_New/PCA/"
+filename <- "prostatecancer2015_ready.rda"
+newFileName <- gsub('.rda','',filename)
+newFileName <- gsub('_ready','', newFileName)
+load(paste0(OutFolder, filename))
+
+writeLines(capture.output(devtools::session_info()), paste0(newFileName,"_sessionInfo.txt"))
+
+# general parameters
+DEBUG <- 'btw' # design for pathway deregulation
+today <- '20190403'
+ncond <- 2
+ncores <- 1
+muvals <- 0.1
+
+newFileName <- paste0(newFileName, '_', DEBUG, '_perm_mu', muvals*10, '_ncores', ncores, '_', today, '_', jid)
 
 p <- nrow(dataset$dat)
-DEBUG <- 'community' 
-# design for pathway deregulation
-## general parameters
-ncond <- 2
-npath <- length(path4netgsa)
-npath_selected <- 20
-pathway_sig_id <- sample(1:npath, npath_selected)
-isEnrichment <- rep(0, npath)
-isEnrichment[pathway_sig_id] <- 1  
-nreps <- 100
-muvals <- 0.4
-detect_call <- 0.1
-pathway_names <- names(path4netgsa)
-
-## For the selected pathways, assign which genes to affect based on the design in DEBUG.
-## The following short loop allows us to introduce randomness in genes that are differential.
-genesets <- vector("list", npath)
-for (i in pathway_sig_id){
-  pathway_i <- path4netgsa[[i]]
-  genes <- colnames(B)[which(B[i,]==1)]
-  fit <- community.dereg(pathway_i, genes, DC = detect_call, seed=1)
-  genesets[[i]] <- fit$GeneID
-}
-genes2affect <- unique(Reduce("c", genesets[pathway_sig_id]))
-
-colnames(B) <- dataset$gene_info$Symbol
+npath <- length(pathSelected)
+path.names <- names(pathSelected)
 mu <- vector("list", ncond)
 mu[[1]] <- rep(0, p)
-mu[[2]] <- muvals * (match(dataset$gene_info$EntrezID, genes2affect, nomatch = 0)>0)
+mu[[2]] <- muvals * (match(dataset$gene_info$EntrezID, base::eval(as.name(paste0("genes2affect_",DEBUG))), nomatch = 0)>0)
 
-myPathway <- convertIdentifiers(path4netgsa, "symbol")
+##********************************
+##****   Main function   *******
+##********************************
+dat <- vector("list", ncond)
+dat[[1]] <- dataset$dat[,(dataset$sample_info$er_status_by_ihc=="Positive")]## p by n1
+dat[[2]] <- dataset$dat[,(dataset$sample_info$er_status_by_ihc=="Negative")]## p by n2
+dat <- lapply(dat, function(d) t(scale(t(d))))
+n <- sapply(dat, ncol)
+dat_combined <- cbind(dat[[1]], dat[[2]])
 
 ```
 
-Our main function is as follows, and simultaneously handles all seven methods. The results of pathway enrichment are saved in the matrix `sigInd`. 
+Our main function is `my.iterations`, and simultaneously handles the output from all methods. The results of pathway enrichment are saved in the object `out.obj`.
 
-```{r main iterations, eval=FALSE}
+```{r main function, eval=FALSE}
 my.iterations <- function(iters){
-  ## For every iteration, need to restandardize data first
-  dat <- vector("list", ncond) 
-  dat[[1]] <- dataset$dat[,(dataset$sample_info==1)]## p by n1
-  dat[[2]] <- dataset$dat[,(dataset$sample_info==0)]## p by n2
-  n <- sapply(dat, ncol)
-  dat <- lapply(dat, function(d) t(scale(t(d))))  
-  rownames(dat[[1]]) <- dataset$gene_info$Symbol[1:p]
-  rownames(dat[[2]]) <- dataset$gene_info$Symbol[1:p]
-  rownames(A) <- dataset$gene_info$Symbol[1:p]
-  colnames(A) <- dataset$gene_info$Symbol[1:p]
- 
-  sigInd <- matrix(0, npath, 21)
-  colnames(sigInd) <- c("PathNet-nom", "PathNet-fdr","PathNet-fwer",
-                        "camera-nom",  "camera-fdr", "camera-fwer",
-                        "DEGraph-nom", "DEGraph-fdr","DEGraph-fwer",
-                        "topoGSA-nom", "topoGSA-fdr","topoGSA-fwer",
-                        "NetGSA-nom", "NetGSA-fdr","NetGSA-fwer",
-                        "SPIA-nom", "SPIA-fdr","SPIA-fwer",
-                        "pe-nom", "pe-fdr","pe-fwer")
+  set.seed(iters)
+  new_dat <- vector("list", ncond)
+  
+  ## Permute sample lables
+  ind.1 <- sample(ncol(dat_combined), n[1])
+  new_dat[[1]] <- dat_combined[,ind.1]
+  new_dat[[2]] <- dat_combined[,-ind.1]
+  
+  ## Or use the original sample labels
+  #  new_dat[[1]] <- dat_combined[,seq(1,n[1])]
+  #  new_dat[[2]] <- dat_combined[,-seq(1,n[1])]
+  dat <- new_dat
+
+  ## output
+  col.names <- c("PE.noCut", 
+                 "PE.Cut", 
+                 "SPIA", 
+                 "PRS",
+                 "cepa.ORA.equal.weight", 
+                 "cepa.ORA.in.degree",
+                 "cepa.ORA.out.degree",
+                 "cepa.ORA.betweenness",
+                 "cepa.ORA.in.reach",
+                 "cepa.ORA.out.reach",
+                 "cepa.GSA.equal.weight", 
+                 "cepa.GSA.in.degree",
+                 "cepa.GSA.out.degree",
+                 "cepa.GSA.betweenness",
+                 "cepa.GSA.in.reach",
+                 "cepa.GSA.out.reach",
+                 "NetGSA2", 
+                 "DEGraph", 
+                 "topologyGSA", 
+                 "topologyGSA.var", 
+                 "CAMERA", 
+                 "PathNet",
+                 "NetGSA")
+  sigInd <- matrix(0, npath, length(col.names))
+  rownames(sigInd) <- path.names
+  colnames(sigInd) <- col.names
+  
+  out.obj <- list()
+  out.obj$pe <- 0
+  out.obj$spia <- 0
+  out.obj$prs <- 0
+  out.obj$cepa <- 0
+  
+  cat('... Setting up data ....\n')
   
   for (i in 1:ncond) {
+    ## Add some random noise to the data
     epsilonVar <- matrix(rnorm(p * n[i]), p, n[i])
-    dat[[i]] <- dat[[i]] + matrix(rep(mu[[i]], n[i]), p, n[i]) + 0.25*epsilonVar
+    dat[[i]] <- dat[[i]] + matrix(rep(mu[[i]], n[i]), p, n[i]) + 0.1*epsilonVar
   }
-
+  
+  ## ******************************
+  ## (1) SPIA, Pathway-Express----
+  ## ******************************
+  cat('... Running PE ....\n')
+  
   ## Two-sample t-test with FDR correction to first determine the DE genes;
-  pvals4genes <- sapply(1:p, function(i) t.test(dat[[2]][i,], dat[[1]][i,], var.equal = FALSE)$p.value)
+  pvals4genes <- sapply(1:p, function(i)  t.test(dat[[2]][i,], dat[[1]][i,], var.equal = FALSE)$p.value)
+  
+  pvals4genes.fdr <- p.adjust(pvals4genes, "BH")
+  logFC.ALL <- rowMeans(dat[[2]]) - rowMeans(dat[[1]])
+  names(logFC.ALL) <- dataset$gene_info$EntrezID
+  
+  res.pe.all <- pe(x = logFC.ALL, graphs = pe_paths, ref = dataset$gene_info$EntrezID,  nboot = 2000, verbose = FALSE)
+  res.pe.all <- summary(res.pe.all)
+  sigInd[,1] <- res.pe.all$pPert[match(path.names,rownames(res.pe.all))]
+ 
+  logFC.th <- logFC.ALL[which(pvals4genes.fdr<0.05)]
+  if (length(logFC.th)>0){
+    # Use DE genes
+    out.obj$spia <- 1
+    out.obj$pe <- 1
+    
+    res.pe <- pe(x = logFC.th, graphs = pe_paths, ref = dataset$gene_info$EntrezID,  nboot = 2000, verbose = FALSE)
+    res.pe <- summary(res.pe)
+    sigInd[,2] <- res.pe$pComb[match(path.names,rownames(res.pe))]
+    
+    cat('... Running SPIA ....\n')
+    res.spia <- runSPIA(de=logFC.th, all=dataset$gene_info$EntrezID, "hsa_KEGG")
+    sigInd[,3] <- res.spia$pG[match(path.names,res.spia$Name)]
+  }
+  
+  ## ******************************
+  ## (2) PRS----
+  ## ******************************
+  cat('... Running PRS ....\n')
+  
+  if (length(logFC.th)>0){
+    out.obj$prs <- 1
+    res.prs <- prs(logFC.th, all=dataset$gene_info$EntrezID, pwys = pathSelected, nperm=2000)
+    sigInd[,4] <- res.prs$p.value[match(path.names,rownames(res.prs))]
+  }
+  
+  ## ******************************
+  ## (3) CePa----
+  ## ******************************
+  cat('... Running CePa ORA...\n')
+  
+  # Note cepa DE gene list is named by gene symbols, and the background genes are also named by gene symbols
+  names(logFC.ALL) <- dataset$gene_info$symbol
+  logFC.th <- logFC.ALL[which(pvals4genes.fdr<0.05)]
+  if (length(logFC.th)>0){
+    out.obj$cepa <- 1
+    res.cepa.ORA <- cepa.all(dif=names(logFC.th), bk=dataset$gene_info$symbol, pc = cepa_paths$pathways)
+    sigInd[,5] <- sapply(res.cepa.ORA, function(a) a$equal.weight$p.value)
+    sigInd[,6] <- sapply(res.cepa.ORA, function(a) a$in.degree$p.value)
+    sigInd[,7] <- sapply(res.cepa.ORA, function(a) a$out.degree$p.value)
+    sigInd[,8] <- sapply(res.cepa.ORA, function(a) a$betweenness$p.value)
+    sigInd[,9] <- sapply(res.cepa.ORA, function(a) a$in.reach$p.value)
+    sigInd[,10] <- sapply(res.cepa.ORA, function(a) a$out.reach$p.value)
+  }
+  
+  cat('... Running CePa GSA ... \n')
+  classlabels <- list()
+  classlabels$label <- c(rep("Pos", n[1]), rep("Neg", n[2]))
+  classlabels$treatment <- "Pos"
+  classlabels$control <- "Neg"
+  
+  res.cepa.GSA <- cepa.all(mat = cbind(dat[[1]], dat[[2]]), label = classlabels, pc = cepa_paths$pathways)
+  sigInd[,11] <- sapply(res.cepa.GSA, function(a) a$equal.weight$p.value)
+  sigInd[,12] <- sapply(res.cepa.GSA, function(a) a$in.degree$p.value)
+  sigInd[,13] <- sapply(res.cepa.GSA, function(a) a$out.degree$p.value)
+  sigInd[,14] <- sapply(res.cepa.GSA, function(a) a$betweenness$p.value)
+  sigInd[,15] <- sapply(res.cepa.GSA, function(a) a$in.reach$p.value)
+  sigInd[,16] <- sapply(res.cepa.GSA, function(a) a$out.reach$p.value)
   
   ##*******************************  
-  ## (1) *******NetGSA*******
+  ## (4) NetGSA, DEGraph, topologyGSA----
   ##*******************************
-  fitted_netgsa <-  vector("list", npath)
-  res.DEGraph <- rep(NA, npath)
-  ## Run NetGSA on each pathway
-  for (loop_path in 1:npath){
-    ## Set current variables
-    currentPath <- convertIdentifiers(path4netgsa[[loop_path]], "entrez")
-    currentName <- nodes(currentPath)
-    if (grep('ENTREZID:',currentName[1])==1){
-      newEntrez <- paste0('ENTREZID:',dataset$gene_info$EntrezID)
-    } else{
-      newEntrez <- dataset$gene_info$EntrezID
-    }
-    index=!is.na(match(newEntrez,currentName))
-    g = subGraph(newEntrez[index], pathwayGraph(currentPath))
-    X1 = t(dat[[1]][index,])
-    X2 = t(dat[[2]][index,])
-    res.DEGraph[loop_path]  = graph.T2.test(X1, X2, G=g)$p.value
+  cat('... Running NetGSA, DEGraph and topologyGSA ....\n')
+  classlabels <- c(rep(1, n[1]), rep(2, n[2]))
+  
+  for (loop_path in seq(1,npath)){
+    cat("current path ...", loop_path, '/', npath, '...\n')
+    index = camera_paths$membership[[loop_path]]
+    pp <- length(index)
+    current_data <- lapply(1:ncond, function(a) dat[[a]][index,])
+    oneMat <- netgsa_paths$adjacency[[loop_path]]
     
-    variables_in_loop <- colnames(B)[which(B[loop_path,]==1)] 
-    pp <- length(variables_in_loop)
-    
-    ## Set current data
-    current_data <- vector("list", ncond)
-    current_data[[1]] <- dat[[1]][(rownames(A) %in% variables_in_loop),]
-    current_data[[2]] <- dat[[2]][(rownames(A) %in% variables_in_loop),]
-    
-    ## Prepare for NetGSA
-    oneMat <- A[(rownames(A) %in% variables_in_loop),(rownames(A) %in% variables_in_loop)]
-    
-    ## Estimate the partial correlation matrices 
+    ## Estimate the partial correlation matrices
     wAdj <- vector("list", ncond)
     for (k in 1:ncond) {
-      lambda_vec = seq(1, 5, 0.1) * sqrt(log(pp)/n[k])
-      rho_star = 0.1 * sqrt(log(pp)/n[k])
-      bic_tune <- bic.netEst.undir(current_data[[k]], one=oneMat, lambda = lambda_vec, rho=rho_star, eta=1)
+      lambda_vec <- seq(1, 5, 0.1) * sqrt(log(pp)/n[k])
+      rho_star <- 0.1 * sqrt(log(pp)/n[k])
+      bic_tune <- bic.netEst.undir(x=current_data[[k]], one=oneMat,  lambda = lambda_vec, rho=rho_star, eta=0.01*(1+pp/2))
       lambda_opt <- (9+which.min(bic_tune$BIC)) * sqrt(log(pp)/n[k]) /10
-      fit <- netEst.undir(current_data[[k]], one=oneMat, lambda = lambda_opt, rho=rho_star, eta = 1)
+      fit <- netEst.undir(current_data[[k]], one=oneMat, lambda = lambda_opt, rho=rho_star, eta = 0.01*(1+pp/2))
       wAdj[[k]] <- fit$Adj
-    } 
-    
+    }
+
     ## Run NetGSA
-    current_pathway <- matrix(rep(1,pp), nrow=1)
-    colnames(current_pathway) <- rownames(oneMat)
-    rownames(current_pathway) <- names(path4netgsa)[[loop_path]]
-    out <- NetGSA(A = wAdj, x = do.call(cbind, current_data),group = c(rep(1, n[1]), rep(2, n[2])), pathways = current_pathway, lklMethod = "REHE")
+    B <- matrix(rep(1,pp), nrow=1)
+    colnames(B) <- rownames(oneMat)
+    rownames(B) <- path.names[loop_path]
+    out <- NetGSA(A = wAdj, x = do.call(cbind, current_data), group=classlabels, pathways = B, lklMethod = "REHE")
+    sigInd[loop_path,17] <- out$results$pval
     
-    fitted_netgsa[[loop_path]] <- out 
+    # Also run NetGSA assuming the network is shared between the two conditions
+    dat_joint <- do.call(cbind, current_data)
+    lambda_vec <- seq(1, 5, 0.1) * sqrt(log(pp)/sum(n))
+    rho_star <- 0.1 * sqrt(log(pp)/sum(n))
+    bic_tune <- bic.netEst.undir(x=dat_joint, one=oneMat,  lambda = lambda_vec, rho=rho_star, eta=0.01*(1+pp/2))
+    lambda_opt <- (9+which.min(bic_tune$BIC)) * sqrt(log(pp)/sum(n)) /10
+    fit <- netEst.undir(dat_joint, one=oneMat, lambda = lambda_opt, rho=rho_star, eta = 0.01*(1+pp/2))
+    wAdj <- fit$Adj
+    out <- NetGSA(A = list(wAdj,wAdj), x = dat_joint, group=classlabels, pathways = B, lklMethod = "REHE")
+    sigInd[loop_path,23] <- out$results$pval
+    
+    sigInd[loop_path,18] <- graph.T2.test(X1=t(current_data[[1]]), X2=t(current_data[[2]]), G=deGraph_paths$pathways[[loop_path]])$p.value
+
+    test <- tryCatch(pathway.mean.test(y1=t(current_data[[1]]), y2=t(current_data[[2]]), dag = topoGSA_paths$pathways[[loop_path]], alpha = 0.05, perm.num = 1000), error=function(e) NULL)
+    if (is.null(test)){
+      sigInd[loop_path,19] <- NA; sigInd[loop_path,20]  <- NA
+    } else {
+      sigInd[loop_path,19] <- test$p.value
+      sigInd[loop_path,20] <- test$p.value.var
+    }
   }
-  # Output netgsa results
-  pvals <- sapply(fitted_netgsa, function(a) a$results$pval)
-  sigInd[,13] <- (pvals < 0.05)
-  sigInd[,14] <- (p.adjust(pvals, "BH") < 0.05)
-  sigInd[,15] <- (p.adjust(pvals, 'holm')<0.05)
-  
-  ##*******************************
-  ## (3) *******DEGraph*******
-  ##*******************************
-  sigInd[,7] <- (res.DEGraph<0.05)
-  sigInd[,8] <- (p.adjust(res.DEGraph, "BH")<0.05)
-  sigInd[,9] <- (p.adjust(res.DEGraph, "holm")<0.05)
   
   ##*******************************  
-  ## (2) *******camera*******
+  ## (5) camera----
   ##*******************************
-  classBca2012 <- c(rep(1, n[1]), rep(0, n[2]))
-  expBca2012 <- cbind(dat[[1]], dat[[2]])
-  rownames(expBca2012) <- dataset$gene_info$EntrezID
+  cat('... Running CAMERA ....\n')
   
-  design <- cbind(Intercept = 1, Group = classBca2012)
-  setList <- lapply(1:nrow(B), function(i) which(B[i,]==1))
-  names(setList) <- names(path4netgsa)
+  classPCA2012 <- c(rep(1, n[1]), rep(0, n[2]))
+  names(classPCA2012) <- dataset$sample_info$GSMID
+  expPCA2012 <- cbind(dat[[1]], dat[[2]])
+  rownames(expPCA2012) <- dataset$gene_info$EntrezID
+  design <- cbind(Intercept = 1, Group = classPCA2012)
   
-  resCamera <- limma::camera(expBca2012, setList, design) 
-  resCamera <- resCamera[match(names(path4netgsa),rownames(resCamera)),]
-  sigInd[,4] <- (resCamera$PValue < 0.05)
-  sigInd[,5] <- (p.adjust(resCamera$PValue, 'BH')<0.05)
-  sigInd[,6] <- (p.adjust(resCamera$PValue, 'holm')<0.05)
+  res.camera <- limma::camera(expPCA2012, camera_paths$membership, design) 
+  sigInd[,21] <- res.camera$PValue[match(path.names,rownames(res.camera))]
   
   ## ******************************
-  ## (4) *******PathNet*******
-  # based on -log10(pvalue)
+  ## (6) PathNet----
   ## ******************************
-  gene_ID <- dataset$gene_info$EntrezID
+  cat('... Running PathNet ....\n')
+  
   logPval <- -log10(pvals4genes)
-  dat4PathNet <- cbind(as.numeric(gene_ID),logPval)
+  dat4PathNet <- cbind(as.numeric(gsub("ENTREZID:","",dataset$gene_info$EntrezID)),logPval)
   colnames(dat4PathNet) <- c("Gene.ID", "ERneg")
-  resPathNet <- PathNet(Enrichment_Analysis = TRUE, Contextual_Analysis = FALSE, 
-                        DirectEvidence_info = dat4PathNet, Column_DirectEvidence = 2, 
-                        Adjacency = A4PathNet, pathway = pathways4PathNet, 
-                        n_perm = 100, threshold = 0.05, use_sig_pathways  = FALSE)
+  res.PathNet <- PathNet(Enrichment_Analysis = TRUE, Contextual_Analysis = FALSE, 
+                         DirectEvidence_info = dat4PathNet, Column_DirectEvidence = 2, 
+                         Adjacency = pathNet_paths$adjacency, pathway = pathNet_paths$pathways, 
+                         n_perm = 2000, threshold = 0.05, use_sig_pathways  = FALSE)
   
-  dict.pathnet <- data.frame("full.name" = sort(names(path4netgsa)), 'path.name' = sort(as.character(resPathNet$enrichment_results$Name)))
-  pathnet.tempName <- dict.pathnet$full.name[match(as.character(resPathNet$enrichment_results$Name),as.character(dict.pathnet$path.name))]
-  resPathNet$enrichment_results$Name <- as.character(pathnet.tempName)
-  resPathNet$enrichment_results <- resPathNet$enrichment_results[match(names(path4netgsa),resPathNet$enrichment_results$Name),]
+  res.PathNet <- res.PathNet$enrichment_results
+  dict.pathnet <- data.frame("full.name" = sort(path.names), 
+                             'path.name' = sort(as.character(res.PathNet$Name)), stringsAsFactors = FALSE)
+  res.PathNet$Name <- dict.pathnet$full.name[match(as.character(res.PathNet$Name),dict.pathnet$path.name)]
+  sigInd[,22] <- res.PathNet$p_PathNet[match(path.names, res.PathNet$Name)]
   
-  sigInd[,1] <- (resPathNet$enrichment_results$p_PathNet<0.05)
-  sigInd[,2] <- (p.adjust(resPathNet$enrichment_results$p_PathNet, "BH")<0.05)
-  sigInd[,3] <- (p.adjust(resPathNet$enrichment_results$p_PathNet, "holm")<0.05)
+  out.obj$sigInd <- sigInd
   
-  ## ******************************
-  ## (5) *******topologyGSA*******
-  ## ******************************
-  res.TopoGSA.var <- runTopologyGSA(myPathway, "var", exp1=t(dat[[1]]), exp2=t(dat[[2]]), 0.05)
-  res.TopoGSA.mean <- runTopologyGSA(myPathway, "mean", exp1=t(dat[[1]]), exp2=t(dat[[2]]), 0.05)
-  res.topologyGSA <- data.frame("Name" = names(path4netgsa))
-  is.match.topologyGSA <- match(names(path4netgsa), names(res.TopoGSA.var$results))
-  
-  res.topologyGSA$p.value <- sapply(is.match.topologyGSA, function(a) {
-    if (is.na(a)) {
-      return(NA)
-    } else {
-      min(c(res.TopoGSA.var$results[[a]]$p.value,res.TopoGSA.mean$results[[a]]$p.value)) 
-    }
-  } 
-  )
-  pFdr <- (p.adjust(res.topologyGSA$p.value, "BH")<0.05)
-  sigInd[,10] <- (res.topologyGSA$p.value < 0.05)
-  sigInd[,11] <- (p.adjust(res.topologyGSA$p.value, "BH")<0.05)
-  sigInd[,12] <- (p.adjust(res.topologyGSA$p.value, "holm")<0.05)
-  
-  ## ******************************
-  ## (6) *******SPIA*******
-  ## ******************************
-  
-  pval4spiaFDR <- p.adjust(pvals4genes, "BH")
-  logFC <- rowMeans(dat[[2]]) - rowMeans(dat[[1]])
-  names(logFC) <- dataset$gene_info$EntrezID[1:p]
-  logFC <- logFC[which(pval4spiaFDR<0.05)]
-
-  if (length(logFC)==0){
-    spiaStatus=0;   
-    return(list(sigInd=sigInd, spiaStatus = spiaStatus))
-  } else{
-    spiaStatus=1;
-
-    resSPIA <- runSPIA(de=logFC, all=ALL_EntrezID, "hsa_KEGG_signaling")
-    neworder <- match(names(path4netgsa),resSPIA$Name)
-    resSPIA <- resSPIA[neworder,]
-    rownames(resSPIA) <- NULL
-    resSPIA$Name <- names(path4netgsa)
-    
-    sigInd[,16] <- sapply(resSPIA$pG, function(a) ifelse(is.na(a), NA, (a<0.05)))
-    sigInd[,17] <- sapply(resSPIA$pGFdr, function(a) ifelse(is.na(a), NA, (a<0.05)))
-    sigInd[,18] <- sapply(resSPIA$pGFWER, function(a) ifelse(is.na(a), NA, (a<0.05)))
-    
-    resPE <- pe(x = logFC, graphs = kpg, ref = ALL_EntrezID,  nboot = 500, verbose = FALSE)
-    df4PE <- summary(resPE)
-    neworder <- match(names(path4netgsa),rownames(df4PE))
-    df4PE <- df4PE[neworder,]
-    rownames(df4PE) <- names(path4netgsa)
-    
-    sigInd[,19] <- sapply(df4PE$pComb, function(a) ifelse(is.na(a), NA, (a<0.05)))
-    sigInd[,20] <- sapply(df4PE$pComb.fdr, function(a) ifelse(is.na(a), NA, (a<0.05)))
-    sigInd[,21] <- sapply(p.adjust(df4PE$pComb,'holm'), function(a) ifelse(is.na(a), NA, (a<0.05)))
-    
-    return(list(sigInd=sigInd, spiaStatus = spiaStatus))
-  }
-  
+  return(out.obj)
 }
-```
 
-To evaluate the above procedure multiple times, we find parallel computing very useful. 
-
-```{r parallel, eval=FALSE}
-cat("In the main loop ... \n")
-cl <- makeCluster(10)
-registerDoParallel(cl)
-
-res <- foreach(iter = 1:nreps, 
-               .packages = c("glasso", "glmnet", "graphite","igraph","KEGGgraph", "ROntoTools",
-                             "SPIA","PathNet","limma","DEGraph","org.Hs.eg.db","topologyGSA"), .verbose = T) %dopar% {
-                               tryCatch({my.iterations(iter)}, error=function(e) NULL)
-                             }
-
-stopCluster(cl)
 
 ```
 
+To evaluate empirical power of each method, we run the function `my.iterations` multiple times using the following line, where the variable `jid` ranges from 1 to 200. The empirical power of each pathway is calculated as the proportion of runs which report an adjusted $p$-value that is no greater than 0.05 out of the 200 replications. 
 
+```{r replication, eval=FALSE}
 
+res <- tryCatch(my.iterations(jid), error=function(e) NULL)
 
+if (!is.null(res)) {
+  cat("... Save Output ... \n")
+  save(res, file=paste0(paste0(OutFolder,'results/mu', muvals*10,'/'), newFileName, '.rda'))
+}
 
+cat("... DONE! ... \n")
+
+```
 
 
 

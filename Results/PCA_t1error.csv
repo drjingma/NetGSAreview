@@ -1,0 +1,673 @@
+"mu","name","size","method","type1error"
+0,"Fructose and mannose metabolism",31,"NetGSA",0
+0,"Galactose metabolism",27,"NetGSA",0
+0,"Ascorbate and aldarate metabolism",8,"NetGSA",0
+0,"Purine metabolism",153,"NetGSA",0.005
+0,"Pyrimidine metabolism",88,"NetGSA",0.005
+0,"Alanine, aspartate and glutamate metabolism",32,"NetGSA",0
+0,"Glycine, serine and threonine metabolism",29,"NetGSA",0
+0,"Cysteine and methionine metabolism",39,"NetGSA",0
+0,"Arginine and proline metabolism",41,"NetGSA",0
+0,"Histidine metabolism",20,"NetGSA",0
+0,"Tyrosine metabolism",32,"NetGSA",0
+0,"Phenylalanine metabolism",14,"NetGSA",0
+0,"Tryptophan metabolism",34,"NetGSA",0
+0,"beta-Alanine metabolism",29,"NetGSA",0
+0,"Taurine and hypotaurine metabolism",10,"NetGSA",0
+0,"Phosphonate and phosphinate metabolism",5,"NetGSA",0
+0,"Selenocompound metabolism",11,"NetGSA",0.005
+0,"Glutathione metabolism",48,"NetGSA",0
+0,"Starch and sucrose metabolism",30,"NetGSA",0
+0,"Amino sugar and nucleotide sugar metabolism",42,"NetGSA",0
+0,"Glycerolipid metabolism",53,"NetGSA",0
+0,"Inositol phosphate metabolism",70,"NetGSA",0.005
+0,"Glycerophospholipid metabolism",84,"NetGSA",0.005
+0,"Ether lipid metabolism",39,"NetGSA",0
+0,"Arachidonic acid metabolism",56,"NetGSA",0
+0,"Linoleic acid metabolism",25,"NetGSA",0
+0,"alpha-Linolenic acid metabolism",22,"NetGSA",0
+0,"Sphingolipid metabolism",43,"NetGSA",0.01
+0,"Pyruvate metabolism",37,"NetGSA",0
+0,"Glyoxylate and dicarboxylate metabolism",22,"NetGSA",0
+0,"Propanoate metabolism",31,"NetGSA",0
+0,"Butanoate metabolism",22,"NetGSA",0
+0,"Thiamine metabolism",14,"NetGSA",0
+0,"Riboflavin metabolism",8,"NetGSA",0
+0,"Nicotinate and nicotinamide metabolism",26,"NetGSA",0
+0,"Retinol metabolism",46,"NetGSA",0
+0,"Porphyrin and chlorophyll metabolism",26,"NetGSA",0
+0,"Sulfur metabolism",9,"NetGSA",0
+0,"Drug metabolism - cytochrome P450",49,"NetGSA",0
+0,"Drug metabolism - other enzymes",58,"NetGSA",0
+0,"Cholesterol metabolism",27,"NetGSA",0.01
+0,"Central carbon metabolism in cancer",54,"NetGSA",0
+0,"Choline metabolism in cancer",71,"NetGSA",0.005
+0,"MAPK signaling pathway",271,"NetGSA",0.005
+0,"ErbB signaling pathway",76,"NetGSA",0.005
+0,"Ras signaling pathway",203,"NetGSA",0
+0,"Rap1 signaling pathway",183,"NetGSA",0.005
+0,"Calcium signaling pathway",173,"NetGSA",0.075
+0,"cGMP-PKG signaling pathway",140,"NetGSA",0
+0,"cAMP signaling pathway",182,"NetGSA",0.015
+0,"Chemokine signaling pathway",166,"NetGSA",0.01
+0,"NF-kappa B signaling pathway",70,"NetGSA",0
+0,"HIF-1 signaling pathway",92,"NetGSA",0.005
+0,"FoxO signaling pathway",109,"NetGSA",0.005
+0,"Phosphatidylinositol signaling system",81,"NetGSA",0.01
+0,"Sphingolipid signaling pathway",87,"NetGSA",0.005
+0,"Phospholipase D signaling pathway",107,"NetGSA",0.005
+0,"p53 signaling pathway",69,"NetGSA",0
+0,"mTOR signaling pathway",127,"NetGSA",0.005
+0,"PI3K-Akt signaling pathway",315,"NetGSA",0.02
+0,"AMPK signaling pathway",88,"NetGSA",0
+0,"Adrenergic signaling in cardiomyocytes",135,"NetGSA",0
+0,"Wnt signaling pathway",136,"NetGSA",0.01
+0,"Notch signaling pathway",41,"NetGSA",0
+0,"Hedgehog signaling pathway",44,"NetGSA",0
+0,"TGF-beta signaling pathway",69,"NetGSA",0
+0,"VEGF signaling pathway",49,"NetGSA",0
+0,"Apelin signaling pathway",120,"NetGSA",0
+0,"Hippo signaling pathway",142,"NetGSA",0.005
+0,"Hippo signaling pathway - multiple species",27,"NetGSA",0
+0,"Toll-like receptor signaling pathway",83,"NetGSA",0
+0,"NOD-like receptor signaling pathway",134,"NetGSA",0
+0,"RIG-I-like receptor signaling pathway",61,"NetGSA",0
+0,"C-type lectin receptor signaling pathway",94,"NetGSA",0
+0,"JAK-STAT signaling pathway",147,"NetGSA",0.03
+0,"IL-17 signaling pathway",12,"NetGSA",0
+0,"T cell receptor signaling pathway",90,"NetGSA",0.005
+0,"B cell receptor signaling pathway",62,"NetGSA",0.005
+0,"Fc epsilon RI signaling pathway",50,"NetGSA",0.005
+0,"TNF signaling pathway",65,"NetGSA",0
+0,"Neurotrophin signaling pathway",106,"NetGSA",0.005
+0,"Retrograde endocannabinoid signaling",87,"NetGSA",0.005
+0,"Insulin signaling pathway",126,"NetGSA",0.005
+0,"GnRH signaling pathway",76,"NetGSA",0.005
+0,"Estrogen signaling pathway",115,"NetGSA",0
+0,"Prolactin signaling pathway",63,"NetGSA",0
+0,"Thyroid hormone signaling pathway",101,"NetGSA",0.005
+0,"Adipocytokine signaling pathway",59,"NetGSA",0
+0,"Oxytocin signaling pathway",139,"NetGSA",0
+0,"Glucagon signaling pathway",81,"NetGSA",0
+0,"Relaxin signaling pathway",115,"NetGSA",0.01
+0,"AGE-RAGE signaling pathway in diabetic complications",83,"NetGSA",0.005
+0,"Epithelial cell signaling in Helicobacter pylori infection",32,"NetGSA",0.005
+0,"Fatty acid biosynthesis",12,"NetGSA",0
+0,"Steroid biosynthesis",17,"NetGSA",0
+0,"Primary bile acid biosynthesis",15,"NetGSA",0
+0,"Ubiquinone and other terpenoid-quinone biosynthesis",9,"NetGSA",0
+0,"Steroid hormone biosynthesis",44,"NetGSA",0
+0,"Arginine biosynthesis",16,"NetGSA",0
+0,"N-Glycan biosynthesis",42,"NetGSA",0.005
+0,"Mucin type O-glycan biosynthesis",29,"NetGSA",0
+0,"Mannose type O-glycan biosynthesis",20,"NetGSA",0
+0,"Glycosaminoglycan biosynthesis - chondroitin sulfate / dermatan sulfate",10,"NetGSA",0
+0,"Glycosaminoglycan biosynthesis - heparan sulfate / heparin",5,"NetGSA",0
+0,"Glycosylphosphatidylinositol (GPI)-anchor biosynthesis",20,"NetGSA",0
+0,"Glycosphingolipid biosynthesis - lacto and neolacto series",25,"NetGSA",0
+0,"Glycosphingolipid biosynthesis - globo and isoglobo series",13,"NetGSA",0
+0,"Glycosphingolipid biosynthesis - ganglio series",14,"NetGSA",0
+0,"Pantothenate and CoA biosynthesis",16,"NetGSA",0
+0,"Folate biosynthesis",26,"NetGSA",0
+0,"Terpenoid backbone biosynthesis",16,"NetGSA",0
+0,"Aminoacyl-tRNA biosynthesis",12,"NetGSA",0
+0,"Fructose and mannose metabolism",31,"DEGraph",0
+0,"Galactose metabolism",27,"DEGraph",0
+0,"Ascorbate and aldarate metabolism",8,"DEGraph",0
+0,"Purine metabolism",153,"DEGraph",0
+0,"Pyrimidine metabolism",88,"DEGraph",0
+0,"Alanine, aspartate and glutamate metabolism",32,"DEGraph",0
+0,"Glycine, serine and threonine metabolism",29,"DEGraph",0
+0,"Cysteine and methionine metabolism",39,"DEGraph",0
+0,"Arginine and proline metabolism",41,"DEGraph",0
+0,"Histidine metabolism",20,"DEGraph",0
+0,"Tyrosine metabolism",32,"DEGraph",0
+0,"Phenylalanine metabolism",14,"DEGraph",0
+0,"Tryptophan metabolism",34,"DEGraph",0.005
+0,"beta-Alanine metabolism",29,"DEGraph",0
+0,"Taurine and hypotaurine metabolism",10,"DEGraph",0
+0,"Phosphonate and phosphinate metabolism",5,"DEGraph",0
+0,"Selenocompound metabolism",11,"DEGraph",0
+0,"Glutathione metabolism",48,"DEGraph",0
+0,"Starch and sucrose metabolism",30,"DEGraph",0
+0,"Amino sugar and nucleotide sugar metabolism",42,"DEGraph",0
+0,"Glycerolipid metabolism",53,"DEGraph",0
+0,"Inositol phosphate metabolism",70,"DEGraph",0
+0,"Glycerophospholipid metabolism",84,"DEGraph",0
+0,"Ether lipid metabolism",39,"DEGraph",0
+0,"Arachidonic acid metabolism",56,"DEGraph",0
+0,"Linoleic acid metabolism",25,"DEGraph",0
+0,"alpha-Linolenic acid metabolism",22,"DEGraph",0
+0,"Sphingolipid metabolism",43,"DEGraph",0
+0,"Pyruvate metabolism",37,"DEGraph",0
+0,"Glyoxylate and dicarboxylate metabolism",22,"DEGraph",0
+0,"Propanoate metabolism",31,"DEGraph",0
+0,"Butanoate metabolism",22,"DEGraph",0
+0,"Thiamine metabolism",14,"DEGraph",0
+0,"Riboflavin metabolism",8,"DEGraph",0.005
+0,"Nicotinate and nicotinamide metabolism",26,"DEGraph",0
+0,"Retinol metabolism",46,"DEGraph",0
+0,"Porphyrin and chlorophyll metabolism",26,"DEGraph",0
+0,"Sulfur metabolism",9,"DEGraph",0
+0,"Drug metabolism - cytochrome P450",49,"DEGraph",0
+0,"Drug metabolism - other enzymes",58,"DEGraph",0
+0,"Cholesterol metabolism",27,"DEGraph",0
+0,"Central carbon metabolism in cancer",54,"DEGraph",0
+0,"Choline metabolism in cancer",71,"DEGraph",0
+0,"MAPK signaling pathway",271,"DEGraph",0.01
+0,"ErbB signaling pathway",76,"DEGraph",0
+0,"Ras signaling pathway",203,"DEGraph",0
+0,"Rap1 signaling pathway",183,"DEGraph",0
+0,"Calcium signaling pathway",173,"DEGraph",0.01
+0,"cGMP-PKG signaling pathway",140,"DEGraph",0.005
+0,"cAMP signaling pathway",182,"DEGraph",0.005
+0,"Chemokine signaling pathway",166,"DEGraph",0
+0,"NF-kappa B signaling pathway",70,"DEGraph",0
+0,"HIF-1 signaling pathway",92,"DEGraph",0
+0,"FoxO signaling pathway",109,"DEGraph",0
+0,"Phosphatidylinositol signaling system",81,"DEGraph",0.005
+0,"Sphingolipid signaling pathway",87,"DEGraph",0
+0,"Phospholipase D signaling pathway",107,"DEGraph",0
+0,"p53 signaling pathway",69,"DEGraph",0
+0,"mTOR signaling pathway",127,"DEGraph",0
+0,"PI3K-Akt signaling pathway",315,"DEGraph",0
+0,"AMPK signaling pathway",88,"DEGraph",0.005
+0,"Adrenergic signaling in cardiomyocytes",135,"DEGraph",0
+0,"Wnt signaling pathway",136,"DEGraph",0
+0,"Notch signaling pathway",41,"DEGraph",0
+0,"Hedgehog signaling pathway",44,"DEGraph",0
+0,"TGF-beta signaling pathway",69,"DEGraph",0
+0,"VEGF signaling pathway",49,"DEGraph",0.005
+0,"Apelin signaling pathway",120,"DEGraph",0.005
+0,"Hippo signaling pathway",142,"DEGraph",0
+0,"Hippo signaling pathway - multiple species",27,"DEGraph",0
+0,"Toll-like receptor signaling pathway",83,"DEGraph",0
+0,"NOD-like receptor signaling pathway",134,"DEGraph",0
+0,"RIG-I-like receptor signaling pathway",61,"DEGraph",0
+0,"C-type lectin receptor signaling pathway",94,"DEGraph",0
+0,"JAK-STAT signaling pathway",147,"DEGraph",0
+0,"IL-17 signaling pathway",12,"DEGraph",0
+0,"T cell receptor signaling pathway",90,"DEGraph",0
+0,"B cell receptor signaling pathway",62,"DEGraph",0.005
+0,"Fc epsilon RI signaling pathway",50,"DEGraph",0
+0,"TNF signaling pathway",65,"DEGraph",0
+0,"Neurotrophin signaling pathway",106,"DEGraph",0
+0,"Retrograde endocannabinoid signaling",87,"DEGraph",0
+0,"Insulin signaling pathway",126,"DEGraph",0.005
+0,"GnRH signaling pathway",76,"DEGraph",0
+0,"Estrogen signaling pathway",115,"DEGraph",0
+0,"Prolactin signaling pathway",63,"DEGraph",0
+0,"Thyroid hormone signaling pathway",101,"DEGraph",0
+0,"Adipocytokine signaling pathway",59,"DEGraph",0
+0,"Oxytocin signaling pathway",139,"DEGraph",0
+0,"Glucagon signaling pathway",81,"DEGraph",0
+0,"Relaxin signaling pathway",115,"DEGraph",0
+0,"AGE-RAGE signaling pathway in diabetic complications",83,"DEGraph",0
+0,"Epithelial cell signaling in Helicobacter pylori infection",32,"DEGraph",0
+0,"Fatty acid biosynthesis",12,"DEGraph",0.005
+0,"Steroid biosynthesis",17,"DEGraph",0
+0,"Primary bile acid biosynthesis",15,"DEGraph",0
+0,"Ubiquinone and other terpenoid-quinone biosynthesis",9,"DEGraph",0
+0,"Steroid hormone biosynthesis",44,"DEGraph",0
+0,"Arginine biosynthesis",16,"DEGraph",0
+0,"N-Glycan biosynthesis",42,"DEGraph",0
+0,"Mucin type O-glycan biosynthesis",29,"DEGraph",0
+0,"Mannose type O-glycan biosynthesis",20,"DEGraph",0
+0,"Glycosaminoglycan biosynthesis - chondroitin sulfate / dermatan sulfate",10,"DEGraph",0
+0,"Glycosaminoglycan biosynthesis - heparan sulfate / heparin",5,"DEGraph",0
+0,"Glycosylphosphatidylinositol (GPI)-anchor biosynthesis",20,"DEGraph",0
+0,"Glycosphingolipid biosynthesis - lacto and neolacto series",25,"DEGraph",0.005
+0,"Glycosphingolipid biosynthesis - globo and isoglobo series",13,"DEGraph",0.005
+0,"Glycosphingolipid biosynthesis - ganglio series",14,"DEGraph",0
+0,"Pantothenate and CoA biosynthesis",16,"DEGraph",0
+0,"Folate biosynthesis",26,"DEGraph",0
+0,"Terpenoid backbone biosynthesis",16,"DEGraph",0
+0,"Aminoacyl-tRNA biosynthesis",12,"DEGraph",0
+0,"Fructose and mannose metabolism",31,"CAMERA",0
+0,"Galactose metabolism",27,"CAMERA",0
+0,"Ascorbate and aldarate metabolism",8,"CAMERA",0.03
+0,"Purine metabolism",153,"CAMERA",0
+0,"Pyrimidine metabolism",88,"CAMERA",0.02
+0,"Alanine, aspartate and glutamate metabolism",32,"CAMERA",0
+0,"Glycine, serine and threonine metabolism",29,"CAMERA",0
+0,"Cysteine and methionine metabolism",39,"CAMERA",0
+0,"Arginine and proline metabolism",41,"CAMERA",0
+0,"Histidine metabolism",20,"CAMERA",0
+0,"Tyrosine metabolism",32,"CAMERA",0
+0,"Phenylalanine metabolism",14,"CAMERA",0.005
+0,"Tryptophan metabolism",34,"CAMERA",0
+0,"beta-Alanine metabolism",29,"CAMERA",0.005
+0,"Taurine and hypotaurine metabolism",10,"CAMERA",0
+0,"Phosphonate and phosphinate metabolism",5,"CAMERA",0
+0,"Selenocompound metabolism",11,"CAMERA",0.005
+0,"Glutathione metabolism",48,"CAMERA",0
+0,"Starch and sucrose metabolism",30,"CAMERA",0
+0,"Amino sugar and nucleotide sugar metabolism",42,"CAMERA",0.005
+0,"Glycerolipid metabolism",53,"CAMERA",0
+0,"Inositol phosphate metabolism",70,"CAMERA",0
+0,"Glycerophospholipid metabolism",84,"CAMERA",0
+0,"Ether lipid metabolism",39,"CAMERA",0
+0,"Arachidonic acid metabolism",56,"CAMERA",0.005
+0,"Linoleic acid metabolism",25,"CAMERA",0.015
+0,"alpha-Linolenic acid metabolism",22,"CAMERA",0
+0,"Sphingolipid metabolism",43,"CAMERA",0.005
+0,"Pyruvate metabolism",37,"CAMERA",0
+0,"Glyoxylate and dicarboxylate metabolism",22,"CAMERA",0.005
+0,"Propanoate metabolism",31,"CAMERA",0.045
+0,"Butanoate metabolism",22,"CAMERA",0.005
+0,"Thiamine metabolism",14,"CAMERA",0
+0,"Riboflavin metabolism",8,"CAMERA",0
+0,"Nicotinate and nicotinamide metabolism",26,"CAMERA",0
+0,"Retinol metabolism",46,"CAMERA",0.095
+0,"Porphyrin and chlorophyll metabolism",26,"CAMERA",0
+0,"Sulfur metabolism",9,"CAMERA",0
+0,"Drug metabolism - cytochrome P450",49,"CAMERA",0.02
+0,"Drug metabolism - other enzymes",58,"CAMERA",0
+0,"Cholesterol metabolism",27,"CAMERA",0
+0,"Central carbon metabolism in cancer",54,"CAMERA",0.015
+0,"Choline metabolism in cancer",71,"CAMERA",0.03
+0,"MAPK signaling pathway",271,"CAMERA",0
+0,"ErbB signaling pathway",76,"CAMERA",0.005
+0,"Ras signaling pathway",203,"CAMERA",0
+0,"Rap1 signaling pathway",183,"CAMERA",0
+0,"Calcium signaling pathway",173,"CAMERA",0
+0,"cGMP-PKG signaling pathway",140,"CAMERA",0
+0,"cAMP signaling pathway",182,"CAMERA",0
+0,"Chemokine signaling pathway",166,"CAMERA",0
+0,"NF-kappa B signaling pathway",70,"CAMERA",0.02
+0,"HIF-1 signaling pathway",92,"CAMERA",0.025
+0,"FoxO signaling pathway",109,"CAMERA",0
+0,"Phosphatidylinositol signaling system",81,"CAMERA",0
+0,"Sphingolipid signaling pathway",87,"CAMERA",0.015
+0,"Phospholipase D signaling pathway",107,"CAMERA",0.005
+0,"p53 signaling pathway",69,"CAMERA",0
+0,"mTOR signaling pathway",127,"CAMERA",0.045
+0,"PI3K-Akt signaling pathway",315,"CAMERA",0
+0,"AMPK signaling pathway",88,"CAMERA",0
+0,"Adrenergic signaling in cardiomyocytes",135,"CAMERA",0
+0,"Wnt signaling pathway",136,"CAMERA",0.005
+0,"Notch signaling pathway",41,"CAMERA",0.01
+0,"Hedgehog signaling pathway",44,"CAMERA",0.01
+0,"TGF-beta signaling pathway",69,"CAMERA",0.01
+0,"VEGF signaling pathway",49,"CAMERA",0.005
+0,"Apelin signaling pathway",120,"CAMERA",0
+0,"Hippo signaling pathway",142,"CAMERA",0
+0,"Hippo signaling pathway - multiple species",27,"CAMERA",0
+0,"Toll-like receptor signaling pathway",83,"CAMERA",0
+0,"NOD-like receptor signaling pathway",134,"CAMERA",0.005
+0,"RIG-I-like receptor signaling pathway",61,"CAMERA",0
+0,"C-type lectin receptor signaling pathway",94,"CAMERA",0.01
+0,"JAK-STAT signaling pathway",147,"CAMERA",0
+0,"IL-17 signaling pathway",12,"CAMERA",0.04
+0,"T cell receptor signaling pathway",90,"CAMERA",0.005
+0,"B cell receptor signaling pathway",62,"CAMERA",0.025
+0,"Fc epsilon RI signaling pathway",50,"CAMERA",0.02
+0,"TNF signaling pathway",65,"CAMERA",0.015
+0,"Neurotrophin signaling pathway",106,"CAMERA",0.025
+0,"Retrograde endocannabinoid signaling",87,"CAMERA",0.01
+0,"Insulin signaling pathway",126,"CAMERA",0.02
+0,"GnRH signaling pathway",76,"CAMERA",0.02
+0,"Estrogen signaling pathway",115,"CAMERA",0
+0,"Prolactin signaling pathway",63,"CAMERA",0
+0,"Thyroid hormone signaling pathway",101,"CAMERA",0.085
+0,"Adipocytokine signaling pathway",59,"CAMERA",0
+0,"Oxytocin signaling pathway",139,"CAMERA",0
+0,"Glucagon signaling pathway",81,"CAMERA",0.01
+0,"Relaxin signaling pathway",115,"CAMERA",0.005
+0,"AGE-RAGE signaling pathway in diabetic complications",83,"CAMERA",0.03
+0,"Epithelial cell signaling in Helicobacter pylori infection",32,"CAMERA",0.02
+0,"Fatty acid biosynthesis",12,"CAMERA",0
+0,"Steroid biosynthesis",17,"CAMERA",0.025
+0,"Primary bile acid biosynthesis",15,"CAMERA",0
+0,"Ubiquinone and other terpenoid-quinone biosynthesis",9,"CAMERA",0
+0,"Steroid hormone biosynthesis",44,"CAMERA",0.025
+0,"Arginine biosynthesis",16,"CAMERA",0
+0,"N-Glycan biosynthesis",42,"CAMERA",0.035
+0,"Mucin type O-glycan biosynthesis",29,"CAMERA",0.015
+0,"Mannose type O-glycan biosynthesis",20,"CAMERA",0
+0,"Glycosaminoglycan biosynthesis - chondroitin sulfate / dermatan sulfate",10,"CAMERA",0
+0,"Glycosaminoglycan biosynthesis - heparan sulfate / heparin",5,"CAMERA",0
+0,"Glycosylphosphatidylinositol (GPI)-anchor biosynthesis",20,"CAMERA",0
+0,"Glycosphingolipid biosynthesis - lacto and neolacto series",25,"CAMERA",0
+0,"Glycosphingolipid biosynthesis - globo and isoglobo series",13,"CAMERA",0
+0,"Glycosphingolipid biosynthesis - ganglio series",14,"CAMERA",0
+0,"Pantothenate and CoA biosynthesis",16,"CAMERA",0
+0,"Folate biosynthesis",26,"CAMERA",0.005
+0,"Terpenoid backbone biosynthesis",16,"CAMERA",0.015
+0,"Aminoacyl-tRNA biosynthesis",12,"CAMERA",0.005
+0,"Fructose and mannose metabolism",31,"PathNet",0.055
+0,"Galactose metabolism",27,"PathNet",0.055
+0,"Ascorbate and aldarate metabolism",8,"PathNet",0.05
+0,"Purine metabolism",153,"PathNet",0.16
+0,"Pyrimidine metabolism",88,"PathNet",0.13
+0,"Alanine, aspartate and glutamate metabolism",32,"PathNet",0.06
+0,"Glycine, serine and threonine metabolism",29,"PathNet",0.055
+0,"Cysteine and methionine metabolism",39,"PathNet",0.03
+0,"Arginine and proline metabolism",41,"PathNet",0.06
+0,"Histidine metabolism",20,"PathNet",0.05
+0,"Tyrosine metabolism",32,"PathNet",0.04
+0,"Phenylalanine metabolism",14,"PathNet",0.02
+0,"Tryptophan metabolism",34,"PathNet",0.025
+0,"beta-Alanine metabolism",29,"PathNet",0.06
+0,"Taurine and hypotaurine metabolism",10,"PathNet",0.015
+0,"Phosphonate and phosphinate metabolism",5,"PathNet",0.01
+0,"Selenocompound metabolism",11,"PathNet",0.025
+0,"Glutathione metabolism",48,"PathNet",0.055
+0,"Starch and sucrose metabolism",30,"PathNet",0.07
+0,"Amino sugar and nucleotide sugar metabolism",42,"PathNet",0.065
+0,"Glycerolipid metabolism",53,"PathNet",0.08
+0,"Inositol phosphate metabolism",70,"PathNet",0.06
+0,"Glycerophospholipid metabolism",84,"PathNet",0.07
+0,"Ether lipid metabolism",39,"PathNet",0.085
+0,"Arachidonic acid metabolism",56,"PathNet",0.07
+0,"Linoleic acid metabolism",25,"PathNet",0.07
+0,"alpha-Linolenic acid metabolism",22,"PathNet",0.065
+0,"Sphingolipid metabolism",43,"PathNet",0.06
+0,"Pyruvate metabolism",37,"PathNet",0.055
+0,"Glyoxylate and dicarboxylate metabolism",22,"PathNet",0.02
+0,"Propanoate metabolism",31,"PathNet",0.055
+0,"Butanoate metabolism",22,"PathNet",0.04
+0,"Thiamine metabolism",14,"PathNet",0.06
+0,"Riboflavin metabolism",8,"PathNet",0.035
+0,"Nicotinate and nicotinamide metabolism",26,"PathNet",0.08
+0,"Retinol metabolism",46,"PathNet",0.09
+0,"Porphyrin and chlorophyll metabolism",26,"PathNet",0.055
+0,"Sulfur metabolism",9,"PathNet",0.025
+0,"Drug metabolism - cytochrome P450",49,"PathNet",0.07
+0,"Drug metabolism - other enzymes",58,"PathNet",0.055
+0,"Cholesterol metabolism",27,"PathNet",0.025
+0,"Central carbon metabolism in cancer",54,"PathNet",0.035
+0,"Choline metabolism in cancer",71,"PathNet",0.03
+0,"MAPK signaling pathway",271,"PathNet",0.105
+0,"ErbB signaling pathway",76,"PathNet",0.03
+0,"Ras signaling pathway",203,"PathNet",0.13
+0,"Rap1 signaling pathway",183,"PathNet",0.055
+0,"Calcium signaling pathway",173,"PathNet",0.055
+0,"cGMP-PKG signaling pathway",140,"PathNet",0.03
+0,"cAMP signaling pathway",182,"PathNet",0.035
+0,"Chemokine signaling pathway",166,"PathNet",0.085
+0,"NF-kappa B signaling pathway",70,"PathNet",0.055
+0,"HIF-1 signaling pathway",92,"PathNet",0.04
+0,"FoxO signaling pathway",109,"PathNet",0.015
+0,"Phosphatidylinositol signaling system",81,"PathNet",0.045
+0,"Sphingolipid signaling pathway",87,"PathNet",0.045
+0,"Phospholipase D signaling pathway",107,"PathNet",0.04
+0,"p53 signaling pathway",69,"PathNet",0.025
+0,"mTOR signaling pathway",127,"PathNet",0.055
+0,"PI3K-Akt signaling pathway",315,"PathNet",0.12
+0,"AMPK signaling pathway",88,"PathNet",0.04
+0,"Adrenergic signaling in cardiomyocytes",135,"PathNet",0.05
+0,"Wnt signaling pathway",136,"PathNet",0.08
+0,"Notch signaling pathway",41,"PathNet",0.025
+0,"Hedgehog signaling pathway",44,"PathNet",0.02
+0,"TGF-beta signaling pathway",69,"PathNet",0.035
+0,"VEGF signaling pathway",49,"PathNet",0.02
+0,"Apelin signaling pathway",120,"PathNet",0.065
+0,"Hippo signaling pathway",142,"PathNet",0.04
+0,"Hippo signaling pathway - multiple species",27,"PathNet",0.035
+0,"Toll-like receptor signaling pathway",83,"PathNet",0.05
+0,"NOD-like receptor signaling pathway",134,"PathNet",0.025
+0,"RIG-I-like receptor signaling pathway",61,"PathNet",0.075
+0,"C-type lectin receptor signaling pathway",94,"PathNet",0.045
+0,"JAK-STAT signaling pathway",147,"PathNet",0.095
+0,"IL-17 signaling pathway",12,"PathNet",0.055
+0,"T cell receptor signaling pathway",90,"PathNet",0.05
+0,"B cell receptor signaling pathway",62,"PathNet",0.035
+0,"Fc epsilon RI signaling pathway",50,"PathNet",0.025
+0,"TNF signaling pathway",65,"PathNet",0.05
+0,"Neurotrophin signaling pathway",106,"PathNet",0.035
+0,"Retrograde endocannabinoid signaling",87,"PathNet",0.05
+0,"Insulin signaling pathway",126,"PathNet",0.055
+0,"GnRH signaling pathway",76,"PathNet",0.075
+0,"Estrogen signaling pathway",115,"PathNet",0.045
+0,"Prolactin signaling pathway",63,"PathNet",0.06
+0,"Thyroid hormone signaling pathway",101,"PathNet",0.045
+0,"Adipocytokine signaling pathway",59,"PathNet",0.04
+0,"Oxytocin signaling pathway",139,"PathNet",0.065
+0,"Glucagon signaling pathway",81,"PathNet",0.075
+0,"Relaxin signaling pathway",115,"PathNet",0.07
+0,"AGE-RAGE signaling pathway in diabetic complications",83,"PathNet",0.035
+0,"Epithelial cell signaling in Helicobacter pylori infection",32,"PathNet",0.04
+0,"Fatty acid biosynthesis",12,"PathNet",0.04
+0,"Steroid biosynthesis",17,"PathNet",0.035
+0,"Primary bile acid biosynthesis",15,"PathNet",0.015
+0,"Ubiquinone and other terpenoid-quinone biosynthesis",9,"PathNet",0.01
+0,"Steroid hormone biosynthesis",44,"PathNet",0.105
+0,"Arginine biosynthesis",16,"PathNet",0.035
+0,"N-Glycan biosynthesis",42,"PathNet",0.025
+0,"Mucin type O-glycan biosynthesis",29,"PathNet",0.065
+0,"Mannose type O-glycan biosynthesis",20,"PathNet",0.02
+0,"Glycosaminoglycan biosynthesis - chondroitin sulfate / dermatan sulfate",10,"PathNet",0.035
+0,"Glycosaminoglycan biosynthesis - heparan sulfate / heparin",5,"PathNet",0.015
+0,"Glycosylphosphatidylinositol (GPI)-anchor biosynthesis",20,"PathNet",0.06
+0,"Glycosphingolipid biosynthesis - lacto and neolacto series",25,"PathNet",0.085
+0,"Glycosphingolipid biosynthesis - globo and isoglobo series",13,"PathNet",0.08
+0,"Glycosphingolipid biosynthesis - ganglio series",14,"PathNet",0.05
+0,"Pantothenate and CoA biosynthesis",16,"PathNet",0.05
+0,"Folate biosynthesis",26,"PathNet",0.03
+0,"Terpenoid backbone biosynthesis",16,"PathNet",0.04
+0,"Aminoacyl-tRNA biosynthesis",12,"PathNet",0.025
+0,"Fructose and mannose metabolism",31,"topologyGSA",NA
+0,"Galactose metabolism",27,"topologyGSA",NA
+0,"Ascorbate and aldarate metabolism",8,"topologyGSA",0.005
+0,"Purine metabolism",153,"topologyGSA",NA
+0,"Pyrimidine metabolism",88,"topologyGSA",NA
+0,"Alanine, aspartate and glutamate metabolism",32,"topologyGSA",NA
+0,"Glycine, serine and threonine metabolism",29,"topologyGSA",NA
+0,"Cysteine and methionine metabolism",39,"topologyGSA",NA
+0,"Arginine and proline metabolism",41,"topologyGSA",NA
+0,"Histidine metabolism",20,"topologyGSA",NA
+0,"Tyrosine metabolism",32,"topologyGSA",NA
+0,"Phenylalanine metabolism",14,"topologyGSA",NA
+0,"Tryptophan metabolism",34,"topologyGSA",NA
+0,"beta-Alanine metabolism",29,"topologyGSA",NA
+0,"Taurine and hypotaurine metabolism",10,"topologyGSA",0.005
+0,"Phosphonate and phosphinate metabolism",5,"topologyGSA",0.005
+0,"Selenocompound metabolism",11,"topologyGSA",NA
+0,"Glutathione metabolism",48,"topologyGSA",NA
+0,"Starch and sucrose metabolism",30,"topologyGSA",NA
+0,"Amino sugar and nucleotide sugar metabolism",42,"topologyGSA",NA
+0,"Glycerolipid metabolism",53,"topologyGSA",NA
+0,"Inositol phosphate metabolism",70,"topologyGSA",NA
+0,"Glycerophospholipid metabolism",84,"topologyGSA",NA
+0,"Ether lipid metabolism",39,"topologyGSA",NA
+0,"Arachidonic acid metabolism",56,"topologyGSA",NA
+0,"Linoleic acid metabolism",25,"topologyGSA",NA
+0,"alpha-Linolenic acid metabolism",22,"topologyGSA",NA
+0,"Sphingolipid metabolism",43,"topologyGSA",NA
+0,"Pyruvate metabolism",37,"topologyGSA",NA
+0,"Glyoxylate and dicarboxylate metabolism",22,"topologyGSA",NA
+0,"Propanoate metabolism",31,"topologyGSA",NA
+0,"Butanoate metabolism",22,"topologyGSA",NA
+0,"Thiamine metabolism",14,"topologyGSA",NA
+0,"Riboflavin metabolism",8,"topologyGSA",NA
+0,"Nicotinate and nicotinamide metabolism",26,"topologyGSA",NA
+0,"Retinol metabolism",46,"topologyGSA",NA
+0,"Porphyrin and chlorophyll metabolism",26,"topologyGSA",NA
+0,"Sulfur metabolism",9,"topologyGSA",NA
+0,"Drug metabolism - cytochrome P450",49,"topologyGSA",NA
+0,"Drug metabolism - other enzymes",58,"topologyGSA",NA
+0,"Cholesterol metabolism",27,"topologyGSA",NA
+0,"Central carbon metabolism in cancer",54,"topologyGSA",0
+0,"Choline metabolism in cancer",71,"topologyGSA",0.005
+0,"MAPK signaling pathway",271,"topologyGSA",NA
+0,"ErbB signaling pathway",76,"topologyGSA",NA
+0,"Ras signaling pathway",203,"topologyGSA",NA
+0,"Rap1 signaling pathway",183,"topologyGSA",NA
+0,"Calcium signaling pathway",173,"topologyGSA",NA
+0,"cGMP-PKG signaling pathway",140,"topologyGSA",NA
+0,"cAMP signaling pathway",182,"topologyGSA",NA
+0,"Chemokine signaling pathway",166,"topologyGSA",NA
+0,"NF-kappa B signaling pathway",70,"topologyGSA",NA
+0,"HIF-1 signaling pathway",92,"topologyGSA",NA
+0,"FoxO signaling pathway",109,"topologyGSA",NA
+0,"Phosphatidylinositol signaling system",81,"topologyGSA",NA
+0,"Sphingolipid signaling pathway",87,"topologyGSA",0.005
+0,"Phospholipase D signaling pathway",107,"topologyGSA",NA
+0,"p53 signaling pathway",69,"topologyGSA",NA
+0,"mTOR signaling pathway",127,"topologyGSA",0.015
+0,"PI3K-Akt signaling pathway",315,"topologyGSA",NA
+0,"AMPK signaling pathway",88,"topologyGSA",NA
+0,"Adrenergic signaling in cardiomyocytes",135,"topologyGSA",0.01
+0,"Wnt signaling pathway",136,"topologyGSA",NA
+0,"Notch signaling pathway",41,"topologyGSA",NA
+0,"Hedgehog signaling pathway",44,"topologyGSA",NA
+0,"TGF-beta signaling pathway",69,"topologyGSA",NA
+0,"VEGF signaling pathway",49,"topologyGSA",0.005
+0,"Apelin signaling pathway",120,"topologyGSA",0.01
+0,"Hippo signaling pathway",142,"topologyGSA",NA
+0,"Hippo signaling pathway - multiple species",27,"topologyGSA",NA
+0,"Toll-like receptor signaling pathway",83,"topologyGSA",NA
+0,"NOD-like receptor signaling pathway",134,"topologyGSA",NA
+0,"RIG-I-like receptor signaling pathway",61,"topologyGSA",NA
+0,"C-type lectin receptor signaling pathway",94,"topologyGSA",NA
+0,"JAK-STAT signaling pathway",147,"topologyGSA",NA
+0,"IL-17 signaling pathway",12,"topologyGSA",0.005
+0,"T cell receptor signaling pathway",90,"topologyGSA",NA
+0,"B cell receptor signaling pathway",62,"topologyGSA",NA
+0,"Fc epsilon RI signaling pathway",50,"topologyGSA",NA
+0,"TNF signaling pathway",65,"topologyGSA",0.01
+0,"Neurotrophin signaling pathway",106,"topologyGSA",NA
+0,"Retrograde endocannabinoid signaling",87,"topologyGSA",0.01
+0,"Insulin signaling pathway",126,"topologyGSA",NA
+0,"GnRH signaling pathway",76,"topologyGSA",0.015
+0,"Estrogen signaling pathway",115,"topologyGSA",NA
+0,"Prolactin signaling pathway",63,"topologyGSA",NA
+0,"Thyroid hormone signaling pathway",101,"topologyGSA",NA
+0,"Adipocytokine signaling pathway",59,"topologyGSA",NA
+0,"Oxytocin signaling pathway",139,"topologyGSA",0.005
+0,"Glucagon signaling pathway",81,"topologyGSA",NA
+0,"Relaxin signaling pathway",115,"topologyGSA",NA
+0,"AGE-RAGE signaling pathway in diabetic complications",83,"topologyGSA",NA
+0,"Epithelial cell signaling in Helicobacter pylori infection",32,"topologyGSA",NA
+0,"Fatty acid biosynthesis",12,"topologyGSA",NA
+0,"Steroid biosynthesis",17,"topologyGSA",NA
+0,"Primary bile acid biosynthesis",15,"topologyGSA",NA
+0,"Ubiquinone and other terpenoid-quinone biosynthesis",9,"topologyGSA",NA
+0,"Steroid hormone biosynthesis",44,"topologyGSA",NA
+0,"Arginine biosynthesis",16,"topologyGSA",NA
+0,"N-Glycan biosynthesis",42,"topologyGSA",NA
+0,"Mucin type O-glycan biosynthesis",29,"topologyGSA",NA
+0,"Mannose type O-glycan biosynthesis",20,"topologyGSA",0.005
+0,"Glycosaminoglycan biosynthesis - chondroitin sulfate / dermatan sulfate",10,"topologyGSA",NA
+0,"Glycosaminoglycan biosynthesis - heparan sulfate / heparin",5,"topologyGSA",NA
+0,"Glycosylphosphatidylinositol (GPI)-anchor biosynthesis",20,"topologyGSA",NA
+0,"Glycosphingolipid biosynthesis - lacto and neolacto series",25,"topologyGSA",NA
+0,"Glycosphingolipid biosynthesis - globo and isoglobo series",13,"topologyGSA",NA
+0,"Glycosphingolipid biosynthesis - ganglio series",14,"topologyGSA",NA
+0,"Pantothenate and CoA biosynthesis",16,"topologyGSA",NA
+0,"Folate biosynthesis",26,"topologyGSA",NA
+0,"Terpenoid backbone biosynthesis",16,"topologyGSA",NA
+0,"Aminoacyl-tRNA biosynthesis",12,"topologyGSA",NA
+0,"Fructose and mannose metabolism",31,"PE.noCut",NA
+0,"Galactose metabolism",27,"PE.noCut",0
+0,"Ascorbate and aldarate metabolism",8,"PE.noCut",0.005
+0,"Purine metabolism",153,"PE.noCut",NA
+0,"Pyrimidine metabolism",88,"PE.noCut",NA
+0,"Alanine, aspartate and glutamate metabolism",32,"PE.noCut",NA
+0,"Glycine, serine and threonine metabolism",29,"PE.noCut",0.005
+0,"Cysteine and methionine metabolism",39,"PE.noCut",NA
+0,"Arginine and proline metabolism",41,"PE.noCut",0.005
+0,"Histidine metabolism",20,"PE.noCut",0.005
+0,"Tyrosine metabolism",32,"PE.noCut",0.01
+0,"Phenylalanine metabolism",14,"PE.noCut",NA
+0,"Tryptophan metabolism",34,"PE.noCut",NA
+0,"beta-Alanine metabolism",29,"PE.noCut",NA
+0,"Taurine and hypotaurine metabolism",10,"PE.noCut",0
+0,"Phosphonate and phosphinate metabolism",5,"PE.noCut",0
+0,"Selenocompound metabolism",11,"PE.noCut",NA
+0,"Glutathione metabolism",48,"PE.noCut",NA
+0,"Starch and sucrose metabolism",30,"PE.noCut",NA
+0,"Amino sugar and nucleotide sugar metabolism",42,"PE.noCut",NA
+0,"Glycerolipid metabolism",53,"PE.noCut",0.01
+0,"Inositol phosphate metabolism",70,"PE.noCut",NA
+0,"Glycerophospholipid metabolism",84,"PE.noCut",0
+0,"Ether lipid metabolism",39,"PE.noCut",0.005
+0,"Arachidonic acid metabolism",56,"PE.noCut",0.055
+0,"Linoleic acid metabolism",25,"PE.noCut",NA
+0,"alpha-Linolenic acid metabolism",22,"PE.noCut",NA
+0,"Sphingolipid metabolism",43,"PE.noCut",0.005
+0,"Pyruvate metabolism",37,"PE.noCut",NA
+0,"Glyoxylate and dicarboxylate metabolism",22,"PE.noCut",NA
+0,"Propanoate metabolism",31,"PE.noCut",NA
+0,"Butanoate metabolism",22,"PE.noCut",NA
+0,"Thiamine metabolism",14,"PE.noCut",NA
+0,"Riboflavin metabolism",8,"PE.noCut",NA
+0,"Nicotinate and nicotinamide metabolism",26,"PE.noCut",NA
+0,"Retinol metabolism",46,"PE.noCut",0.06
+0,"Porphyrin and chlorophyll metabolism",26,"PE.noCut",NA
+0,"Sulfur metabolism",9,"PE.noCut",NA
+0,"Drug metabolism - cytochrome P450",49,"PE.noCut",NA
+0,"Drug metabolism - other enzymes",58,"PE.noCut",NA
+0,"Cholesterol metabolism",27,"PE.noCut",0
+0,"Central carbon metabolism in cancer",54,"PE.noCut",0.055
+0,"Choline metabolism in cancer",71,"PE.noCut",0.08
+0,"MAPK signaling pathway",271,"PE.noCut",0.04
+0,"ErbB signaling pathway",76,"PE.noCut",0.015
+0,"Ras signaling pathway",203,"PE.noCut",0.05
+0,"Rap1 signaling pathway",183,"PE.noCut",NA
+0,"Calcium signaling pathway",173,"PE.noCut",NA
+0,"cGMP-PKG signaling pathway",140,"PE.noCut",NA
+0,"cAMP signaling pathway",182,"PE.noCut",0.175
+0,"Chemokine signaling pathway",166,"PE.noCut",NA
+0,"NF-kappa B signaling pathway",70,"PE.noCut",0.025
+0,"HIF-1 signaling pathway",92,"PE.noCut",0.1
+0,"FoxO signaling pathway",109,"PE.noCut",0.095
+0,"Phosphatidylinositol signaling system",81,"PE.noCut",NA
+0,"Sphingolipid signaling pathway",87,"PE.noCut",0.06
+0,"Phospholipase D signaling pathway",107,"PE.noCut",0.045
+0,"p53 signaling pathway",69,"PE.noCut",NA
+0,"mTOR signaling pathway",127,"PE.noCut",0.15
+0,"PI3K-Akt signaling pathway",315,"PE.noCut",NA
+0,"AMPK signaling pathway",88,"PE.noCut",0.075
+0,"Adrenergic signaling in cardiomyocytes",135,"PE.noCut",0.005
+0,"Wnt signaling pathway",136,"PE.noCut",0.14
+0,"Notch signaling pathway",41,"PE.noCut",0.15
+0,"Hedgehog signaling pathway",44,"PE.noCut",0.025
+0,"TGF-beta signaling pathway",69,"PE.noCut",0.095
+0,"VEGF signaling pathway",49,"PE.noCut",0.02
+0,"Apelin signaling pathway",120,"PE.noCut",0.04
+0,"Hippo signaling pathway",142,"PE.noCut",0.045
+0,"Hippo signaling pathway - multiple species",27,"PE.noCut",0
+0,"Toll-like receptor signaling pathway",83,"PE.noCut",0.02
+0,"NOD-like receptor signaling pathway",134,"PE.noCut",0.03
+0,"RIG-I-like receptor signaling pathway",61,"PE.noCut",0.015
+0,"C-type lectin receptor signaling pathway",94,"PE.noCut",0.08
+0,"JAK-STAT signaling pathway",147,"PE.noCut",0.11
+0,"IL-17 signaling pathway",12,"PE.noCut",0.065
+0,"T cell receptor signaling pathway",90,"PE.noCut",0.045
+0,"B cell receptor signaling pathway",62,"PE.noCut",0.04
+0,"Fc epsilon RI signaling pathway",50,"PE.noCut",NA
+0,"TNF signaling pathway",65,"PE.noCut",0.09
+0,"Neurotrophin signaling pathway",106,"PE.noCut",0.125
+0,"Retrograde endocannabinoid signaling",87,"PE.noCut",0
+0,"Insulin signaling pathway",126,"PE.noCut",0.125
+0,"GnRH signaling pathway",76,"PE.noCut",0.125
+0,"Estrogen signaling pathway",115,"PE.noCut",0.055
+0,"Prolactin signaling pathway",63,"PE.noCut",0.07
+0,"Thyroid hormone signaling pathway",101,"PE.noCut",0.215
+0,"Adipocytokine signaling pathway",59,"PE.noCut",0.005
+0,"Oxytocin signaling pathway",139,"PE.noCut",0.065
+0,"Glucagon signaling pathway",81,"PE.noCut",0.08
+0,"Relaxin signaling pathway",115,"PE.noCut",0.06
+0,"AGE-RAGE signaling pathway in diabetic complications",83,"PE.noCut",0.135
+0,"Epithelial cell signaling in Helicobacter pylori infection",32,"PE.noCut",0.05
+0,"Fatty acid biosynthesis",12,"PE.noCut",NA
+0,"Steroid biosynthesis",17,"PE.noCut",0.06
+0,"Primary bile acid biosynthesis",15,"PE.noCut",NA
+0,"Ubiquinone and other terpenoid-quinone biosynthesis",9,"PE.noCut",NA
+0,"Steroid hormone biosynthesis",44,"PE.noCut",0.105
+0,"Arginine biosynthesis",16,"PE.noCut",NA
+0,"N-Glycan biosynthesis",42,"PE.noCut",NA
+0,"Mucin type O-glycan biosynthesis",29,"PE.noCut",0.05
+0,"Mannose type O-glycan biosynthesis",20,"PE.noCut",0.005
+0,"Glycosaminoglycan biosynthesis - chondroitin sulfate / dermatan sulfate",10,"PE.noCut",NA
+0,"Glycosaminoglycan biosynthesis - heparan sulfate / heparin",5,"PE.noCut",0.005
+0,"Glycosylphosphatidylinositol (GPI)-anchor biosynthesis",20,"PE.noCut",0.005
+0,"Glycosphingolipid biosynthesis - lacto and neolacto series",25,"PE.noCut",NA
+0,"Glycosphingolipid biosynthesis - globo and isoglobo series",13,"PE.noCut",0
+0,"Glycosphingolipid biosynthesis - ganglio series",14,"PE.noCut",0
+0,"Pantothenate and CoA biosynthesis",16,"PE.noCut",NA
+0,"Folate biosynthesis",26,"PE.noCut",NA
+0,"Terpenoid backbone biosynthesis",16,"PE.noCut",0.035
+0,"Aminoacyl-tRNA biosynthesis",12,"PE.noCut",NA

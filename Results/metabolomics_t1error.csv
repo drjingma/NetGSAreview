@@ -1,0 +1,326 @@
+"mu","name","size","method","type1error"
+0,"2-Oxocarboxylic acid metabolism ",15,"NetGSA",0.026
+0,"Alanine, aspartate and glutamate metabolism ",23,"NetGSA",0.002
+0,"Amino sugar and nucleotide sugar metabolism ",11,"NetGSA",0.056
+0,"Aminoacyl-tRNA biosynthesis ",20,"NetGSA",0.006
+0,"Amphetamine addiction ",6,"NetGSA",0.014
+0,"Arginine and proline metabolism ",24,"NetGSA",0.014
+0,"Ascorbate and aldarate metabolism ",10,"NetGSA",0.049
+0,"beta-Alanine metabolism ",15,"NetGSA",0.037
+0,"Bile secretion ",8,"NetGSA",0.029
+0,"Biosynthesis of unsaturated fatty acids ",8,"NetGSA",0
+0,"Butanoate metabolism ",10,"NetGSA",0.012
+0,"Carbohydrate digestion and absorption ",6,"NetGSA",0.035
+0,"Chemical carcinogenesis ",7,"NetGSA",0.005
+0,"Citrate cycle (TCA cycle) ",8,"NetGSA",0.006
+0,"Cocaine addiction ",6,"NetGSA",0.014
+0,"Cysteine and methionine metabolism ",14,"NetGSA",0.007
+0,"Dopaminergic synapse ",6,"NetGSA",0.014
+0,"Drug metabolism - other enzymes ",15,"NetGSA",0.042
+0,"Fat digestion and absorption ",10,"NetGSA",0.01
+0,"Fatty acid elongation ",6,"NetGSA",0
+0,"Fatty acid metabolism ",9,"NetGSA",0.027
+0,"Fructose and mannose metabolism ",14,"NetGSA",0.103
+0,"GABAergic synapse ",8,"NetGSA",0.023
+0,"Galactose metabolism ",19,"NetGSA",0.108
+0,"Glutamatergic synapse ",7,"NetGSA",0.009
+0,"Glutathione metabolism ",11,"NetGSA",0.016
+0,"Glycerolipid metabolism ",21,"NetGSA",0.085
+0,"Glycerophospholipid metabolism ",10,"NetGSA",0.021
+0,"Glycine, serine and threonine metabolism ",18,"NetGSA",0.016
+0,"Glycolysis / Gluconeogenesis ",17,"NetGSA",0.056
+0,"Glycosphingolipid biosynthesis - globo series ",9,"NetGSA",0.012
+0,"Glyoxylate and dicarboxylate metabolism ",13,"NetGSA",0.015
+0,"HIF-1 signaling pathway ",8,"NetGSA",0.02
+0,"Histidine metabolism ",16,"NetGSA",0.027
+0,"Insulin signaling pathway ",10,"NetGSA",0.044
+0,"Long-term depression ",6,"NetGSA",0.004
+0,"Lysine biosynthesis ",12,"NetGSA",0.028
+0,"Lysine degradation ",12,"NetGSA",0.023
+0,"Lysosome ",15,"NetGSA",0.053
+0,"Nicotinate and nicotinamide metabolism ",14,"NetGSA",0.035
+0,"Pancreatic secretion ",6,"NetGSA",0.004
+0,"Pantothenate and CoA biosynthesis ",15,"NetGSA",0.084
+0,"Pentose and glucuronate interconversions ",13,"NetGSA",0.116
+0,"Pentose phosphate pathway ",7,"NetGSA",0.109
+0,"Peroxisome ",19,"NetGSA",0.006
+0,"Phenylalanine metabolism ",12,"NetGSA",0.011
+0,"Phenylalanine, tyrosine and tryptophan biosynthesis ",9,"NetGSA",0.012
+0,"Porphyrin and chlorophyll metabolism ",6,"NetGSA",0.009
+0,"PPAR signaling pathway ",10,"NetGSA",0.04
+0,"Primary bile acid biosynthesis ",6,"NetGSA",0.037
+0,"Propanoate metabolism ",11,"NetGSA",0.019
+0,"Purine metabolism ",24,"NetGSA",0.029
+0,"Pyrimidine metabolism ",17,"NetGSA",0.043
+0,"Pyruvate metabolism ",18,"NetGSA",0.046
+0,"Riboflavin metabolism ",6,"NetGSA",0.019
+0,"Selenocompound metabolism ",9,"NetGSA",0.004
+0,"Serotonergic synapse ",8,"NetGSA",0.007
+0,"Sphingolipid metabolism ",12,"NetGSA",0.013
+0,"Starch and sucrose metabolism ",12,"NetGSA",0.086
+0,"Taurine and hypotaurine metabolism ",6,"NetGSA",0.014
+0,"Tryptophan metabolism ",18,"NetGSA",0.015
+0,"Tyrosine metabolism ",15,"NetGSA",0.005
+0,"Ubiquinone and other terpenoid-quinone biosynthesis ",7,"NetGSA",0.007
+0,"Valine, leucine and isoleucine biosynthesis ",6,"NetGSA",0.024
+0,"Valine, leucine and isoleucine degradation ",18,"NetGSA",0.026
+0,"2-Oxocarboxylic acid metabolism ",15,"DEGraph",0.001
+0,"Alanine, aspartate and glutamate metabolism ",23,"DEGraph",0.002
+0,"Amino sugar and nucleotide sugar metabolism ",11,"DEGraph",0.003
+0,"Aminoacyl-tRNA biosynthesis ",20,"DEGraph",0.003
+0,"Amphetamine addiction ",6,"DEGraph",0.005
+0,"Arginine and proline metabolism ",24,"DEGraph",0
+0,"Ascorbate and aldarate metabolism ",10,"DEGraph",0.002
+0,"beta-Alanine metabolism ",15,"DEGraph",0.002
+0,"Bile secretion ",8,"DEGraph",0.004
+0,"Biosynthesis of unsaturated fatty acids ",8,"DEGraph",0.004
+0,"Butanoate metabolism ",10,"DEGraph",0.001
+0,"Carbohydrate digestion and absorption ",6,"DEGraph",0
+0,"Chemical carcinogenesis ",7,"DEGraph",0.002
+0,"Citrate cycle (TCA cycle) ",8,"DEGraph",0.001
+0,"Cocaine addiction ",6,"DEGraph",0.005
+0,"Cysteine and methionine metabolism ",14,"DEGraph",0.005
+0,"Dopaminergic synapse ",6,"DEGraph",0.005
+0,"Drug metabolism - other enzymes ",15,"DEGraph",0.004
+0,"Fat digestion and absorption ",10,"DEGraph",0.002
+0,"Fatty acid elongation ",6,"DEGraph",0.001
+0,"Fatty acid metabolism ",9,"DEGraph",0.002
+0,"Fructose and mannose metabolism ",14,"DEGraph",0.001
+0,"GABAergic synapse ",8,"DEGraph",0.002
+0,"Galactose metabolism ",19,"DEGraph",0.002
+0,"Glutamatergic synapse ",7,"DEGraph",0.002
+0,"Glutathione metabolism ",11,"DEGraph",0.001
+0,"Glycerolipid metabolism ",21,"DEGraph",0.002
+0,"Glycerophospholipid metabolism ",10,"DEGraph",0.002
+0,"Glycine, serine and threonine metabolism ",18,"DEGraph",0.003
+0,"Glycolysis / Gluconeogenesis ",17,"DEGraph",0.004
+0,"Glycosphingolipid biosynthesis - globo series ",9,"DEGraph",0.002
+0,"Glyoxylate and dicarboxylate metabolism ",13,"DEGraph",0.002
+0,"HIF-1 signaling pathway ",8,"DEGraph",0
+0,"Histidine metabolism ",16,"DEGraph",0.002
+0,"Insulin signaling pathway ",10,"DEGraph",0.002
+0,"Long-term depression ",6,"DEGraph",0.002
+0,"Lysine biosynthesis ",12,"DEGraph",0.001
+0,"Lysine degradation ",12,"DEGraph",0.001
+0,"Lysosome ",15,"DEGraph",0.001
+0,"Nicotinate and nicotinamide metabolism ",14,"DEGraph",0.003
+0,"Pancreatic secretion ",6,"DEGraph",0.002
+0,"Pantothenate and CoA biosynthesis ",15,"DEGraph",0.003
+0,"Pentose and glucuronate interconversions ",13,"DEGraph",0.004
+0,"Pentose phosphate pathway ",7,"DEGraph",0
+0,"Peroxisome ",19,"DEGraph",0.002
+0,"Phenylalanine metabolism ",12,"DEGraph",0.002
+0,"Phenylalanine, tyrosine and tryptophan biosynthesis ",9,"DEGraph",0.005
+0,"Porphyrin and chlorophyll metabolism ",6,"DEGraph",0.002
+0,"PPAR signaling pathway ",10,"DEGraph",0.001
+0,"Primary bile acid biosynthesis ",6,"DEGraph",0.003
+0,"Propanoate metabolism ",11,"DEGraph",0.001
+0,"Purine metabolism ",24,"DEGraph",0.003
+0,"Pyrimidine metabolism ",17,"DEGraph",0.003
+0,"Pyruvate metabolism ",18,"DEGraph",0.001
+0,"Riboflavin metabolism ",6,"DEGraph",0.002
+0,"Selenocompound metabolism ",9,"DEGraph",0.002
+0,"Serotonergic synapse ",8,"DEGraph",0.004
+0,"Sphingolipid metabolism ",12,"DEGraph",0.003
+0,"Starch and sucrose metabolism ",12,"DEGraph",0.001
+0,"Taurine and hypotaurine metabolism ",6,"DEGraph",0.004
+0,"Tryptophan metabolism ",18,"DEGraph",0.002
+0,"Tyrosine metabolism ",15,"DEGraph",0.002
+0,"Ubiquinone and other terpenoid-quinone biosynthesis ",7,"DEGraph",0.007
+0,"Valine, leucine and isoleucine biosynthesis ",6,"DEGraph",0.001
+0,"Valine, leucine and isoleucine degradation ",18,"DEGraph",0.002
+0,"2-Oxocarboxylic acid metabolism ",15,"CAMERA",0.019
+0,"Alanine, aspartate and glutamate metabolism ",23,"CAMERA",0.023
+0,"Amino sugar and nucleotide sugar metabolism ",11,"CAMERA",0.017
+0,"Aminoacyl-tRNA biosynthesis ",20,"CAMERA",0.041
+0,"Amphetamine addiction ",6,"CAMERA",0.008
+0,"Arginine and proline metabolism ",24,"CAMERA",0.024
+0,"Ascorbate and aldarate metabolism ",10,"CAMERA",0.003
+0,"beta-Alanine metabolism ",15,"CAMERA",0.02
+0,"Bile secretion ",8,"CAMERA",0.004
+0,"Biosynthesis of unsaturated fatty acids ",8,"CAMERA",0.04
+0,"Butanoate metabolism ",10,"CAMERA",0.005
+0,"Carbohydrate digestion and absorption ",6,"CAMERA",0.035
+0,"Chemical carcinogenesis ",7,"CAMERA",0.004
+0,"Citrate cycle (TCA cycle) ",8,"CAMERA",0.078
+0,"Cocaine addiction ",6,"CAMERA",0.008
+0,"Cysteine and methionine metabolism ",14,"CAMERA",0.014
+0,"Dopaminergic synapse ",6,"CAMERA",0.008
+0,"Drug metabolism - other enzymes ",15,"CAMERA",0.001
+0,"Fat digestion and absorption ",10,"CAMERA",0.016
+0,"Fatty acid elongation ",6,"CAMERA",0.087
+0,"Fatty acid metabolism ",9,"CAMERA",0.017
+0,"Fructose and mannose metabolism ",14,"CAMERA",0.022
+0,"GABAergic synapse ",8,"CAMERA",0.005
+0,"Galactose metabolism ",19,"CAMERA",0.026
+0,"Glutamatergic synapse ",7,"CAMERA",0.006
+0,"Glutathione metabolism ",11,"CAMERA",0.01
+0,"Glycerolipid metabolism ",21,"CAMERA",0.005
+0,"Glycerophospholipid metabolism ",10,"CAMERA",0.019
+0,"Glycine, serine and threonine metabolism ",18,"CAMERA",0.016
+0,"Glycolysis / Gluconeogenesis ",17,"CAMERA",0.005
+0,"Glycosphingolipid biosynthesis - globo series ",9,"CAMERA",0.012
+0,"Glyoxylate and dicarboxylate metabolism ",13,"CAMERA",0.024
+0,"HIF-1 signaling pathway ",8,"CAMERA",0.012
+0,"Histidine metabolism ",16,"CAMERA",0.017
+0,"Insulin signaling pathway ",10,"CAMERA",0.012
+0,"Long-term depression ",6,"CAMERA",0.005
+0,"Lysine biosynthesis ",12,"CAMERA",0.004
+0,"Lysine degradation ",12,"CAMERA",0.011
+0,"Lysosome ",15,"CAMERA",0.022
+0,"Nicotinate and nicotinamide metabolism ",14,"CAMERA",0.007
+0,"Pancreatic secretion ",6,"CAMERA",0.026
+0,"Pantothenate and CoA biosynthesis ",15,"CAMERA",0
+0,"Pentose and glucuronate interconversions ",13,"CAMERA",0.011
+0,"Pentose phosphate pathway ",7,"CAMERA",0.012
+0,"Peroxisome ",19,"CAMERA",0.006
+0,"Phenylalanine metabolism ",12,"CAMERA",0.024
+0,"Phenylalanine, tyrosine and tryptophan biosynthesis ",9,"CAMERA",0.018
+0,"Porphyrin and chlorophyll metabolism ",6,"CAMERA",0.003
+0,"PPAR signaling pathway ",10,"CAMERA",0.009
+0,"Primary bile acid biosynthesis ",6,"CAMERA",0.01
+0,"Propanoate metabolism ",11,"CAMERA",0.01
+0,"Purine metabolism ",24,"CAMERA",0.005
+0,"Pyrimidine metabolism ",17,"CAMERA",0.019
+0,"Pyruvate metabolism ",18,"CAMERA",0.002
+0,"Riboflavin metabolism ",6,"CAMERA",0.008
+0,"Selenocompound metabolism ",9,"CAMERA",0.002
+0,"Serotonergic synapse ",8,"CAMERA",0.025
+0,"Sphingolipid metabolism ",12,"CAMERA",0.006
+0,"Starch and sucrose metabolism ",12,"CAMERA",0.037
+0,"Taurine and hypotaurine metabolism ",6,"CAMERA",0.017
+0,"Tryptophan metabolism ",18,"CAMERA",0.019
+0,"Tyrosine metabolism ",15,"CAMERA",0.019
+0,"Ubiquinone and other terpenoid-quinone biosynthesis ",7,"CAMERA",0.004
+0,"Valine, leucine and isoleucine biosynthesis ",6,"CAMERA",0.01
+0,"Valine, leucine and isoleucine degradation ",18,"CAMERA",0.011
+0,"2-Oxocarboxylic acid metabolism ",15,"PathNet",0.006
+0,"Alanine, aspartate and glutamate metabolism ",23,"PathNet",0.017
+0,"Amino sugar and nucleotide sugar metabolism ",11,"PathNet",0.003
+0,"Aminoacyl-tRNA biosynthesis ",20,"PathNet",0.018
+0,"Amphetamine addiction ",6,"PathNet",0.014
+0,"Arginine and proline metabolism ",24,"PathNet",0.011
+0,"Ascorbate and aldarate metabolism ",10,"PathNet",0.003
+0,"beta-Alanine metabolism ",15,"PathNet",0.004
+0,"Bile secretion ",8,"PathNet",0
+0,"Biosynthesis of unsaturated fatty acids ",8,"PathNet",0.002
+0,"Butanoate metabolism ",10,"PathNet",0.006
+0,"Carbohydrate digestion and absorption ",6,"PathNet",0.013
+0,"Chemical carcinogenesis ",7,"PathNet",0.001
+0,"Citrate cycle (TCA cycle) ",8,"PathNet",0.047
+0,"Cocaine addiction ",6,"PathNet",0.014
+0,"Cysteine and methionine metabolism ",14,"PathNet",0.011
+0,"Dopaminergic synapse ",6,"PathNet",0.014
+0,"Drug metabolism - other enzymes ",15,"PathNet",0.002
+0,"Fat digestion and absorption ",10,"PathNet",0.006
+0,"Fatty acid elongation ",6,"PathNet",0.003
+0,"Fatty acid metabolism ",9,"PathNet",0.001
+0,"Fructose and mannose metabolism ",14,"PathNet",0.003
+0,"GABAergic synapse ",8,"PathNet",0.003
+0,"Galactose metabolism ",19,"PathNet",0.018
+0,"Glutamatergic synapse ",7,"PathNet",0.005
+0,"Glutathione metabolism ",11,"PathNet",0.004
+0,"Glycerolipid metabolism ",21,"PathNet",0.006
+0,"Glycerophospholipid metabolism ",10,"PathNet",0.003
+0,"Glycine, serine and threonine metabolism ",18,"PathNet",0.005
+0,"Glycolysis / Gluconeogenesis ",17,"PathNet",0
+0,"Glycosphingolipid biosynthesis - globo series ",9,"PathNet",0.012
+0,"Glyoxylate and dicarboxylate metabolism ",13,"PathNet",0.015
+0,"HIF-1 signaling pathway ",8,"PathNet",0.002
+0,"Histidine metabolism ",16,"PathNet",0.008
+0,"Insulin signaling pathway ",10,"PathNet",0.001
+0,"Long-term depression ",6,"PathNet",0.006
+0,"Lysine biosynthesis ",12,"PathNet",0.01
+0,"Lysine degradation ",12,"PathNet",0
+0,"Lysosome ",15,"PathNet",0.017
+0,"Nicotinate and nicotinamide metabolism ",14,"PathNet",0.006
+0,"Pancreatic secretion ",6,"PathNet",0.006
+0,"Pantothenate and CoA biosynthesis ",15,"PathNet",0.002
+0,"Pentose and glucuronate interconversions ",13,"PathNet",0.004
+0,"Pentose phosphate pathway ",7,"PathNet",0
+0,"Peroxisome ",19,"PathNet",0.002
+0,"Phenylalanine metabolism ",12,"PathNet",0.016
+0,"Phenylalanine, tyrosine and tryptophan biosynthesis ",9,"PathNet",0.011
+0,"Porphyrin and chlorophyll metabolism ",6,"PathNet",0
+0,"PPAR signaling pathway ",10,"PathNet",0.001
+0,"Primary bile acid biosynthesis ",6,"PathNet",0
+0,"Propanoate metabolism ",11,"PathNet",0.004
+0,"Purine metabolism ",24,"PathNet",0.005
+0,"Pyrimidine metabolism ",17,"PathNet",0.012
+0,"Pyruvate metabolism ",18,"PathNet",0.001
+0,"Riboflavin metabolism ",6,"PathNet",0
+0,"Selenocompound metabolism ",9,"PathNet",0.002
+0,"Serotonergic synapse ",8,"PathNet",0.015
+0,"Sphingolipid metabolism ",12,"PathNet",0.007
+0,"Starch and sucrose metabolism ",12,"PathNet",0.013
+0,"Taurine and hypotaurine metabolism ",6,"PathNet",0.005
+0,"Tryptophan metabolism ",18,"PathNet",0.012
+0,"Tyrosine metabolism ",15,"PathNet",0.016
+0,"Ubiquinone and other terpenoid-quinone biosynthesis ",7,"PathNet",0.008
+0,"Valine, leucine and isoleucine biosynthesis ",6,"PathNet",0.007
+0,"Valine, leucine and isoleucine degradation ",18,"PathNet",0.005
+0,"2-Oxocarboxylic acid metabolism ",15,"CePa",NA
+0,"Alanine, aspartate and glutamate metabolism ",23,"CePa",NA
+0,"Amino sugar and nucleotide sugar metabolism ",11,"CePa",NA
+0,"Aminoacyl-tRNA biosynthesis ",20,"CePa",NA
+0,"Amphetamine addiction ",6,"CePa",NA
+0,"Arginine and proline metabolism ",24,"CePa",NA
+0,"Ascorbate and aldarate metabolism ",10,"CePa",NA
+0,"beta-Alanine metabolism ",15,"CePa",NA
+0,"Bile secretion ",8,"CePa",NA
+0,"Biosynthesis of unsaturated fatty acids ",8,"CePa",NA
+0,"Butanoate metabolism ",10,"CePa",NA
+0,"Carbohydrate digestion and absorption ",6,"CePa",NA
+0,"Chemical carcinogenesis ",7,"CePa",NA
+0,"Citrate cycle (TCA cycle) ",8,"CePa",NA
+0,"Cocaine addiction ",6,"CePa",NA
+0,"Cysteine and methionine metabolism ",14,"CePa",NA
+0,"Dopaminergic synapse ",6,"CePa",NA
+0,"Drug metabolism - other enzymes ",15,"CePa",NA
+0,"Fat digestion and absorption ",10,"CePa",NA
+0,"Fatty acid elongation ",6,"CePa",NA
+0,"Fatty acid metabolism ",9,"CePa",NA
+0,"Fructose and mannose metabolism ",14,"CePa",NA
+0,"GABAergic synapse ",8,"CePa",NA
+0,"Galactose metabolism ",19,"CePa",NA
+0,"Glutamatergic synapse ",7,"CePa",NA
+0,"Glutathione metabolism ",11,"CePa",NA
+0,"Glycerolipid metabolism ",21,"CePa",NA
+0,"Glycerophospholipid metabolism ",10,"CePa",NA
+0,"Glycine, serine and threonine metabolism ",18,"CePa",NA
+0,"Glycolysis / Gluconeogenesis ",17,"CePa",NA
+0,"Glycosphingolipid biosynthesis - globo series ",9,"CePa",NA
+0,"Glyoxylate and dicarboxylate metabolism ",13,"CePa",NA
+0,"HIF-1 signaling pathway ",8,"CePa",NA
+0,"Histidine metabolism ",16,"CePa",NA
+0,"Insulin signaling pathway ",10,"CePa",NA
+0,"Long-term depression ",6,"CePa",NA
+0,"Lysine biosynthesis ",12,"CePa",NA
+0,"Lysine degradation ",12,"CePa",NA
+0,"Lysosome ",15,"CePa",NA
+0,"Nicotinate and nicotinamide metabolism ",14,"CePa",NA
+0,"Pancreatic secretion ",6,"CePa",NA
+0,"Pantothenate and CoA biosynthesis ",15,"CePa",NA
+0,"Pentose and glucuronate interconversions ",13,"CePa",NA
+0,"Pentose phosphate pathway ",7,"CePa",NA
+0,"Peroxisome ",19,"CePa",NA
+0,"Phenylalanine metabolism ",12,"CePa",NA
+0,"Phenylalanine, tyrosine and tryptophan biosynthesis ",9,"CePa",NA
+0,"Porphyrin and chlorophyll metabolism ",6,"CePa",NA
+0,"PPAR signaling pathway ",10,"CePa",NA
+0,"Primary bile acid biosynthesis ",6,"CePa",NA
+0,"Propanoate metabolism ",11,"CePa",NA
+0,"Purine metabolism ",24,"CePa",NA
+0,"Pyrimidine metabolism ",17,"CePa",NA
+0,"Pyruvate metabolism ",18,"CePa",NA
+0,"Riboflavin metabolism ",6,"CePa",NA
+0,"Selenocompound metabolism ",9,"CePa",NA
+0,"Serotonergic synapse ",8,"CePa",NA
+0,"Sphingolipid metabolism ",12,"CePa",NA
+0,"Starch and sucrose metabolism ",12,"CePa",NA
+0,"Taurine and hypotaurine metabolism ",6,"CePa",NA
+0,"Tryptophan metabolism ",18,"CePa",NA
+0,"Tyrosine metabolism ",15,"CePa",NA
+0,"Ubiquinone and other terpenoid-quinone biosynthesis ",7,"CePa",NA
+0,"Valine, leucine and isoleucine biosynthesis ",6,"CePa",NA
+0,"Valine, leucine and isoleucine degradation ",18,"CePa",NA
